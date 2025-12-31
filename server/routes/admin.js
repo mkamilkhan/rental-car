@@ -22,18 +22,29 @@ const upload = multer({ storage }).fields([
 ]);
 
 /* ================= BOOKINGS ================= */
+/* ================= BOOKINGS ================= */
 router.get('/bookings', adminAuth, async (req, res) => {
   try {
-    const bookings = await Booking.find()
+    // ❌ Cache disable
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
+    const bookings = await Booking.find({})
       .populate('car')
       .populate('user', 'name email')
       .sort({ createdAt: -1 });
 
-    res.json(bookings);
+    return res.status(200).json(bookings);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Admin bookings error:', error);
+    return res.status(500).json({
+      message: 'Server error',
+      error: error.message
+    });
   }
 });
+
 
 /* ================= ADD CAR ================= */
 router.post('/cars', upload, async (req, res) => {

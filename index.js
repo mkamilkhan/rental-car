@@ -75,8 +75,8 @@ app.use('/api/bookings', require('./routes/bookings'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/contact', require('./routes/contact'));
 
-// Serve React frontend
-const buildPath = path.join(__dirname, '../client/build');
+// Serve React frontend from server/build
+const buildPath =  path.join(__dirname, 'build'); // server ke andar ab build hai
 app.use(express.static(buildPath));
 
 // React Router fallback

@@ -45,9 +45,10 @@ console.log(car,'imag')
           <div className="car-image-section">
             <div className="car-image-wrapper">
             <img
-  src={`http://localhost:3000/${car.image}`}
+  src={`${process.env.REACT_APP_API_URL}/${car.image}`}
   alt={car.name}
 />
+
 
               {car.available ? (
                 <span className="availability-badge-large available">✓ Available Now</span>

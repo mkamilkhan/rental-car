@@ -1893,7 +1893,11 @@ const AdminDashboard = () => {
                 {cars.map((car) => (
                   <div key={car._id} className={`car-admin-card ${!car.available ? 'car-unavailable' : ''}`}>
                     <div className="car-image-wrapper-admin">
-                      <img src={car.image} alt={car.name} />
+                    <img
+  src={`${process.env.REACT_APP_API_URL}/${car.image}`}
+  alt={car.name}
+/>
+
                       {car.available ? (
                         <span className="availability-badge-admin available">✓ Available</span>
                       ) : (

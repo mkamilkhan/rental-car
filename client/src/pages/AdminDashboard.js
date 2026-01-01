@@ -1043,7 +1043,7 @@ const AdminDashboard = () => {
     try {
       const response = await axios.get('/api/admin/bookings');
       const latestBookings = response.data;
-            
+            console.log(latestBookings,'latestBookings')
       if (latestBookings.length > 0) {
         const latestBooking = latestBookings[0];
                 
@@ -1094,24 +1094,27 @@ const AdminDashboard = () => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
+  
       const response = await axios.get('/api/admin/bookings');
-      setBookings(response.data);
-            
-      if (response.data.length > 0) {
-        const latestBooking = response.data[0];
-        const pendingCount = response.data.filter(b => b.status === 'pending').length;
-        setNewBookingsCount(pendingCount);
-                
-        if (!lastBookingId) {
-          setLastBookingId(latestBooking._id);
-        }
-      }
+  
+      const bookingsArray = response.data?.data || [];
+  console.log(response,'response')
+      setBookings(bookingsArray);
+  
+      const pendingCount = bookingsArray.filter(
+        b => b.status === 'pending'
+      ).length;
+  
+      setNewBookingsCount(pendingCount);
+  
     } catch (error) {
       console.error('Error fetching bookings:', error);
+      setBookings([]);
     } finally {
       setLoading(false);
     }
   };
+  
 
   const fetchCars = async () => {
     try {
@@ -1893,11 +1896,7 @@ const AdminDashboard = () => {
                 {cars.map((car) => (
                   <div key={car._id} className={`car-admin-card ${!car.available ? 'car-unavailable' : ''}`}>
                     <div className="car-image-wrapper-admin">
-                    <img
-  src={`${process.env.REACT_APP_API_URL}/${car.image}`}
-  alt={car.name}
-/>
-
+                      <img src={car.image} alt={car.name} />
                       {car.available ? (
                         <span className="availability-badge-admin available">✓ Available</span>
                       ) : (

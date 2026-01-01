@@ -15,8 +15,10 @@ const CarDetails = () => {
 
   const fetchCarDetails = async () => {
     try {
-      const response = await axios.get(`/api/cars/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/cars/${id}`);      ;
       setCar(response.data);
+      console.log(response,'respo')
+
     } catch (error) {
       console.error('Error fetching car details:', error);
     } finally {
@@ -45,7 +47,7 @@ console.log(car,'imag')
           <div className="car-image-section">
             <div className="car-image-wrapper">
             <img
-  src={`${process.env.REACT_APP_API_URL}/${car.image}`}
+  src={`${(car.image)}`}
   alt={car.name}
 />
 

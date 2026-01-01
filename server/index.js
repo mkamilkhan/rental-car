@@ -92,8 +92,8 @@ app.get('*', (req, res) => {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/rental-car-booking')
-  .then(() => console.log('MongoDB Connected'))
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('MongoDB altus Connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Initialize default admin user

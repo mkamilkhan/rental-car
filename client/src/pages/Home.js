@@ -140,7 +140,10 @@ const Home = () => {
             <div className="featured-grid">
               {cars.map((car) => (
                 <div key={car._id} className="featured-card">
-                  <img src={car.image} alt={car.name} />
+                  {/* <img src={car.image} alt={car.name} /> */}
+                 <img src={`${(car.image)}`}
+  alt={car.name}
+/>
                   <div className="featured-content">
                     <h3>{car.name}</h3>
                     <p>{car.brand} {car.model}</p>

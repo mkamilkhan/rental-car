@@ -182,7 +182,9 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
                 Confirmation Email Sent
               </p>
               <p style={{ fontSize: "14px", color: "#1e40af", marginTop: "4px" }}>
-                We've sent a confirmation to <span style={{ fontWeight: "600" }}>{bookingDetails.customerEmail}</span>
+                We've sent a confirmation to <span style={{ fontWeight: "400" }}>
+                  {/* {bookingDetails.customerEmail} */}  offroadrentalhub@gmail.com
+                  </span>
               </p>
             </div>
           </div>

@@ -91,8 +91,8 @@ router.post('/', async (req, res) => {
       await booking.populate('user', 'name email');
     }
 
-    // Get admin email and WhatsApp - Always send to m.kamil.se@gmail.com and 03358395531
-    const adminEmail = 'm.kamil.se@gmail.com';
+    // Get admin email and WhatsApp - Always send to offroadrentalhub@gmail.com and 03358395531
+    const adminEmail = 'offroadrentalhub@gmail.com';
     const adminWhatsApp = '03358395531';
 
     // Prepare booking message for admin
@@ -132,7 +132,7 @@ router.post('/', async (req, res) => {
                                 !examplePasswords.includes(process.env.EMAIL_PASS.trim());
 
       console.log('\n📧 ===== BOOKING EMAIL NOTIFICATION =====');
-      console.log('Target Email: m.kamil.se@gmail.com');
+      console.log('Target Email: offroadrentalhub@gmail.com');
       console.log('Email Configured:', isEmailConfigured);
       console.log('EMAIL_USER:', process.env.EMAIL_USER || 'NOT SET');
       console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'SET (length: ' + process.env.EMAIL_PASS.length + ')' : 'NOT SET');
@@ -199,7 +199,7 @@ router.post('/', async (req, res) => {
         console.log('5. Type "Node.js" and click "Generate"');
         console.log('6. Copy the REAL 16-character password (NOT the example!)');
         console.log('7. Update server/.env file:');
-        console.log('   EMAIL_USER=m.kamil.se@gmail.com');
+        console.log('   EMAIL_USER=offroadrentalhub@gmail.com');
         console.log('   EMAIL_PASS=paste-your-REAL-app-password-here');
         console.log('8. Restart server');
         console.log('\n💡 The password should look like: "wxyz abcd efgh ijkl" (but YOUR actual one!)');

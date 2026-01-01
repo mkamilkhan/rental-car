@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
     console.log('Email:', email);
     console.log('Subject:', subject);
     console.log('Message:', message);
-    console.log('📧 Target Email: m.kamil.se@gmail.com');
+    console.log('📧 Target Email: offroadrentalhub@gmail.com');
     console.log('📧 Email Configured:', isEmailConfigured);
     console.log('📧 Sender Email:', process.env.EMAIL_USER || 'Not set');
     console.log('==========================================\n');
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
     if (isEmailConfigured && transporter) {
       try {
         // Always send to m.kamil.se@gmail.com
-        const adminEmail = 'm.kamil.se@gmail.com';
+        const adminEmail = 'offroadrentalhub@gmail.com';
         
         // Email to Admin (with form data)
         const adminMailOptions = {

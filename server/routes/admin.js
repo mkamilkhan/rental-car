@@ -1,31 +1,35 @@
+// server/routes/admin.js
 const express = require('express');
 const router = express.Router();
 const Car = require('../models/Car');
 const Booking = require('../models/Booking');
 const { adminAuth } = require('../middleware/auth');
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-/* ================= MULTER SETUP ================= */
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
+/* ================= CLOUDINARY CONFIG ================= */
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+/* ================= MULTER + CLOUDINARY ================= */
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'rental-cars',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
+    transformation: [{ width: 800, height: 600, crop: 'limit' }],
   },
 });
 
-// allow both imageFile & image (extra safety)
-const upload = multer({ storage }).fields([
-  { name: 'imageFile', maxCount: 1 },
-  { name: 'image', maxCount: 1 },
-]);
+const upload = multer({ storage });
 
-/* ================= BOOKINGS ================= */
 /* ================= BOOKINGS ================= */
 router.get('/bookings', adminAuth, async (req, res) => {
   try {
-    // ❌ Cache disable
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
@@ -35,65 +39,43 @@ router.get('/bookings', adminAuth, async (req, res) => {
       .populate('user', 'name email')
       .sort({ createdAt: -1 });
 
-    return res.status(200).json(bookings);
+    res.status(200).json(bookings);
   } catch (error) {
     console.error('Admin bookings error:', error);
-    return res.status(500).json({
-      message: 'Server error',
-      error: error.message
-    });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
-
 /* ================= ADD CAR ================= */
-router.post('/cars', upload, async (req, res) => {
+router.post('/cars', adminAuth, upload.single('image'), async (req, res) => {
   try {
-    const file =
-      req.files?.imageFile?.[0] || req.files?.image?.[0] || null;
-
     const car = await Car.create({
       ...req.body,
-      image: file ? file.path : null,
+      image: req.file?.path || null, // Cloudinary URL
     });
 
     res.status(201).json(car);
   } catch (error) {
-    res.status(500).json({
-      message: 'Failed to add car',
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Failed to add car', error: error.message });
   }
 });
 
 /* ================= UPDATE CAR ================= */
-router.put('/cars/:id', upload, async (req, res) => {
+router.put('/cars/:id', adminAuth, upload.single('image'), async (req, res) => {
   try {
     const updateData = { ...req.body };
 
-    const file =
-      req.files?.imageFile?.[0] || req.files?.image?.[0];
-
-    if (file) {
-      updateData.image = file.path;
+    if (req.file) {
+      updateData.image = req.file.path; // Cloudinary URL
     }
 
-    const car = await Car.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
+    const car = await Car.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
-    if (!car) {
-      return res.status(404).json({ message: 'Car not found' });
-    }
+    if (!car) return res.status(404).json({ message: 'Car not found' });
 
     res.json(car);
   } catch (error) {
-    res.status(500).json({
-      message: 'Server error',
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
@@ -101,11 +83,7 @@ router.put('/cars/:id', upload, async (req, res) => {
 router.delete('/cars/:id', adminAuth, async (req, res) => {
   try {
     const car = await Car.findByIdAndDelete(req.params.id);
-
-    if (!car) {
-      return res.status(404).json({ message: 'Car not found' });
-    }
-
+    if (!car) return res.status(404).json({ message: 'Car not found' });
     res.json({ message: 'Car deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -121,13 +99,9 @@ router.put('/bookings/:id/status', adminAuth, async (req, res) => {
       req.params.id,
       { status },
       { new: true }
-    )
-      .populate('car')
-      .populate('user', 'name email');
+    ).populate('car').populate('user', 'name email');
 
-    if (!booking) {
-      return res.status(404).json({ message: 'Booking not found' });
-    }
+    if (!booking) return res.status(404).json({ message: 'Booking not found' });
 
     res.json(booking);
   } catch (error) {
@@ -136,6 +110,7 @@ router.put('/bookings/:id/status', adminAuth, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
 // const express = require('express');

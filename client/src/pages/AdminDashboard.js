@@ -1128,26 +1128,26 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleCarFormChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+  // const handleCarFormChange = (e) => {
+  //   const { name, value, type, checked, files } = e.target;
   
-    if (type === 'file') {
-      const file = files[0];
-      if (!file) return;
+  //   if (type === 'file') {
+  //     const file = files[0];
+  //     if (!file) return;
   
-      setCarFormData((prev) => ({
-        ...prev,
-        imageFile: file,
-      }));
+  //     setCarFormData((prev) => ({
+  //       ...prev,
+  //       imageFile: file,
+  //     }));
   
-      setImagePreview(URL.createObjectURL(file));
-    } else {
-      setCarFormData((prev) => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value,
-      }));
-    }
-  };
+  //     setImagePreview(URL.createObjectURL(file));
+  //   } else {
+  //     setCarFormData((prev) => ({
+  //       ...prev,
+  //       [name]: type === 'checkbox' ? checked : value,
+  //     }));
+  //   }
+  // };
   
           
   const handleCarSubmit = async (e) => {
@@ -1156,17 +1156,21 @@ const AdminDashboard = () => {
     try {
       const formData = new FormData();
   
+      // Append all form fields except imageFile
       Object.entries(carFormData).forEach(([key, value]) => {
         if (key !== 'imageFile') {
-          formData.append(key, value);
+          // Booleans need to be converted to strings
+          formData.append(key, typeof value === 'boolean' ? value.toString() : value);
         }
       });
   
+      // Append image file (if selected)
       if (carFormData.imageFile instanceof File) {
-        formData.append('imageFile', carFormData.imageFile);
+        formData.append('image', carFormData.imageFile); // must match backend field name
       }
   
       if (editingCar) {
+        // Update existing car
         await axios.put(
           `/api/admin/cars/${editingCar._id}`,
           formData,
@@ -1174,6 +1178,7 @@ const AdminDashboard = () => {
         );
         alert('✅ Car updated successfully');
       } else {
+        // Add new car
         await axios.post(
           '/api/admin/cars',
           formData,
@@ -1191,6 +1196,29 @@ const AdminDashboard = () => {
       alert('❌ Failed to save car');
     }
   };
+  
+  // Handle file input change
+  const handleCarFormChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+  
+    if (type === 'file') {
+      const file = files[0];
+      setCarFormData(prev => ({ ...prev, imageFile: file }));
+  
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => setImagePreview(reader.result);
+        reader.readAsDataURL(file);
+      } else {
+        setImagePreview(null);
+      }
+    } else if (type === 'checkbox') {
+      setCarFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setCarFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+  
   
   
 
@@ -1819,11 +1847,12 @@ const AdminDashboard = () => {
                       <label>Vehicle Image *</label>
                       <input
   type="file"
-  name="imageFile"
+  name="image"
   accept="image/*"
   onChange={handleCarFormChange}
   required={!editingCar}
 />
+
 
 
                       {imagePreview && (

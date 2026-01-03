@@ -46,10 +46,8 @@ console.log(car,'imag')
         <div className="car-details-content">
           <div className="car-image-section">
             <div className="car-image-wrapper">
-            <img
-  src={`${(car.image)}`}
-  alt={car.name}
-/>
+   
+<img src={car.image} alt={car.name}/>
 
 
               {car.available ? (

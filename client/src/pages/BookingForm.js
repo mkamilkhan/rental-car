@@ -326,9 +326,9 @@ const BookingForm = () => {
           {/* Car Summary Card */}
           <div className="card overflow-hidden transition-shadow" style={{ padding: "0" }}>
             <div className="relative overflow-hidden" style={{ height: "320px" }}>
-              <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
-              <img
-  src={`http://localhost:3000/${car.image}`}
+    
+<img
+  src={car.image}
   alt={car.name}
   className="w-full h-full object-cover"
 />

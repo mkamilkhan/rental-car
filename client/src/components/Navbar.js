@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import Logo7 from '../assets/Logo7.png';
+import Logo9 from '../assets/Logo10.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -31,7 +31,7 @@ const Navbar = () => {
         <div className="navbar-wrapper">
           {/* Logo */}
           <Link to="/" className="navbar-logo" onClick={closeMenu}>
-            <img style={{width: 100}} src={Logo7}/>
+            <img style={{width: 100}} src={Logo9}/>
           </Link>
 
           {/* Hamburger Menu Button */}

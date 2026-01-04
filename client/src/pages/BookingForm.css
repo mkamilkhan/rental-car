@@ -434,3 +434,19 @@
 .modal-content::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.pickup-note {
+  font-size: 12.5px;              /* smaller & neat */
+  font-family: "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  color: #4b5563;                 /* slate gray */
+  background: #f8fafc;            /* soft light gray */
+  border: 1px solid #e5e7eb;       /* subtle border */
+  border-left: 3px solid #3b82f6;  /* professional blue accent */
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.pickup-note strong {
+  color: #284481; /* darker text for emphasis */
+}

@@ -1002,7 +1002,7 @@ const AdminDashboard = () => {
     brand: '',
     model: '',
     year: new Date().getFullYear(),
-    pricePerDay: '',
+    // pricePerDay: '',
     price30min: '',
     price60min: '',
     currency: 'AED',
@@ -1232,7 +1232,7 @@ const AdminDashboard = () => {
       brand: car.brand,
       model: car.model,
       year: car.year,
-      pricePerDay: car.pricePerDay,
+      // pricePerDay: car.pricePerDay,
       price30min: car.price30min || '',
       price60min: car.price60min || '',
       currency: car.currency || 'AED',
@@ -1686,7 +1686,7 @@ const AdminDashboard = () => {
                   brand: '',
                   model: '',
                   year: new Date().getFullYear(),
-                  pricePerDay: '',
+                  // pricePerDay: '',
                   price30min: '',
                   price60min: '',
                   currency: 'AED',
@@ -1756,7 +1756,7 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                     <div className="form-row">
-                      <div className="form-group">
+                      {/* <div className="form-group">
                         <label>Price per Day ({carFormData.currency || 'AED'}) *</label>
                         <input
                           type="number"
@@ -1766,7 +1766,7 @@ const AdminDashboard = () => {
                           required
                           min="0"
                         />
-                      </div>
+                      </div> */}
                       <div className="form-group">
                         <label>Price 60min ({carFormData.currency || 'AED'})</label>
                         <input
@@ -1935,7 +1935,7 @@ const AdminDashboard = () => {
                     <div className="car-admin-info">
                       <h4>{car.name}</h4>
                       <p>{car.brand} {car.model} ({car.year})</p>
-                      <p>{car.price60min ? `${car.price60min} ${car.currency || 'AED'}/60min` : `${car.pricePerDay} ${car.currency || 'AED'}/day`}</p>
+                      <p>{car.price60min ? `${car.price60min} ${car.currency || 'AED'}/60min` : `} ${car.currency || 'AED'}/day`}</p>
                       <div className="car-admin-actions">
                         <button
                           onClick={() => handleToggleAvailability(car._id, car.available)}

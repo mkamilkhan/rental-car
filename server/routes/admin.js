@@ -19,10 +19,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: 'rental-cars',
-    allowed_formats: ['jpg', 'jpeg', 'png'],
-    transformation: [{ width: 800, height: 600, crop: 'limit' }],
-  },
+    folder: 'cars',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
+  }
 });
 
 const upload = multer({ storage });
@@ -45,6 +44,48 @@ router.get('/bookings', adminAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+/* ================= CREATE BOOKING ================= */
+/* ================= CREATE BOOKING ================= */
+router.post('/bookings', async (req, res) => {
+  try {
+    const {
+      carId,
+      carName,
+      customerName,
+      customerEmail,
+      contactNumber,
+      startDate,
+      endDate,
+      totalDays,
+      pickupLocation,
+      totalPrice
+    } = req.body;
+
+    if (!carId || !customerName || !customerEmail || !startDate || !endDate) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const booking = await Booking.create({
+      car: carId,
+      carName,
+      customerName,
+      customerEmail,
+      contactNumber,
+      startDate,
+      endDate,
+      totalDays,
+      pickupLocation,
+      totalPrice,
+      status: "pending"
+    });
+
+    res.status(201).json(booking);
+  } catch (error) {
+    console.error("Create booking error:", error);
+    res.status(500).json({ message: "Failed to create booking", error: error.message });
+  }
+});
+
 
 /* ================= ADD CAR ================= */
 router.post('/cars', adminAuth, upload.single('image'), async (req, res) => {

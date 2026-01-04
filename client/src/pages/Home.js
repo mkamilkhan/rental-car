@@ -3,12 +3,23 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 import './Home.css';
+import CategoriesSlider from "../components/CategoriesSlider";
+
 
 const Home = () => {
   const { t, isRTL } = useLanguage();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+// 
+
+// const categories = [
+//   { name: "CanAm Maverick R", image: "/assets/vehicles/quad-bike-single.jpg" },
+//   { name: "CanAm Maverick RS", image: "/assets/vehicles/polaris-rzr1000.jpg" },
+//   { name: "Polaris RZR 1000", image: "/assets/vehicles/dirt-bike.jpg" },
+//   { name: "Dirt Bikes", image: "/assets/vehicles/polaris-rzr1000-4seater.jpg" },
+// ];
+
 
   // Hero background videos
   const heroVideos = [
@@ -47,11 +58,19 @@ const Home = () => {
 
   const categories = [
     
-    { name: 'ATV Rides', image: '/assets/vehicles/quad-bike-single.jpg' },
-    { name: 'UTV Tours', image: '/assets/vehicles/polaris-rzr1000.jpg' },
+    // { name: 'ATV Rides', image: '/assets/vehicles/quad-bike-single.jpg' },
+    // { name: 'UTV Tours', image: '/assets/vehicles/polaris-rzr1000.jpg' },
+    // { name: 'Dirt Bikes', image: '/assets/vehicles/dirt-bike.jpg' },
+    // { name: 'Family Tours', image: '/assets/vehicles/polaris-rzr1000-4seater.jpg' },
+    // { name: 'Premium Rides', image: '/assets/vehicles/canam-maverick-xrs.jpg' }
+    { name: 'CanAm Maverick R', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
+    { name: 'CanAm Maverick RS', image: '/assets/vehicles/polaris-rzr1000.jpg' },
+    { name: 'Polaris rzr 1000', image: '/assets/vehicles/polaris-rzr1000.jpg' },
     { name: 'Dirt Bikes', image: '/assets/vehicles/dirt-bike.jpg' },
-    { name: 'Family Tours', image: '/assets/vehicles/polaris-rzr1000-4seater.jpg' },
-    { name: 'Premium Rides', image: '/assets/vehicles/canam-maverick-xrs.jpg' }
+    { name: 'Yamaha Raptors ', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
+    { name: 'Polaris Rzr Pro', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
+    { name: 'Single Quad bikes (Open desert) ', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
+    { name: 'Double Quad Bikes (Open Desert)', image: '/assets/vehicles/canam-maverick-xrs.jpg' }
   ];
   
   return (
@@ -113,7 +132,10 @@ const Home = () => {
             <h2>{t('home.chooseAdventure')}</h2>
             <p>{t('home.categoriesDesc')}</p>
           </div>
-          <div className="categories-grid">
+          {/* <CategoriesSlider/> */}
+          <CategoriesSlider categories={categories} />
+
+          {/* <div className="categories-grid">
             {categories.map((category, index) => (
               <div key={index} className="category-card">
                 <img src={category.image} alt={category.name} />
@@ -123,7 +145,7 @@ const Home = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 

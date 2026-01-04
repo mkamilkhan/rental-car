@@ -20,11 +20,11 @@ const carSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  pricePerDay: {
-    type: Number,
-    required: true,
-    min: 0
-  },
+  // pricePerDay: {
+  //   type: Number,
+  //   required: true,
+  //   min: 0
+  // },
   price30min: {
     type: Number,
     min: 0

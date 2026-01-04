@@ -184,7 +184,7 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
               <p style={{ fontSize: "14px", color: "#1e40af", marginTop: "4px" }}>
                 We've sent a confirmation to <span style={{ fontWeight: "400" }}>
                   {/* {bookingDetails.customerEmail} */}  offroadrentalhub@gmail.com
-                  </span>
+                </span>
               </p>
             </div>
           </div>
@@ -212,7 +212,7 @@ const BookingForm = () => {
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
-    pickupLocation: "",
+    pickupLocation: "normal", // ✅ default
     contactNumber: "",
     customerEmail: "",
     customerName: ""
@@ -242,17 +242,17 @@ const BookingForm = () => {
     const end = new Date(formData.endDate);
     const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
     if (days <= 0) return 0;
-  
+
     let total = days * car.pricePerDay;
-  
+
     // Extra charge for Private 4x4
     if (formData.pickupLocation === "private") {
       total += 300; // fixed extra AED
     }
-  
+
     return total;
   };
-  
+
 
   const totalDays =
     formData.startDate && formData.endDate
@@ -326,12 +326,12 @@ const BookingForm = () => {
           {/* Car Summary Card */}
           <div className="card overflow-hidden transition-shadow" style={{ padding: "0" }}>
             <div className="relative overflow-hidden" style={{ height: "320px" }}>
-    
-<img
-  src={car.image}
-  alt={car.name}
-  className="w-full h-full object-cover"
-/>
+
+              <img
+                src={car.image}
+                alt={car.name}
+                className="w-full h-full object-cover"
+              />
 
               <div
                 className="absolute inset-0"
@@ -409,19 +409,26 @@ const BookingForm = () => {
               </div>
 
               <div className="form-group">
-  <label htmlFor="pickupLocation">Pickup Location</label>
-  <select
-    id="pickupLocation"
-    name="pickupLocation"
-    value={formData.pickupLocation}
-    onChange={handleChange}
-    required
-  >
-    <option value="">Select Pickup Option</option>
-    <option value="normal">Normal Pickup (No Extra Charge)</option>
-    <option value="private">Private 4x4 Pickup & Drop-off (+300 AED)</option>
-  </select>
+
+              <p className="pickup-note">
+  If <strong>Private 4x4 Pickup & Drop-off</strong> is selected,
+  an additional charge of <strong>300 AED</strong> will apply.
+</p>
+
+<label htmlFor="pickupLocation">Pickup Location</label>
+<select
+  id="pickupLocation"
+  name="pickupLocation"
+  value={formData.pickupLocation}
+  onChange={handleChange}
+  required
+>
+  <option value="normal">Normal Pickup (No Extra Charge)</option>
+  <option value="private">Private 4x4 Pickup & Drop-off (+300 AED)</option>
+</select>
+
 </div>
+
 
 
               {/* Buttons */}

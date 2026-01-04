@@ -1,14 +1,21 @@
 {
   "files": {
     "main.css": "./static/css/main.4255d9da.css",
-    "main.js": "./static/js/main.92bc6b20.js",
+    "main.js": "./static/js/main.50ecea99.js",
     "static/media/Logo10.png": "./static/media/Logo10.aeca126fc8b442421ae9.png",
+    "static/media/Yamaha-raptor.jpeg": "./static/media/Yamaha-raptor.c044c17d3c6cd01d22a7.jpeg",
+    "static/media/Dirt-bike.jpeg": "./static/media/Dirt-bike.978c00421f0544e87a55.jpeg",
+    "static/media/CanAm-Maverick-Turbo-RS.jpeg": "./static/media/CanAm-Maverick-Turbo-RS.8e362e9f4ce0a3fa4413.jpeg",
+    "static/media/CanAm-maverick-XRS-Turbo-sports.jpeg": "./static/media/CanAm-maverick-XRS-Turbo-sports.5d648667997ed2569584.jpeg",
+    "static/media/Polaris-rzr-1000.jpg": "./static/media/Polaris-rzr-1000.b47da60a9556159d996f.jpg",
+    "static/media/Polaris-rzr-Pro.jpeg": "./static/media/Polaris-rzr-Pro.9ab536d37eaf786411cb.jpeg",
+    "static/media/QuadBike.jpeg": "./static/media/QuadBike.4d240b655dff2baf12c6.jpeg",
     "index.html": "./index.html",
     "main.4255d9da.css.map": "./static/css/main.4255d9da.css.map",
-    "main.92bc6b20.js.map": "./static/js/main.92bc6b20.js.map"
+    "main.50ecea99.js.map": "./static/js/main.50ecea99.js.map"
   },
   "entrypoints": [
     "static/css/main.4255d9da.css",
-    "static/js/main.92bc6b20.js"
+    "static/js/main.50ecea99.js"
   ]
 }

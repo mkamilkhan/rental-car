@@ -5,6 +5,18 @@ import { useLanguage } from '../context/LanguageContext';
 import './Home.css';
 import CategoriesSlider from "../components/CategoriesSlider";
 
+// import CanAmTwo from "../assets/CanAm-maverick XRS-Two-Seater.jpeg";
+import CanAmTurbo from "../assets/CanAm-Maverick-Turbo-RS.jpeg";
+import CanAmSport from "../assets/CanAm-maverick-XRS-Turbo-sports.jpeg";
+import DirtBike from "../assets/Dirt-bike.jpeg";
+import Polaris1000 from "../assets/Polaris-rzr-1000.jpg";
+import PolarisPro from "../assets/Polaris-rzr-Pro.jpeg";
+// import Polaris2Seater from "../assets/Polaris-rzr1000-2-seater.jpeg";
+// import Polaris4Seater from "../assets/Polaris-rzr1000-four-seater.jpeg";
+// import Polaris1Seater from "../assets/Polaris-rzr1000-single-seater.jpeg";
+import QuadBike from "../assets/QuadBike.jpeg";
+import YamahaRaptor from "../assets/Yamaha-raptor.jpeg";
+
 
 const Home = () => {
   const { t, isRTL } = useLanguage();
@@ -63,14 +75,14 @@ const Home = () => {
     // { name: 'Dirt Bikes', image: '/assets/vehicles/dirt-bike.jpg' },
     // { name: 'Family Tours', image: '/assets/vehicles/polaris-rzr1000-4seater.jpg' },
     // { name: 'Premium Rides', image: '/assets/vehicles/canam-maverick-xrs.jpg' }
-    { name: 'CanAm Maverick R', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
-    { name: 'CanAm Maverick RS', image: '/assets/vehicles/polaris-rzr1000.jpg' },
-    { name: 'Polaris rzr 1000', image: '/assets/vehicles/polaris-rzr1000.jpg' },
-    { name: 'Dirt Bikes', image: '/assets/vehicles/dirt-bike.jpg' },
-    { name: 'Yamaha Raptors ', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
-    { name: 'Polaris Rzr Pro', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
-    { name: 'Single Quad bikes (Open desert) ', image: '/assets/vehicles/canam-maverick-xrs.jpg' },
-    { name: 'Double Quad Bikes (Open Desert)', image: '/assets/vehicles/canam-maverick-xrs.jpg' }
+    { name: 'CanAm Maverick R', image: CanAmTurbo },
+    { name: 'CanAm Maverick RS', image: CanAmSport},
+    { name: 'Polaris rzr 1000', image: Polaris1000 },
+    { name: 'Dirt Bikes', image: DirtBike },
+    { name: 'Yamaha Raptors ', image: YamahaRaptor },
+    { name: 'Polaris Rzr Pro', image: PolarisPro },
+    { name: 'Single Quad bikes (Open desert) ', image: QuadBike },
+    { name: 'Double Quad Bikes (Open Desert)', image: QuadBike }
   ];
   
   return (

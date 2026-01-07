@@ -94,7 +94,7 @@ const Destination = () => {
                         </div>
                         <Link 
                           to={`/car/${car._id}`} 
-                          className={`btn btn-primary ${!car.available ? 'btn-disabled' : ''}`}
+                          className={`btn   ${!car.available ? 'btn-disabled' : ''}`}
                           style={!car.available ? { opacity: 0.6, cursor: 'not-allowed' } : {}}
                         >
                           {car.available ? `${t('destination.bookNow')} →` : 'Not Available'}

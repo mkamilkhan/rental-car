@@ -49,7 +49,7 @@ const About = () => {
             <h3>{t('about.newsletter')}</h3>
             <div className="newsletter-form">
               <input type="email" placeholder={t('about.enterEmail')} />
-              <button className="btn btn-primary">{t('about.subscribe')}</button>
+              <button className="btn btn-subscribe">{t('about.subscribe')}</button>
             </div>
           </div>
         </div>

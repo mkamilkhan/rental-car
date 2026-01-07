@@ -117,7 +117,7 @@ const Home = () => {
               <p style={{fontSize: '18px', marginBottom: '30px', maxWidth: '800px', margin: '0 auto 30px', lineHeight: '1.6'}}>
                 Explore Dubai's legendary red-sand dunes, feel the wind of the open desert, and create unforgettable memories with our expert-guided tours. From sunrise rides to sunset escapes every moment is pure adventure.
               </p>
-              <p style={{fontSize: '22px', fontWeight: '700', color: '#ff6b35', marginTop: '20px'}}>
+              <p style={{fontSize: '22px', fontWeight: '700', color: '#f59e0b', marginTop: '20px'}}>
                 Ride. Explore. Conquer the Desert.
               </p>
               <Link to="/destination" className="btn btn-hero" style={{marginTop: '30px'}}>

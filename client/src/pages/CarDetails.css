@@ -22,14 +22,14 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #fbbf24;
+    color: #fc8b1a;
     text-decoration: none;
     font-weight: 700;
     font-size: 1rem;
     margin-bottom: 2rem;
     padding: 0.75rem 1.5rem;
     background: rgba(251, 191, 36, 0.1);
-    border: 1px solid #fbbf24;
+    border: 1px solid #fc8b1a;
     border-radius: 10px;
     transition: all 0.3s ease;
   }
@@ -49,7 +49,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     background: #1a1a1a;
-    border: 1px solid #fbbf24;
+    border: 1px solid #fc8b1a;
     border-radius: 30px;
     padding: 2.5rem;
     box-shadow: 
@@ -65,7 +65,7 @@
     left: -3px;
     right: -3px;
     bottom: -3px;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+    background: linear-gradient(135deg, #fc8b1a, #fc8b1a, #fc8b1a);
     border-radius: 30px;
     opacity: 0;
     z-index: -1;
@@ -96,7 +96,7 @@
     height: 500px;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid #fbbf24;
+    border: 1px solid #fc8b1a;
     box-shadow: 
       0 0 40px rgba(251, 191, 36, 0.4),
       inset 0 0 30px rgba(251, 191, 36, 0.1);
@@ -131,9 +131,9 @@
   }
   
   .availability-badge-large.available {
-    background: linear-gradient(135deg, #2a2826 0%, #f3a60d 100%);
+    background: linear-gradient(135deg, #2a2826 0%, #fc8b1a 100%);
     color: #ffffff;
-    border-color: #d9b903;
+    border-color: #fc8b1a;
     box-shadow: 
       0 8px 25px rgba(16, 185, 129, 0.4),
       0 0 30px rgba(16, 185, 129, 0.3);
@@ -217,7 +217,7 @@
     gap: 1.5rem;
     padding: 2rem;
     background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
-    border: 1px solid #fbbf24;
+    border: 1px solid #fc8b1a;
     border-radius: 16px;
     box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
   }
@@ -237,7 +237,7 @@
   .spec-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
-    border-color: #fbbf24;
+    border-color: #fc8b1a;
   }
   
   .spec-label {
@@ -249,7 +249,7 @@
   }
   
   .spec-value {
-    color: #fbbf24;
+    color: #fc8b1a;
     font-size: 1.3rem;
     font-weight: 900;
     letter-spacing: 1px;
@@ -263,12 +263,12 @@
   .car-description {
     padding: 1.5rem;
     background: rgba(251, 191, 36, 0.05);
-    border-left: 4px solid #fbbf24;
+    border-left: 4px solid #fc8b1a;
     border-radius: 10px;
   }
   
   .car-description h3 {
-    color: #fbbf24;
+    color: #fc8b1a;
     font-size: 1.5rem;
     font-weight: 900;
     letter-spacing: 1px;
@@ -290,7 +290,7 @@
   .pricing-section {
     padding: 2rem;
     background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-    border: 1px solid #fbbf24;
+    border: 1px solid #fc8b1a;
     border-radius: 16px;
     box-shadow: 
       0 0 30px rgba(251, 191, 36, 0.2),
@@ -298,7 +298,7 @@
   }
   
   .pricing-section h3 {
-    color: #fbbf24;
+    color: #fc8b1a;
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: 1.5px;
@@ -322,7 +322,7 @@
   
   .price-option:hover {
     background: rgba(251, 191, 36, 0.15);
-    border-color: #fbbf24;
+    border-color: #fc8b1a;
     box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
     transform: translateX(5px);
   }
@@ -340,7 +340,7 @@
   }
   
   .price-amount {
-    color: #fbbf24;
+    color: #fc8b1a;
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: 1px;
@@ -373,7 +373,7 @@
   }
   
   .btn-primary {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(135deg, #fc8b1a, #f59e0b);
     color: #000000;
     box-shadow: 
       0 8px 25px rgba(251, 191, 36, 0.4),
@@ -412,7 +412,7 @@
     width: 100%;
     font-size: 1.4rem;
     padding: 1.5rem 3rem;
-    background-color: #fbbf24;
+    background-color: #fc8b1a;
   }
   
   .btn-disabled {
@@ -451,7 +451,7 @@
     min-height: 60vh;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: #fc8b1a;
     text-transform: uppercase;
     letter-spacing: 2px;
   }
@@ -582,7 +582,7 @@
     .btn-large {
       font-size: 1.2rem;
       padding: 1.25rem 2rem;
-      background-color: #fbbf24;
+      background-color: #fc8b1a;
     }
   }
   
@@ -702,7 +702,7 @@
       padding: 1rem 1.5rem;
       letter-spacing: 1px;
       border-width: 2px;
-      background-color: #fbbf24;
+      background-color: #fc8b1a;
     }
   
     .unavailable-message {
@@ -754,7 +754,7 @@
     .btn-large {
       font-size: 0.9rem;
       padding: 0.875rem 1.25rem;
-      background-color: #fbbf24;
+      background-color: #fc8b1a;
     }
   }
   
@@ -772,7 +772,7 @@
   
   [dir="rtl"] .car-description {
     border-left: none;
-    border-right: 4px solid #fbbf24;
+    border-right: 4px solid #fc8b1a;
   }
   
   [dir="rtl"] .availability-badge-large {

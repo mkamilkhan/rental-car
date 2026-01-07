@@ -20,7 +20,7 @@
 
 .section-label {
   font-size: 18px;
-  color: #f59e0b;
+  color: #f3f2f1;
   font-style: italic;
   display: block;
   margin-bottom: 10px;
@@ -64,11 +64,23 @@
 }
 
 .newsletter-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #fc8b1a, #F59E0C);
+  /* background: linear-gradient(135deg, #121211, #1f1d1a); */
   padding: 50px;
   border-radius: 12px;
   text-align: center;
   color: white;
+}
+.btn-subscribe {
+background: linear-gradient(135deg, #121211, #1f1d1a);
+  padding: 50px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+.btn-subscribe:hover {
+  background: linear-gradient(135deg, #eae9e7, #e9e6e2);
+  color: rgb(31, 29, 29);
 }
 
 .newsletter-section h3 {

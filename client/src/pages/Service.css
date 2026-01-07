@@ -13,7 +13,7 @@
 }
 
 .service-card {
-  background: rgb(23, 21, 21);
+  background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -49,25 +49,25 @@
 .service-info h3 {
   font-size: 24px;
   margin-bottom: 10px;
-  color: #f4f5f8;
+  color: #fc8b1a;
 }
 
 .service-listings {
-  color: #fbbf24;
+  color: #201f1d;
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 14px;
 }
 
 .service-description {
-  color: #d78e06;
+  color: #fc8b1a;
   line-height: 1.6;
   margin-bottom: 20px;
   font-size: 14px;
 }
 
 .btn-service {
-  background: #fbbf24;
+  background: #fc8b1a;
   color: white;
   padding: 12px 24px;
   border-radius: 25px;
@@ -78,7 +78,7 @@
 }
 
 .btn-service:hover {
-  background: #ff8533;
+  background: #0d0d0d;
   transform: translateX(5px);
 }
 

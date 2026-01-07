@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
           subject: `New Contact Form: ${subject}`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2 style="color: #ff6b35;">New Contact Form Submission</h2>
+              <h2 style="color: #f59e0b;">New Contact Form Submission</h2>
               <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>Email:</strong> ${email}</p>
@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
           subject: `Thank you for contacting OFFROAD RENTALHUB`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2 style="color: #ff6b35;">Thank You, ${name}!</h2>
+              <h2 style="color: #f59e0b;">Thank You, ${name}!</h2>
               <p>We have received your message and will get back to you soon.</p>
               <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <p><strong>Your Message:</strong></p>

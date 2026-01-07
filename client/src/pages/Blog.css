@@ -14,7 +14,7 @@
 
 .section-label {
   font-size: 18px;
-  color: #ff6b35;
+  color: #ffffff;
   font-style: italic;
   display: block;
   margin-bottom: 15px;
@@ -74,7 +74,7 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #ff6b35;
+  background: #fc8b1a;
   color: white;
   padding: 8px 15px;
   border-radius: 20px;
@@ -101,7 +101,7 @@
 }
 
 .read-more {
-  color: #ff6b35;
+  color: #fc8b1a;
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
@@ -109,7 +109,7 @@
 }
 
 .read-more:hover {
-  color: #ff8533;
+  color: #fc8b1a;
 }
 
 @media (max-width: 768px) {

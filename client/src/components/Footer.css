@@ -1,9 +1,10 @@
 /* ============================================
    PROFESSIONAL FOOTER STYLES
    ============================================ */
-
+   /* background: linear-gradient(135deg, #fc8b1a, #F59E0C, #f5b71b); */
    .footer {
-    background: linear-gradient(180deg, #181819 0%, #141416 100%);
+    /* background: linear-gradient(135deg, rgba(24, 22, 22, 0.95) 0%, rgba(21, 19, 19, 0.95) 100%); */
+    background: linear-gradient(135deg, rgb(12, 12, 12) 0%, rgb(17, 17, 17) 100%);
     color: #e2e8f0;
     position: relative;
     overflow: hidden;
@@ -16,8 +17,8 @@
     left: 0;
     right: 0;
     height: 1px;
-    /* background: linear-gradient(90deg, transparent, #f59e0b, transparent); */
-    background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+    /* background: linear-gradient(90deg, transparent, #fc8b1a, transparent); */
+    background: linear-gradient(135deg, #fbbf24, #fc8b1a, #fbbf24);
   }
   
   .footer-container {
@@ -72,8 +73,8 @@
     background: rgba(249, 115, 22, 0.1);
     border: 1.5px solid rgba(249, 115, 22, 0.3);
     border-radius: 10px;
-    color: #f59e0b;
-    /* background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24); */
+    color: #fc8b1a;
+    /* background: linear-gradient(135deg, #fbbf24, #fc8b1a, #fbbf24); */
     transition: all 0.3s ease;
   }
   
@@ -83,9 +84,9 @@
   }
   
   .social-icon:hover {
-    background: #f59e0b;
+    background: #fc8b1a;
     color: #ffffff;
-    border-color: #f59e0b;
+    border-color: #fc8b1a;
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4);
   }
@@ -122,7 +123,7 @@
     left: 0;
     width: 40px;
     height: 3px;
-    background: linear-gradient(90deg, #f59e0b, #f59e0b);
+    background: linear-gradient(135deg, #fc8b1a, #F59E0C, #f5b71b);
     border-radius: 2px;
   }
   
@@ -152,7 +153,7 @@
     position: absolute;
     left: -20px;
     opacity: 0;
-    color: #f59e0b;
+    color: #fc8b1a;
     transition: all 0.3s ease;
   }
   
@@ -189,7 +190,7 @@
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    color: #f59e0b;
+    color: #fc8b1a;
     margin-top: 2px;
   }
   
@@ -200,7 +201,7 @@
   }
   
   .contact-item a:hover {
-    color: #f59e0b;
+    color: #fc8b1a;
   }
   
   /* Newsletter */
@@ -219,7 +220,7 @@
   .newsletter-input {
     flex: 1;
     padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, rgba(24, 22, 22, 0.95) 0%, rgba(21, 19, 19, 0.95) 100%);
     border: 1.5px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     color: #ffffff;
@@ -233,13 +234,13 @@
   
   .newsletter-input:focus {
     outline: none;
-    border-color: #f59e0b;
+    border-color: #fc8b1a;
     background: rgba(255, 255, 255, 0.08);
   }
   
   .newsletter-btn {
     padding: 0.75rem 1.25rem;
-    background: linear-gradient(135deg, #f59e0b, #f59e0b);
+    background: linear-gradient(135deg, #fc8b1a, #fc8b1a);
     border: none;
     border-radius: 8px;
     color: #ffffff;
@@ -256,7 +257,7 @@
   }
   
   .newsletter-btn:hover {
-    background: linear-gradient(135deg, #f59e0b, #f59e0b);
+    background: linear-gradient(135deg, #fc8b1a, #fc8b1a);
     transform: translateX(3px);
     box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
   }
@@ -298,7 +299,7 @@
   }
   
   .footer-legal a:hover {
-    color: #f59e0b;
+    color: #fc8b1a;
   }
   
   .separator {

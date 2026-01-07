@@ -4,7 +4,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* background: linear-gradient(135deg, rgba(24, 22, 22, 0.95) 0%, rgba(21, 19, 19, 0.95) 100%); */
+  background: linear-gradient(135deg, #fc8b1a, #F59E0C, #f5b71b);
+  /* background: linear-gradient(135deg, #fbbf24, #F59E0C, #fbbf24); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,7 +110,7 @@
   font-size: 42px;
   font-weight: 900;
   letter-spacing: 4px;
-  background: linear-gradient(135deg, #ffd700 0%, #ff6b35 100%);
+  background: linear-gradient(135deg, #282826 0%, #2f2e2d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -136,7 +138,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid #ffd700;
+  border-top: 4px solid #2a2a27;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto;

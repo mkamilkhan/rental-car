@@ -7,7 +7,7 @@
 :root {
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --warning-gradient: linear-gradient(135deg, #fc8b1a 0%, #F59E0C 100%);
   --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   --info-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   --pending-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
@@ -88,7 +88,7 @@
 .notification-badge svg {
   width: 20px;
   height: 20px;
-  color: #d97706;
+  color: #fc8b1a;
   animation: ring 2s ease-in-out infinite;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .notification-count {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg, #fc8b1a 0%, #dcb226 100%);
   color: white;
   font-size: 0.75rem;
   font-weight: 700;
@@ -154,7 +154,7 @@
   padding: 1.5rem;
   margin-bottom: 2rem;
   box-shadow: var(--shadow-md);
-  border: 2px solid #fbbf24;
+  border: 2px solid #fc8b1a;
 }
 
 .notifications-header {
@@ -686,7 +686,7 @@
 .status-badge {
   display: inline-block;
   padding: 0.5rem 1rem;
-  border-radius: 50px;
+  border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -997,9 +997,9 @@
 }
 
 .availability-badge-admin.available {
-  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-  color: #065f46;
-  border: 2px solid #10b981;
+  background: linear-gradient(135deg, #faeed1 0%, #f3eaa7 100%);
+  color: #fc8b1a;
+  border: 2px solid #b97510;
 }
 
 .availability-badge-admin.unavailable {
@@ -1140,12 +1140,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #fc8b1a 0%, #deb902 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #fc8b1a 0%, #eae166 100%);
 }
 
 /* Smooth Transitions */

@@ -172,33 +172,60 @@ const Home = () => {
             <div className="loading">{t('home.loading')}</div>
           ) : (
             <div className="featured-grid">
-              {cars.map((car) => (
-                <div key={car._id} className="featured-card">
-                  <img src={car.image} alt={car.name} />
-
-                  <div className="featured-content">
-                    <h3>{car.name}</h3>
-                    <p>{car.brand} {car.model}</p>
-                    <div className="featured-price">
-                      {car.price60min ? (
-                        <>
-                          <span>{car.price60min} {car.currency || 'AED'}</span>
-                          <span>{t('destination.per60min')}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>{car.pricePerDay} {car.currency || 'AED'}</span>
-                          <span>{t('destination.perDay')}</span>
-                        </>
+            {cars.map((car) => (
+              <div key={car._id} className="monster-card">
+                <div className="monster-card-inner">
+                  <div className="monster-card-image-wrapper">
+                    <div className="monster-card-image">
+                      <img src={car.image} alt={car.name} />
+                      
+                      {/* Big Title Sticker on Image */}
+                      <div className="image-title-sticker">
+                        <h2>{car.brand.toUpperCase()}</h2>
+                      </div>
+                      
+                      {/* Price Badge on Image */}
+                      <div className="image-price-badge">
+                        <span>FROM {car.price60min}</span>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div className="monster-card-content">
+                    <h3 className="monster-card-title">{car.name}</h3>
+                    
+                    <div className="monster-features">
+                      <div className="feature-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        <span>Full safety set provided</span>
+                      </div>
+                      {car.duration && (
+                        <div className="feature-item">
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M12.5 7V12.25L17 14.92L16.25 16.15L11 13V7H12.5Z"/>
+                          </svg>
+                          <span>{car.duration || '30min • 60min • 90min • 120min'}</span>
+                        </div>
                       )}
                     </div>
-                    <Link to={`/car/${car._id}`} className="btn btn-primary">
-                      {t('home.bookNow')} {isRTL ? '←' : '→'}
+          
+                    <div className="monster-description">
+                      <p>{car.description || `Experience the thrill with ${car.name}. Premium ${car.brand} ${car.model} rental for ultimate adventure.`}</p>
+                    </div>
+          
+                    <Link to={`/car/${car._id}`} className="monster-btn">
+                      <span>{t('home.bookNow')}</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
                     </Link>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
           )}
           <div className="view-all">
             <Link to="/destination" className="btn btn-secondary">

@@ -190,7 +190,7 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
           </div>
 
           <button onClick={onClose} className="btn-submit">
-            Book Another Car
+            Book Another Tour
           </button>
 
           <p className="text-center" style={{ fontSize: "14px", color: "#6b7280" }}>
@@ -345,65 +345,65 @@ const BookingForm = () => {
 
             <div className="space-y-6" style={{ padding: "24px" }}>
               <div className="grid-md-3">
-                <div className="flex flex-col items-center spec-card-indigo rounded-xl" style={{ padding: "16px" }}>
+                <div className="flex flex-col items-center spec-card-indigo rounded-xl" style={{ padding: "16px", marginTop:'12px'  }}>
                   <Users style={{ width: "24px", height: "24px", color: "#6366f1", marginBottom: "8px" }} />
                   <span style={{ fontSize: "14px", color: "#6b7280" }}>Seats</span>
                   <span style={{ fontWeight: "600", color: "#111827" }}>{car.seats}</span>
                 </div>
-                <div className="flex flex-col items-center spec-card-purple rounded-xl" style={{ padding: "16px" }}>
+                <div className="flex flex-col items-center m spec-card-purple rounded-xl" style={{ padding: "16px", marginTop:'12px' }}>
                   <Settings style={{ width: "24px", height: "24px", color: "#8b5cf6", marginBottom: "8px" }} />
                   <span style={{ fontSize: "14px", color: "#6b7280", textAlign: "center" }}>Trans.</span>
                   <span style={{ fontWeight: "600", color: "#111827", fontSize: "12px" }}>{car.transmission}</span>
                 </div>
-                <div className="flex flex-col items-center spec-card-pink rounded-xl" style={{ padding: "16px" }}>
+                <div className="flex flex-col items-center spec-card-pink rounded-xl" style={{ padding: "16px", marginTop:'12px'  }}>
                   <Fuel style={{ width: "24px", height: "24px", color: "#ec4899", marginBottom: "8px" }} />
                   <span style={{ fontSize: "14px", color: "#6b7280" }}>Fuel</span>
                   <span style={{ fontWeight: "600", color: "#111827" }}>{car.fuelType}</span>
                 </div>
               </div>
 
-              <div className="bg-gradient-header rounded-xl text-center" style={{ padding: "24px", color: "white" }}>
+              <div className="bg-gradient-header rounded-xl text-center" style={{ padding: "32px", marginTop:'100px', color: "white" }}>
                 <p style={{ fontSize: "14px", opacity: 0.9, marginBottom: "4px" }}>Daily Rate</p>
                 <p style={{ fontSize: "36px", fontWeight: "bold" }}>
                   {car.pricePerDay} <span style={{ fontSize: "20px" }}>{car.currency}</span>
                 </p>
-                <p style={{ fontSize: "14px", opacity: 0.9, marginTop: "4px" }}>per day</p>
+                <p style={{ fontSize: "14px", opacity: 0.9, marginTop: "4px" }}>Per minute</p>
               </div>
             </div>
           </div>
 
           {/* Booking Form */}
           <div className="card" style={{ padding: "32px" }}>
-            <h3 style={{ fontSize: "24px", fontWeight: "bold", color: "#111827", marginBottom: "24px" }}>
+            <h3 style={{ fontSize: "24px", fontWeight: "bold", color: "white", marginBottom: "24px" }}>
               Booking Details
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name and Email */}
               <div className="form-group">
-                <label htmlFor="customerName">Full Name</label>
+                <label htmlFor="customerName" style={{color: "white"}}>Full Name</label>
                 <input type="text" id="customerName" name="customerName" value={formData.customerName} onChange={handleChange} placeholder="Enter your full name" required />
               </div>
 
               <div className="form-group">
-                <label htmlFor="customerEmail">Email</label>
+                <label htmlFor="customerEmail" style={{color: "white"}}>Email</label>
                 <input type="email" id="customerEmail" name="customerEmail" value={formData.customerEmail} onChange={handleChange} placeholder="Enter your email" required />
               </div>
 
               <div className="form-group">
-                <label htmlFor="contactNumber">Contact Number</label>
+                <label htmlFor="contactNumber" style={{color: "white"}}>Contact Number</label>
                 <input type="text" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="Enter your contact number" required />
               </div>
 
               {/* Start/End Date in single row */}
               <div className="grid-md-2">
                 <div className="form-group">
-                  <label htmlFor="startDate">Start Date</label>
+                  <label htmlFor="startDate" style={{color: "white"}}>Start Date</label>
                   <input type="date" id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} min={new Date().toISOString().split("T")[0]} required />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="endDate">End Date</label>
+                  <label htmlFor="endDate" style={{color: "white"}}>End Date</label>
                   <input type="date" id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} min={formData.startDate || new Date().toISOString().split("T")[0]} required />
                 </div>
               </div>
@@ -415,7 +415,7 @@ const BookingForm = () => {
   an additional charge of <strong>300 AED</strong> will apply.
 </p>
 
-<label htmlFor="pickupLocation">Pickup Location</label>
+<label htmlFor="pickupLocation" style={{color:'white'}}>Pickup Location</label>
 <select
   id="pickupLocation"
   name="pickupLocation"

@@ -3,7 +3,7 @@
    ============================================ */
 
    .footer {
-    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+    background: linear-gradient(180deg, #181819 0%, #141416 100%);
     color: #e2e8f0;
     position: relative;
     overflow: hidden;
@@ -16,7 +16,8 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #f97316, transparent);
+    /* background: linear-gradient(90deg, transparent, #f59e0b, transparent); */
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
   }
   
   .footer-container {
@@ -71,7 +72,8 @@
     background: rgba(249, 115, 22, 0.1);
     border: 1.5px solid rgba(249, 115, 22, 0.3);
     border-radius: 10px;
-    color: #f97316;
+    color: #f59e0b;
+    /* background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24); */
     transition: all 0.3s ease;
   }
   
@@ -81,9 +83,9 @@
   }
   
   .social-icon:hover {
-    background: #f97316;
+    background: #f59e0b;
     color: #ffffff;
-    border-color: #f97316;
+    border-color: #f59e0b;
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4);
   }
@@ -120,7 +122,7 @@
     left: 0;
     width: 40px;
     height: 3px;
-    background: linear-gradient(90deg, #f97316, #ea580c);
+    background: linear-gradient(90deg, #f59e0b, #f59e0b);
     border-radius: 2px;
   }
   
@@ -150,7 +152,7 @@
     position: absolute;
     left: -20px;
     opacity: 0;
-    color: #f97316;
+    color: #f59e0b;
     transition: all 0.3s ease;
   }
   
@@ -187,7 +189,7 @@
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    color: #f97316;
+    color: #f59e0b;
     margin-top: 2px;
   }
   
@@ -198,7 +200,7 @@
   }
   
   .contact-item a:hover {
-    color: #f97316;
+    color: #f59e0b;
   }
   
   /* Newsletter */
@@ -231,13 +233,13 @@
   
   .newsletter-input:focus {
     outline: none;
-    border-color: #f97316;
+    border-color: #f59e0b;
     background: rgba(255, 255, 255, 0.08);
   }
   
   .newsletter-btn {
     padding: 0.75rem 1.25rem;
-    background: linear-gradient(135deg, #f97316, #ea580c);
+    background: linear-gradient(135deg, #f59e0b, #f59e0b);
     border: none;
     border-radius: 8px;
     color: #ffffff;
@@ -254,7 +256,7 @@
   }
   
   .newsletter-btn:hover {
-    background: linear-gradient(135deg, #ea580c, #c2410c);
+    background: linear-gradient(135deg, #f59e0b, #f59e0b);
     transform: translateX(3px);
     box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
   }
@@ -296,7 +298,7 @@
   }
   
   .footer-legal a:hover {
-    color: #f97316;
+    color: #f59e0b;
   }
   
   .separator {

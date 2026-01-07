@@ -6,7 +6,7 @@
     position: sticky;
     top: 0;
     width: 100%;
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #151515 0%, #0b0b0b 100%);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     transition: all 0.3s ease;

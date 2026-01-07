@@ -111,7 +111,7 @@ console.log(car,'imag')
             <div className="booking-section">
               <button
                 onClick={handleBookNow}
-                className={`btn btn-primary btn-large ${!car.available ? 'btn-disabled' : ''}`}
+                className={`btn  btn-large ${!car.available ? 'btn-disabled' : ''}`}
                 disabled={!car.available}
               >
                 {car.available ? 'Book Now' : 'Not Available for Booking'}

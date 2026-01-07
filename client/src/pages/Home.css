@@ -77,7 +77,7 @@
 }
 
 .btn-hero {
-  background: #ff6b35;
+  background: #f59e0b;
   color: white;
   padding: 15px 40px;
   border-radius: 30px;
@@ -89,7 +89,7 @@
 }
 
 .btn-hero:hover {
-  background: #ff8533;
+  background: #fbbf24;
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
@@ -119,7 +119,7 @@
 }
 
 .indicator.active {
-  background: #ff6b35;
+  background: #f59e0b;
   width: 30px;
   border-radius: 6px;
 }
@@ -139,7 +139,7 @@
 
 .section-label {
   font-size: 18px;
-  color: #ff6b35;
+  color: #f59e0b;
   font-style: italic;
   display: block;
   margin-bottom: 15px;
@@ -206,7 +206,7 @@
 }
 
 .category-link {
-  color: #ff6b35;
+  color: #f59e0b;
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
@@ -265,7 +265,7 @@
 .featured-price span:first-child {
   font-size: 28px;
   font-weight: bold;
-  color: #ff6b35;
+  color: #f59e0b;
 }
 
 .featured-price span:last-child {
@@ -341,4 +341,875 @@
     grid-template-columns: 1fr;
   }
 }
+/* ============================================
+   MONSTER EXPERIENCE CARD DESIGN
+   ============================================ */
 
+   .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 0;
+  }
+  
+  .monster-card {
+    background: #000000;
+    border-radius: 30px;
+    padding: 1.5rem;
+    position: relative;
+  }
+  
+  .monster-card-inner {
+    background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 24px;
+    border: 2px solid #333333;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+    transition: all 0.4s ease;
+  }
+  
+  .monster-card-inner::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+    border-radius: 24px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+  }
+  
+  .monster-card:hover .monster-card-inner::before {
+    opacity: 0.6;
+  }
+  
+  .monster-card:hover .monster-card-inner {
+    transform: translateY(-5px);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+  }
+  
+  /* Image Wrapper with Yellow Glow Border */
+  .monster-card-image-wrapper {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+  }
+  
+  .monster-card-image {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid #fbbf24;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.5), 
+                inset 0 0 20px rgba(251, 191, 36, 0.1);
+  }
+  
+  .monster-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  
+  .monster-card:hover .monster-card-image img {
+    transform: scale(1.08);
+  }
+  
+  /* Big Title Sticker on Image - Like Screenshot */
+/* ============================================
+   CREATIVE TITLE STICKER - RESPONSIVE
+   ============================================ */
+
+/* ============================================
+   CREATIVE TITLE STICKER - RESPONSIVE
+   ============================================ */
+
+   .image-title-sticker {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transform: rotate(3deg);
+    background: linear-gradient(135deg, #ffed4e 0%, #fbbf24 100%);
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(255, 237, 78, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 2;
+    max-width: 60%;
+    border: 3px solid #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .monster-card:hover .image-title-sticker {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 
+      0 12px 35px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(255, 237, 78, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  
+  .image-title-sticker h2 {
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 1.5px;
+    text-align: center;
+    line-height: 1.2;
+    text-transform: uppercase;
+    text-shadow: 
+      1px 1px 2px rgba(255, 255, 255, 0.5),
+      -1px -1px 2px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+  }
+  
+  /* ============================================
+     CREATIVE PRICE BADGE - RESPONSIVE
+     ============================================ */
+  
+  .image-price-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    color: #fbbf24;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(251, 191, 36, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 3;
+    border: 2px solid #fbbf24;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+  
+  .monster-card:hover .image-price-badge {
+    transform: scale(1.05);
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(251, 191, 36, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .image-price-badge::before {
+    content: 'STARTING';
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 1px;
+  }
+  
+  .image-price-badge span {
+    display: block;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  }
+  
+  /* ============================================
+     TABLET RESPONSIVE (768px - 1024px)
+     ============================================ */
+  
+  @media (max-width: 1024px) {
+    .image-title-sticker {
+      top: 12px;
+      right: 12px;
+      padding: 0.65rem 1.1rem;
+      max-width: 65%;
+      border-width: 2.5px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1rem;
+      letter-spacing: 1.2px;
+    }
+  
+    .image-price-badge {
+      bottom: 12px;
+      left: 12px;
+      padding: 0.75rem 1.3rem;
+      font-size: 1.15rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE LANDSCAPE (481px - 768px)
+     ============================================ */
+  
+  @media (max-width: 768px) {
+    .image-title-sticker {
+      top: 10px;
+      right: 10px;
+      padding: 0.6rem 1rem;
+      max-width: 70%;
+      border-radius: 10px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  
+    .image-price-badge {
+      bottom: 10px;
+      left: 10px;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      letter-spacing: 1.2px;
+      border-radius: 10px;
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.5rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE PORTRAIT (320px - 480px)
+     ============================================ */
+  
+  @media (max-width: 480px) {
+    .image-title-sticker {
+      top: 100px;
+      right: 8px;
+      padding: 0.5rem 0.85rem;
+      max-width: 75%;
+      border-radius: 8px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.75rem;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+  
+    .image-price-badge {
+      top: 28px;
+      left: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      border-width: 1.5px;
+    width: 80px;
+    height: 70px;
+
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.45rem;
+    }
+  }
+  
+  /* ============================================
+     EXTRA SMALL MOBILE (max 375px)
+     ============================================ */
+  
+  @media (max-width: 375px) {
+    .image-title-sticker {
+      top: 6px;
+      right: 6px;
+      padding: 0.45rem 0.75rem;
+      max-width: 80%;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+  
+    .image-price-badge {
+      bottom: 6px;
+      left: 6px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* ============================================
+     ALTERNATIVE CREATIVE DESIGNS (OPTIONAL)
+     ============================================ */
+  
+  /* Option 1: Ribbon Style Sticker */
+  .image-title-sticker.ribbon-style {
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    padding: 0.9rem 1.5rem;
+  }
+  
+  /* Option 2: Stamp Style */
+  .image-title-sticker.stamp-style {
+    border-radius: 4px;
+    border: 3px dashed #000000;
+    background: #ffed4e;
+    box-shadow: inset 0 0 0 6px #ffed4e;
+  }
+  
+  /* Option 3: Glowing Price Badge */
+  .image-price-badge.glow-style {
+    animation: priceGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes priceGlow {
+    0%, 100% {
+      box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(251, 191, 36, 0.3);
+    }
+    50% {
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(251, 191, 36, 0.6);
+    }
+  }
+  
+  /* ============================================
+     RTL SUPPORT
+     ============================================ */
+  
+  [dir="rtl"] .image-title-sticker {
+    right: auto;
+    left: 15px;
+    transform: rotate(-3deg);
+  }
+  
+  [dir="rtl"] .monster-card:hover .image-title-sticker {
+    transform: rotate(0deg) scale(1.05);
+  }
+  
+  [dir="rtl"] .image-price-badge {
+    left: auto;
+    right: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    [dir="rtl"] .image-title-sticker {
+      left: 10px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    [dir="rtl"] .image-title-sticker {
+      left:8px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 8px;
+    }
+  }
+  
+  /* ============================================
+     CREATIVE PRICE BADGE - RESPONSIVE
+     ============================================ */
+  
+  .image-price-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    color: #fbbf24;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(251, 191, 36, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 3;
+    border: 2px solid #fbbf24;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+  
+  .monster-card:hover .image-price-badge {
+    transform: scale(1.05);
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(251, 191, 36, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .image-price-badge::before {
+    content: 'STARTING';
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 1px;
+  }
+  
+  .image-price-badge span {
+    display: block;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  }
+  
+  /* ============================================
+     TABLET RESPONSIVE (768px - 1024px)
+     ============================================ */
+  
+  @media (max-width: 1024px) {
+    .image-title-sticker {
+      top: 12px;
+      right: 12px;
+      padding: 0.65rem 1.1rem;
+      max-width: 65%;
+      border-width: 2.5px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1rem;
+      letter-spacing: 1.2px;
+    }
+  
+    .image-price-badge {
+      bottom: 12px;
+      left: 12px;
+      padding: 0.75rem 1.3rem;
+      font-size: 1.15rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE LANDSCAPE (481px - 768px)
+     ============================================ */
+  
+  @media (max-width: 768px) {
+    .image-title-sticker {
+      top: 10px;
+      right: 10px;
+      padding: 0.6rem 1rem;
+      max-width: 70%;
+      border-radius: 10px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  
+    .image-price-badge {
+      bottom: 10px;
+      left: 10px;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      letter-spacing: 1.2px;
+      border-radius: 10px;
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.5rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE PORTRAIT (320px - 480px)
+     ============================================ */
+  
+  @media (max-width: 480px) {
+    .image-title-sticker {
+      top: 8px;
+      right: 8px;
+      padding: 0.5rem 0.85rem;
+      max-width: 75%;
+      border-radius: 8px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.75rem;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+  
+    .image-price-badge {
+      bottom: 8px;
+      left: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      border-width: 1.5px;
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.45rem;
+    }
+  }
+  
+  /* ============================================
+     EXTRA SMALL MOBILE (max 375px)
+     ============================================ */
+  
+  @media (max-width: 375px) {
+    .image-title-sticker {
+      top: 6px;
+      right: 6px;
+      padding: 0.45rem 0.75rem;
+      max-width: 80%;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+  
+    .image-price-badge {
+      bottom: 6px;
+      left: 6px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* ============================================
+     ALTERNATIVE CREATIVE DESIGNS (OPTIONAL)
+     ============================================ */
+  
+  /* Option 1: Ribbon Style Sticker */
+  .image-title-sticker.ribbon-style {
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    padding: 0.9rem 1.5rem;
+  }
+  
+  /* Option 2: Stamp Style */
+  .image-title-sticker.stamp-style {
+    border-radius: 4px;
+    border: 3px dashed #000000;
+    background: #ffed4e;
+    box-shadow: inset 0 0 0 6px #ffed4e;
+  }
+  
+  /* Option 3: Glowing Price Badge */
+  .image-price-badge.glow-style {
+    animation: priceGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes priceGlow {
+    0%, 100% {
+      box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(251, 191, 36, 0.3);
+    }
+    50% {
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(251, 191, 36, 0.6);
+    }
+  }
+  
+  /* ============================================
+     RTL SUPPORT
+     ============================================ */
+  
+  [dir="rtl"] .image-title-sticker {
+    right: auto;
+    left: 15px;
+    transform: rotate(-3deg);
+  }
+  
+  [dir="rtl"] .monster-card:hover .image-title-sticker {
+    transform: rotate(0deg) scale(1.05);
+  }
+  
+  [dir="rtl"] .image-price-badge {
+    left: auto;
+    right: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    [dir="rtl"] .image-title-sticker {
+      left: 10px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    [dir="rtl"] .image-title-sticker {
+      left: 8px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 8px;
+    }
+  }
+  
+  /* Card Content */
+  .monster-card-content {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  
+  .monster-card-title {
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 900;
+    margin-bottom: 1.25rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  /* Features with Yellow Icons */
+  .monster-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .feature-item svg {
+    width: 22px;
+    height: 22px;
+    color: #fbbf24;
+    fill: #fbbf24;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+  }
+  
+  .feature-item span {
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  /* Description */
+  .monster-description {
+    margin-bottom: 1.75rem;
+    padding: 1rem;
+    background: rgba(251, 191, 36, 0.05);
+    border-left: 3px solid #fbbf24;
+    border-radius: 8px;
+  }
+  
+  .monster-description p {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  /* Monster Button */
+  .monster-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #000000;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .monster-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .monster-btn:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .monster-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #000000;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .monster-btn span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .monster-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(251, 191, 36, 0.6);
+  }
+  
+  .monster-btn:hover svg {
+    transform: translateX(5px);
+  }
+  
+  /* ============================================
+     RESPONSIVE DESIGN
+     ============================================ */
+  
+  @media (max-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  
+    .monster-card-image {
+      height: 250px;
+    }
+  
+    .image-title-sticker {
+      padding: 1rem 1.5rem;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1.75rem;
+    }
+  
+    .image-price-badge {
+      font-size: 0.95rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .monster-card {
+      padding: 1rem;
+    }
+  
+    .monster-card-image {
+      height: 220px;
+    }
+  
+    .image-title-sticker {
+      padding: 0.75rem 1rem;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+  
+    .image-price-badge {
+      top: 140px;
+      left: 10px;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+    }
+  
+    .monster-card-title {
+      font-size: 1.5rem;
+    }
+  
+    .monster-btn {
+      font-size: 1em;
+      padding: 0.875rem 1.5rem;
+    }
+  }
+  
+  /* ============================================
+     RTL SUPPORT
+     ============================================ */
+  
+  [dir="rtl"] .monster-description {
+    border-left: none;
+    border-right: 3px solid #fbbf24;
+  }
+  
+  [dir="rtl"] .image-price-badge {
+    left: auto;
+    right: 20px;
+  }
+  
+  [dir="rtl"] .monster-btn:hover svg {
+    transform: translateX(-9px) rotate(180deg);
+  }
+  
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    }
+  }
+  
+  .monster-card-image {
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .monster-card {
+    animation: fadeInUp 0.6s ease backwards;
+  }
+  
+  .monster-card:nth-child(1) { animation-delay: 0.1s; }
+  .monster-card:nth-child(2) { animation-delay: 0.2s; }
+  .monster-card:nth-child(3) { animation-delay: 0.3s; }
+  .monster-card:nth-child(4) { animation-delay: 0.4s; }
+  .monster-card:nth-child(5) { animation-delay: 0.5s; }
+  .monster-card:nth-child(6) { animation-delay: 0.6s; }

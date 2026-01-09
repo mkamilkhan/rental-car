@@ -56,6 +56,7 @@
     line-height: 1.8;
     margin-bottom: 2rem;
     font-size: 0.95rem;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   /* Social Links */
@@ -100,11 +101,13 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 3rem;
     margin-bottom: 3rem;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   .footer-column {
     display: flex;
     flex-direction: column;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   .footer-heading {
@@ -114,6 +117,7 @@
     margin-bottom: 1.5rem;
     position: relative;
     padding-bottom: 0.75rem;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   .footer-heading::after {
@@ -125,6 +129,7 @@
     height: 3px;
     background: linear-gradient(135deg, #fc8b1a, #F59E0C, #f5b71b);
     border-radius: 2px;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   /* Footer Links */
@@ -135,6 +140,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   .footer-links a {
@@ -146,6 +152,7 @@
     align-items: center;
     position: relative;
     padding-left: 0;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   .footer-links a::before {
@@ -155,6 +162,7 @@
     opacity: 0;
     color: #fc8b1a;
     transition: all 0.3s ease;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
   }
   
   .footer-links a:hover {

@@ -58,7 +58,7 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
                 <Sparkles
                   className="h-4 w-4"
                   style={{
-                    color: ["#6366f1", "#8b5cf6", "#ec4899", "#f59e0b"][
+                    color: ["#ffed4e", "#fbbf24", "#f59e0b", "#f97316"][
                       Math.floor(Math.random() * 4)
                     ],
                     transform: `rotate(${Math.random() * 360}deg)`
@@ -73,10 +73,7 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
           <X style={{ width: "24px", height: "24px" }} />
         </button>
 
-        <div
-          className="relative bg-gradient-header"
-          style={{ padding: "32px", paddingBottom: "48px" }}
-        >
+        <div className="bg-gradient-header" style={{ padding: "32px", paddingBottom: "48px" }}>
           <div className="pattern-grid absolute inset-0"></div>
           <div className="relative text-center">
             <div
@@ -100,14 +97,14 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
 
         <div style={{ padding: "32px", marginTop: "-24px" }} className="space-y-6">
           <div className="success-badge rounded-2xl text-center" style={{ padding: "24px" }}>
-            <p style={{ color: "#065f46", fontWeight: "500" }}>
+            <p style={{ color: "#22c55e", fontWeight: "600" }}>
               🎊 Congratulations! Your dream car is reserved for you!
             </p>
           </div>
 
           <div className="space-y-4">
-            <h4 className="flex items-center gap-2" style={{ fontWeight: "600", color: "#111827" }}>
-              <Sparkles style={{ width: "20px", height: "20px", color: "#8b5cf6" }} />
+            <h4 className="flex items-center gap-2" style={{ fontWeight: "600", color: "#ffffff" }}>
+              <Sparkles style={{ width: "20px", height: "20px", color: "#ffed4e" }} />
               Booking Summary
             </h4>
 
@@ -119,14 +116,14 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
                 <div style={{ marginTop: "2px" }}>
                   <div
                     className="flex items-center justify-center rounded-full"
-                    style={{ width: "32px", height: "32px", background: "#e0e7ff" }}
+                    style={{ width: "32px", height: "32px", background: "rgba(255, 237, 78, 0.2)" }}
                   >
-                    <CheckCircle2 style={{ width: "16px", height: "16px", color: "#6366f1" }} />
+                    <CheckCircle2 style={{ width: "16px", height: "16px", color: "#ffed4e" }} />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p style={{ fontSize: "14px", color: "#6b7280" }}>Vehicle</p>
-                  <p style={{ fontWeight: "600", color: "#111827" }}>{bookingDetails.carName}</p>
+                  <p style={{ fontSize: "14px", color: "#9ca3af" }}>Vehicle</p>
+                  <p style={{ fontWeight: "600", color: "#ffffff" }}>{bookingDetails.carName}</p>
                 </div>
               </div>
 
@@ -137,14 +134,14 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
                 <div style={{ marginTop: "2px" }}>
                   <div
                     className="flex items-center justify-center rounded-full"
-                    style={{ width: "32px", height: "32px", background: "#f3e8ff" }}
+                    style={{ width: "32px", height: "32px", background: "rgba(255, 237, 78, 0.2)" }}
                   >
-                    <Calendar style={{ width: "16px", height: "16px", color: "#8b5cf6" }} />
+                    <Calendar style={{ width: "16px", height: "16px", color: "#ffed4e" }} />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p style={{ fontSize: "14px", color: "#6b7280" }}>Duration</p>
-                  <p style={{ fontWeight: "600", color: "#111827" }}>
+                  <p style={{ fontSize: "14px", color: "#9ca3af" }}>Duration</p>
+                  <p style={{ fontWeight: "600", color: "#ffffff" }}>
                     {bookingDetails.totalDays} {bookingDetails.totalDays === 1 ? "Day" : "Days"}
                   </p>
                 </div>
@@ -157,14 +154,14 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
                 <div style={{ marginTop: "2px" }}>
                   <div
                     className="flex items-center justify-center rounded-full"
-                    style={{ width: "32px", height: "32px", background: "#fce7f3" }}
+                    style={{ width: "32px", height: "32px", background: "rgba(255, 237, 78, 0.2)" }}
                   >
-                    <DollarSign style={{ width: "16px", height: "16px", color: "#ec4899" }} />
+                    <DollarSign style={{ width: "16px", height: "16px", color: "#ffed4e" }} />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <p style={{ fontSize: "14px", color: "#6b7280" }}>Total Amount</p>
-                  <p className="text-gradient" style={{ fontSize: "24px", fontWeight: "bold" }}>
+                  <p style={{ fontSize: "14px", color: "#9ca3af" }}>Total Amount</p>
+                  <p style={{ fontSize: "24px", fontWeight: "bold", color: "#ffed4e" }}>
                     {bookingDetails.totalPrice} {bookingDetails.currency}
                   </p>
                 </div>
@@ -174,26 +171,27 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
 
           <div
             className="flex items-start gap-3 rounded-xl"
-            style={{ padding: "16px", background: "#eff6ff", border: "1px solid #bfdbfe" }}
+            style={{ padding: "16px", background: "rgba(34, 197, 94, 0.1)", border: "1px solid rgba(34, 197, 94, 0.3)" }}
           >
-            <Mail style={{ width: "20px", height: "20px", color: "#2563eb", marginTop: "2px", flexShrink: 0 }} />
+            <Mail style={{ width: "20px", height: "20px", color: "#22c55e", marginTop: "2px", flexShrink: 0 }} />
             <div>
-              <p style={{ fontSize: "14px", fontWeight: "500", color: "#1e3a8a" }}>
+              <p style={{ fontSize: "14px", fontWeight: "500", color: "#22c55e" }}>
                 Confirmation Email Sent
               </p>
-              <p style={{ fontSize: "14px", color: "#1e40af", marginTop: "4px" }}>
-                We've sent a confirmation to <span style={{ fontWeight: "400" }}>
-                  {/* {bookingDetails.customerEmail} */}  offroadrentalhub@gmail.com
+              <p style={{ fontSize: "14px", color: "#9ca3af", marginTop: "4px" }}>
+                We've sent a confirmation to <span style={{ fontWeight: "400", color: "#ffffff" }}>
+                  offroadrentalhub@gmail.com
                 </span>
               </p>
             </div>
           </div>
 
           <button onClick={onClose} className="btn-submit">
+            <Check style={{ width: "20px", height: "20px" }} />
             Book Another Tour
           </button>
 
-          <p className="text-center" style={{ fontSize: "14px", color: "#6b7280" }}>
+          <p className="text-center" style={{ fontSize: "14px", color: "#9ca3af" }}>
             Thank you for choosing our service! 🚗
           </p>
         </div>
@@ -209,10 +207,12 @@ const BookingForm = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [activeTab, setActiveTab] = useState("description");
+
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
-    pickupLocation: "normal", // ✅ default
+    pickupLocation: "normal",
     contactNumber: "",
     customerEmail: "",
     customerName: ""
@@ -247,12 +247,11 @@ const BookingForm = () => {
 
     // Extra charge for Private 4x4
     if (formData.pickupLocation === "private") {
-      total += 300; // fixed extra AED
+      total += 300;
     }
 
     return total;
   };
-
 
   const totalDays =
     formData.startDate && formData.endDate
@@ -263,7 +262,6 @@ const BookingForm = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    // EmailJS integration
     try {
       await emailjs.send(
         process.env.REACT_APP_EMAILJS_SERVICE_ID,
@@ -298,175 +296,176 @@ const BookingForm = () => {
     setFormData({
       startDate: "",
       endDate: "",
-      pickupLocation: "",
+      pickupLocation: "normal",
       contactNumber: "",
       customerEmail: "",
       customerName: ""
     });
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (!car) return <p>Car not found</p>;
-
-
+  if (loading) return <p style={{ color: "#ffffff", textAlign: "center", padding: "3rem" }}>Loading...</p>;
+  if (!car) return <p style={{ color: "#ffffff", textAlign: "center", padding: "3rem" }}>Car not found</p>;
 
   return (
     <div className="bg-gradient-main">
-      <div className="container" style={{ paddingTop: "32px", paddingBottom: "48px" }}>
-        <div className="text-center space-y-3" style={{ marginBottom: "48px" }}>
-          <h1 className="text-gradient" style={{ fontSize: "48px", fontWeight: "bold", marginBottom: "12px" }}>
-            Book Your Dream Car
-          </h1>
-          <p style={{ fontSize: "18px", color: "#6b7280" }}>
-            Complete your booking details below for a premium experience
-          </p>
+      {/* Header Section */}
+      <div className="booking-header">
+        <div className="container">
+          <h1 className="text-gradient">Book Your Adventure</h1>
         </div>
+      </div>
 
-        <div className="grid-lg-2" style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          {/* Car Summary Card */}
-          <div className="card overflow-hidden transition-shadow" style={{ padding: "0" }}>
-            <div className="relative overflow-hidden" style={{ height: "320px" }}>
+      <div className="container" style={{ paddingBottom: "3rem" }}>
+        <div className="grid-lg-2">
+          {/* LEFT SIDE - Car Summary Card */}
+          <div className="card">
+            <div className="car-image-container">
+              <img src={car.image} alt={car.name} />
+              <div className="car-image-overlay" />
+              
+              {/* Price Badge on Image */}
+              <div className="price-badge">
+                {car.price60min} {car.currency}
+              </div>
 
-              <img
-                src={car.image}
-                alt={car.name}
-                className="w-full h-full object-cover"
-              />
-
-              <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.2), transparent)" }}
-              />
-              <div className="absolute" style={{ bottom: "0", left: "0", right: "0", padding: "24px", color: "white" }}>
-                <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "8px" }}>{car.name}</h2>
-                <p style={{ color: "rgba(255, 255, 255, 0.9)" }}>{car.brand} {car.model} ({car.year})</p>
+              {/* Car Info Overlay */}
+              <div className="car-image-info">
+                <h2>{car.name}</h2>
+                <p>{car.brand} {car.model} ({car.year})</p>
               </div>
             </div>
 
-            <div className="space-y-6" style={{ padding: "24px" }}>
+            <div className="specs-container">
               <div className="grid-md-3">
-                <div className="flex flex-col items-center spec-card-indigo rounded-xl" style={{ padding: "16px", marginTop:'12px'  }}>
-                  <Users style={{ width: "24px", height: "24px", color: "#6366f1", marginBottom: "8px" }} />
-                  <span style={{ fontSize: "14px", color: "#6b7280" }}>Seats</span>
-                  <span style={{ fontWeight: "600", color: "#111827" }}>{car.seats}</span>
+                <div className="spec-card">
+                  <Users style={{ width: "28px", height: "28px" }} />
+                  <span>Seat</span>
+                  <span>{car.seats}</span>
                 </div>
-                <div className="flex flex-col items-center m spec-card-purple rounded-xl" style={{ padding: "16px", marginTop:'12px' }}>
-                  <Settings style={{ width: "24px", height: "24px", color: "#8b5cf6", marginBottom: "8px" }} />
-                  <span style={{ fontSize: "14px", color: "#6b7280", textAlign: "center" }}>Trans.</span>
-                  <span style={{ fontWeight: "600", color: "#111827", fontSize: "12px" }}>{car.transmission}</span>
+                <div className="spec-card">
+                  <Settings style={{ width: "28px", height: "28px" }} />
+                  <span>Trans.</span>
+                  <span>{car.transmission}</span>
                 </div>
-                <div className="flex flex-col items-center spec-card-pink rounded-xl" style={{ padding: "16px", marginTop:'12px'  }}>
-                  <Fuel style={{ width: "24px", height: "24px", color: "#ec4899", marginBottom: "8px" }} />
-                  <span style={{ fontSize: "14px", color: "#6b7280" }}>Fuel</span>
-                  <span style={{ fontWeight: "600", color: "#111827" }}>{car.fuelType}</span>
+                <div className="spec-card">
+                  <Fuel style={{ width: "28px", height: "28px" }} />
+                  <span>Fuel</span>
+                  <span>{car.fuelType}</span>
                 </div>
               </div>
 
-              <div className="bg-gradient-header rounded-xl text-center" style={{ padding: "32px", marginTop:'100px', color: "white" }}>
-                <p style={{ fontSize: "14px", opacity: 0.9, marginBottom: "4px" }}>Daily Rate</p>
-                <p style={{ fontSize: "36px", fontWeight: "bold" }}>
-                  {car.pricePerDay} <span style={{ fontSize: "20px" }}>{car.currency}</span>
+              <div className="daily-rate-section">
+                <p>Daily Rate</p>
+                <p>
+                  {car.price60min} <span>{car.currency}</span>
                 </p>
-                <p style={{ fontSize: "14px", opacity: 0.9, marginTop: "4px" }}>Per minute</p>
+                <p>Per Day</p>
               </div>
             </div>
           </div>
 
-          {/* Booking Form */}
-          <div className="card" style={{ padding: "32px" }}>
-            <h3 style={{ fontSize: "24px", fontWeight: "bold", color: "white", marginBottom: "24px" }}>
-              Booking Details
-            </h3>
+          {/* RIGHT SIDE - Booking Form */}
+          <div className="booking-form-card">
+            <h3>Booking Details</h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name and Email */}
               <div className="form-group">
-                <label htmlFor="customerName" style={{color: "white"}}>Full Name</label>
-                <input type="text" id="customerName" name="customerName" value={formData.customerName} onChange={handleChange} placeholder="Enter your full name" required />
+                <label  style={{color:'white'}}>Full Name</label>
+                <input
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  value={formData.customerName}
+                  onChange={handleChange}
+                  placeholder="Enter your full name"
+                  required
+                />
               </div>
 
               <div className="form-group">
-                <label htmlFor="customerEmail" style={{color: "white"}}>Email</label>
-                <input type="email" id="customerEmail" name="customerEmail" value={formData.customerEmail} onChange={handleChange} placeholder="Enter your email" required />
+                <label style={{color:'white'}} htmlFor="customerEmail">Email</label>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  name="customerEmail"
+                  value={formData.customerEmail}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
               </div>
 
               <div className="form-group">
-                <label htmlFor="contactNumber" style={{color: "white"}}>Contact Number</label>
-                <input type="text" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="Enter your contact number" required />
+                <label style={{color:'white'}} htmlFor="contactNumber">Contact Number</label>
+                <input
+                  type="text"
+                  id="contactNumber"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                  placeholder="Enter your contact number"
+                  required
+                />
               </div>
 
-              {/* Start/End Date in single row */}
               <div className="grid-md-2">
                 <div className="form-group">
-                  <label htmlFor="startDate" style={{color: "white"}}>Start Date</label>
-                  <input type="date" id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} min={new Date().toISOString().split("T")[0]} required />
+                  <label style={{color:'white'}} htmlFor="startDate">Start Date</label>
+                  <input
+                    type="date"
+                    id="startDate"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleChange}
+                    min={new Date().toISOString().split("T")[0]}
+                    required
+                  />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="endDate" style={{color: "white"}}>End Date</label>
-                  <input type="date" id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} min={formData.startDate || new Date().toISOString().split("T")[0]} required />
+                  <label style={{color:'white'}} htmlFor="endDate">End Date</label>
+                  <input
+                    type="date"
+                    id="endDate"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={handleChange}
+                    min={formData.startDate || new Date().toISOString().split("T")[0]}
+                    required
+                  />
                 </div>
               </div>
 
               <div className="form-group">
-
-              <p className="pickup-note">
-  If <strong>Private 4x4 Pickup & Drop-off</strong> is selected,
-  an additional charge of <strong>300 AED</strong> will apply.
-</p>
-
-<label htmlFor="pickupLocation" style={{color:'white'}}>Pickup Location</label>
-<select
-  id="pickupLocation"
-  name="pickupLocation"
-  value={formData.pickupLocation}
-  onChange={handleChange}
-  required
->
-  <option value="normal">Normal Pickup (No Extra Charge)</option>
-  <option value="private">Private 4x4 Pickup & Drop-off (+300 AED)</option>
-</select>
-
-</div>
-
-
-
-              {/* Buttons */}
-              <div className="flex gap-4 flex-wrap">
-                <button type="submit" className="btn-submit" disabled={submitting}>
-                  {submitting ? "Booking..." : "Confirm Booking"}
-                </button>
-
-                {/* WhatsApp Button */}
-                {/* <button
-                  type="button"
-                  className="btn-submit btn-whatsapp"
-                  onClick={() => {
-                    const whatsappMessage = `
-🚗 New Booking Confirmed
-Vehicle: ${car.name}
-Brand/Model: ${car.brand} ${car.model}
-
-Customer Name: ${formData.customerName}
-Email: ${formData.customerEmail}
-Contact: ${formData.contactNumber}
-
-Start Date: ${formData.startDate}
-End Date: ${formData.endDate}
-Total Days: ${totalDays}
-
-Pickup Location: ${formData.pickupLocation}
-Total Price: ${calculateTotal()}
-Booking ID: ${Math.floor(Math.random() * 1000000)}
-`;
-const whatsappURL = `https://wa.me/92335839531?text=${encodeURIComponent(whatsappMessage)}`;
-
-                    window.location.href = whatsappURL;
-                  }}
+                <p className="pickup-note">
+                  If <strong>Private 4x4 Pickup & Drop-off</strong> is selected, an additional charge of <strong>300 AED</strong> will apply.
+                </p>
+                <label style={{color:'white'}} htmlFor="pickupLocation">Pickup Location</label>
+                <select
+                  id="pickupLocation"
+                  name="pickupLocation"
+                  value={formData.pickupLocation}
+                  onChange={handleChange}
+                  required
                 >
-                  Send via WhatsApp
-                </button> */}
+                  <option value="normal">Normal Pickup (No Extra Charge)</option>
+                  <option value="private">Private 4x4 Pickup & Drop-off (+300 AED)</option>
+                </select>
               </div>
+
+              <button type="submit" className="btn-submit" disabled={submitting}>
+                {submitting ? (
+                  <>
+                    <Loader2 className="animate-spin" style={{ width: "20px", height: "20px" }} />
+                    Booking...
+                  </>
+                ) : (
+                  <>
+                    <Check style={{ width: "20px", height: "20px" }} />
+                    Confirm Booking
+                  </>
+                )}
+              </button>
             </form>
           </div>
         </div>
@@ -483,6 +482,51 @@ const whatsappURL = `https://wa.me/92335839531?text=${encodeURIComponent(whatsap
           currency: car.currency
         }}
       />
+    {/* Tabs */}
+{/* TABS HEADER */}
+<div className="car-tabs-header">
+  <span
+    className={activeTab === "description" ? "active" : ""}
+    onClick={() => setActiveTab("description")}
+  >
+    Description
+  </span>
+
+  <span
+    className={activeTab === "features" ? "active" : ""}
+    onClick={() => setActiveTab("features")}
+  >
+    Features
+  </span>
+
+  <span
+    className={activeTab === "terms" ? "active" : ""}
+    onClick={() => setActiveTab("terms")}
+  >
+    Terms
+  </span>
+</div>
+
+{/* TAB CONTENT */}
+<div className="car-tab-body">
+  {activeTab === "description" && (
+    <p>{car?.description || "No description available."}</p>
+  )}
+
+  {activeTab === "features" && (
+    <ul>
+      <li>4x4 Off-Road</li>
+      <li>Automatic Transmission</li>
+      <li>Air Conditioning</li>
+    </ul>
+  )}
+
+  {activeTab === "terms" && (
+    <p>Driver must be 21+. Valid ID required.</p>
+  )}
+</div>
+
+
     </div>
   );
 };

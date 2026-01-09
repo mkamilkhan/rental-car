@@ -1,141 +1,81 @@
-import React, { useState } from 'react';
-import './Contact.css';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import './CarDetails.css';
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+const CarDetails = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [car, setCar] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  useEffect(() => {
+    fetchCarDetails();
+  }, [id]);
+
+  const fetchCarDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/cars/${id}`
+      );
+      setCar(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    const phoneNumber = '971564455568'; // without +
-  
-    const text =
-  `New Contact Form Message
-  
-  Name: ${formData.name}
-  Email: ${formData.email}
-  Subject: ${formData.subject}
-  
-  Message:
-  ${formData.message}
-  `;
-  
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-    window.open(whatsappURL, '_blank');
-  
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-  };
-  
-  
+  if (loading) return <div className="loading">Loading...</div>;
+  if (!car) return <div className="container">Not Found</div>;
 
   return (
-    <div className="contact-page">
-  
+    <div className="vehicle-details-page">
+      <div className="container">
+        <Link to="/" className="back-link">← Back</Link>
 
-      <div className="contact-content">
-        <div className="container">
-          <div className="contact-main">
-            <div className="contact-info">
-              <div className="info-section">
-                <h3>Get In Touch</h3>
-                <h2>Our Contact Information</h2>
-              </div>
+        <div className="vehicle-details-grid">
+          {/* IMAGE */}
+          <div className="vehicle-image-box">
+            <img
+              src={car.image}
+              alt={car.name}
+              onError={(e) => {
+                e.target.src =
+                  'https://via.placeholder.com/800x500?text=Vehicle+Image';
+              }}
+            />
+          </div>
 
-              <div className="contact-details">
-                <div className="contact-item">
-                  <div className="contact-icon">📍</div>
-                  <div className="contact-text">
-                    <h4>Our Address</h4>
-                    <p>2690 Hitara Street Victoria Rued, New York, Canada</p>
-                  </div>
-                </div>
+          {/* INFO */}
+          <div className="vehicle-info-box">
+            <h1 className="vehicle-title">{car.name}</h1>
 
-                <div className="contact-item">
-                  <div className="contact-icon">📞</div>
-                  <div className="contact-text">
-                    <h4>Phone Number</h4>
-                    <p>+01 234 567 890</p>
-                    <p>108 678 543 210</p>
-                  </div>
-                </div>
-
-                <div className="contact-item">
-                  <div className="contact-icon">✉️</div>
-                  <div className="contact-text">
-                    <h4>Email Address</h4>
-                    <p>malinfo00@tourm.com</p>
-                    <p>supuurt24@tourm.com</p>
-                  </div>
-                </div>
-              </div>
+            <div className="vehicle-meta">
+              <span>⚙ {car.transmission || 'Manual'}</span>
+              <span>🛡 Safety Provided</span>
+              <span>⏱ 30 / 60 / 90 / 120 MIN</span>
             </div>
 
-            <div className="contact-form-section">
-              <h3>Send Us A Message</h3>
-              <form onSubmit={handleSubmit} className="contact-form">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Your Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="subject"
-                    placeholder="Subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <textarea
-                    name="message"
-                    placeholder="Your Message"
-                    rows="6"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary btn-large">
-  Send via WhatsApp
-</button>
+            <p className="vehicle-description">
+              {car.description ||
+                'Designed for greater control and easy handling, this vehicle is ideal for desert adventure rides.'}
+            </p>
 
-              </form>
+            <div className="vehicle-price">
+              Starts from / per vehicle
+              <strong>
+                {car.currency || 'AED'} {car.price30min || car.pricePerDay}
+              </strong>
             </div>
+
+            <button
+              className="book-now-btn"
+              onClick={() => navigate(`/booking/${id}`)}
+              disabled={!car.available}
+            >
+              {car.available ? 'BOOK NOW' : 'NOT AVAILABLE'}
+            </button>
           </div>
         </div>
       </div>
@@ -143,5 +83,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
-
+export default CarDetails;

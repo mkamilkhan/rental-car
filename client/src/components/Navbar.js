@@ -63,6 +63,9 @@ const Navbar = () => {
               <Link to="/contact" onClick={closeMenu} className="nav-link">
                 {t('nav.contact')}
               </Link>
+              <Link to="/blog" onClick={closeMenu} className="nav-link">
+                {t('nav.blog')}
+              </Link>
             </div>
 
             <div className="navbar-actions">

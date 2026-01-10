@@ -81,7 +81,7 @@ import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-
+import { FaWhatsapp } from "react-icons/fa6";
 import LoadingScreen from './components/LoadingScreen';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -141,6 +141,17 @@ function App() {
                   />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
+                 {/* ✅ WHATSAPP FLOATING BUTTON — GLOBAL */}
+    <a
+      href="https://wa.me/971562858526"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="whatsapp-float"
+      aria-label="Contact us on WhatsApp"
+    >
+      <FaWhatsapp />
+    </a>
+
                 <Footer />
               </>
             )}

@@ -39,7 +39,7 @@
 /* Base Styles */
 .destination-page {
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: #161616;
 }
 
 .container {
@@ -59,6 +59,8 @@
   max-width: 800px;
   margin: 0 auto 4rem;
   animation: fadeInUp 0.6s ease;
+  color: #ffffff;
+   font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 @keyframes fadeInUp {
@@ -108,14 +110,14 @@
 .destination-intro h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: white;
   margin: 0 0 1rem 0;
   line-height: 1.2;
 }
 
 .destination-intro p {
   font-size: 1.125rem;
-  color: var(--text-secondary);
+  color: white;
   line-height: 1.7;
   margin: 0;
 }
@@ -136,14 +138,15 @@
 }
 
 .destination-card {
-  background: var(--bg-card);
-  border-radius: var(--border-radius);
+  background: #000;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
+  color: #f3eeee; 
   display: flex;
   flex-direction: column;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(185, 182, 17, 0.15);
+   border: 1px solid #222218;
 }
 
 .destination-card:hover {
@@ -176,7 +179,7 @@
   top: 1rem;
   right: 1rem;
   padding: 0.5rem 1rem;
-  border-radius: 50px;
+  border-radius: 5px;
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -184,12 +187,13 @@
   box-shadow: var(--shadow-lg);
   backdrop-filter: blur(10px);
   z-index: 2;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .availability-badge.available {
-  background: linear-gradient(135deg, #fc8b1a 0%, #F59E0C 100%);
+  background: #ffd400;
   color: #ffffff;
-  border: 2px solid #cf8b04db;
+  border: 2px solid #ffd400;
 }
 
 .availability-badge.unavailable {
@@ -214,12 +218,14 @@
   font-weight: 700;
   color: white;
   line-height: 1.3;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .card-content > p {
   margin: 0 0 1.25rem 0;
-color: #d97706;
+color: #ffd400;
   font-size: 0.9375rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* Card Details */
@@ -228,6 +234,7 @@ color: #d97706;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .detail-badge {
@@ -242,6 +249,7 @@ color: #d97706;
   font-weight: 600;
   color: var(--text-secondary);
   transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .detail-badge:hover {
@@ -266,12 +274,13 @@ color: #d97706;
   border-radius: var(--border-radius-sm);
   margin-bottom: 1.5rem;
   border-left: 4px solid var(--destination-primary);
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .price {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--destination-primary);
+  color: black;
   line-height: 1;
   margin-bottom: 0.25rem;
 }
@@ -290,18 +299,17 @@ color: #d97706;
   align-items: center;
   justify-content: center;
   padding: 1rem 2rem;
-  border: none;
-  border-radius: var(--border-radius-sm);
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   text-align: center;
-  background: linear-gradient(135deg, #fc8b1a 0%, #F59E0C 100%);
+  background:#ffd400;
   box-shadow: var(--shadow-md);
   margin-top: auto;
   color: white;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .btn-primary {
@@ -333,11 +341,12 @@ color: #d97706;
 }
 
 .sidebar-section {
-  background: var(--bg-card);
+  background: #161313;
   border-radius: var(--border-radius);
   padding: 2rem;
   box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
+  border: 1px solid #222218;
 }
 
 .sidebar-section:hover {
@@ -348,10 +357,12 @@ color: #d97706;
   margin: 0 0 1.5rem 0;
   font-size: 1.375rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: white;
   padding-bottom: 1rem;
   border-bottom: 3px solid var(--border-color);
   position: relative;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  
 }
 
 .sidebar-section h3::after {
@@ -363,6 +374,7 @@ color: #d97706;
   height: 3px;
   background: var(--gradient-primary);
   border-radius: 2px;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* Info List */
@@ -370,6 +382,7 @@ color: #d97706;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .info-item {
@@ -381,6 +394,7 @@ color: #d97706;
   border-radius: var(--border-radius-sm);
   transition: all 0.3s ease;
   border: 1px solid transparent;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .info-item:hover {
@@ -392,9 +406,10 @@ color: #d97706;
 .info-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: #161313;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .info-value {
@@ -402,6 +417,7 @@ color: #d97706;
   font-weight: 700;
   color: var(--text-primary);
   text-align: right;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* Recent Posts */
@@ -409,6 +425,7 @@ color: #d97706;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .post-item {
@@ -418,6 +435,7 @@ color: #d97706;
   transition: all 0.3s ease;
   cursor: pointer;
   border-left: 4px solid transparent;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .post-item:hover {
@@ -435,6 +453,7 @@ color: #d97706;
   font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .post-item p {
@@ -443,6 +462,7 @@ color: #d97706;
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.5;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* Tags */
@@ -450,6 +470,7 @@ color: #d97706;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .tag {
@@ -463,6 +484,7 @@ color: #d97706;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 .tag:hover {
@@ -471,6 +493,7 @@ color: #d97706;
   border-color: var(--destination-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* Loading */
@@ -483,6 +506,7 @@ color: #d97706;
   background: var(--bg-card);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-md);
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* ===================================
@@ -763,7 +787,7 @@ color: #d97706;
 }
 
 .destination-page::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #fc8b1a 0%, #F59E0C 100%);
+  background: linear-gradient(135deg, #ffd400 0%, #ffd400 100%);
 }
 
 /* Print Styles */

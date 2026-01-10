@@ -114,10 +114,7 @@ const Destination = () => {
                     <span className="info-label">{t('destination.destinationLabel')}</span>
                     <span className="info-value">{t('destination.variousLocations')}</span>
                   </div>
-                  <div className="info-item">
-                    <span className="info-label">{t('destination.visaRequirements')}</span>
-                    <span className="info-value">{t('destination.notRequired')}</span>
-                  </div>
+                
                   <div className="info-item">
                     <span className="info-label">{t('destination.language')}</span>
                     <span className="info-value">English</span>

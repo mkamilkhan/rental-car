@@ -1203,10 +1203,11 @@ body {
 
 .contact-content {
   padding: 0 2rem;
-  max-width: 42rem;
+  max-width: 32rem;
+  font-size: 1rem;
 }
 
-.contact-title {
+.contact-titles {
   font-size: 2rem;
   padding: 12px;
   font-weight: 900;
@@ -1215,8 +1216,9 @@ body {
    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.contact-title .white-text {
+.contact-titles .white-text {
   color: #fff;
+  font-size: 1rem;
 }
 
 .contact-divider {

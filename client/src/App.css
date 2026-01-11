@@ -23,8 +23,8 @@ body {
 
 .whatsapp-float {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 50px;
+  right: 32px;
   width: 60px;
   height: 60px;
   background: #25D366; /* Correct WhatsApp green */
@@ -53,7 +53,7 @@ body {
 /* Optional: ensure it shows on mobile properly */
 @media (max-width: 768px) {
   .whatsapp-float {
-    bottom: 16px;
+    bottom: 40px;
     right: 16px;
     width: 50px;
     height: 50px;

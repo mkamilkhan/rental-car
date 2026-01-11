@@ -337,7 +337,7 @@ const Home = () => {
             />
             <div className="contact-overlay">
               <div className="contact-content">
-                <h3 className="contact-title">
+                <h3 className="contact-titles">
                   NOT SURE WHICH<br />
                   ADVENTURE TO CHOOSE?<br />
                   <span className="white-text">OR NEED A TAILOR<br />MADE OFFER?</span>

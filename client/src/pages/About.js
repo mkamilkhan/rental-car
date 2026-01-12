@@ -11,7 +11,7 @@ const About = () => {
   return (
     <div className="about-page">
       <HeroCarousel 
-        title="About Monster Experience" 
+        title="About" 
         subtitle="Dubai's Premier Desert Adventure Tourism Company Since 2017" 
       />
 
@@ -24,10 +24,10 @@ const About = () => {
             <div className="history-content">
               <div className="history-text">
                 <p className="lead-text">
-                  <strong>Monster Experience</strong> was founded in 2017, beginning as a small camp in the heart of the desert, inspired by a passion for the Bedouin lifestyle. Over the years, Desert Adventure Tourism Company – Monster Experience – has become synonymous with unforgettable desert adventures.
+                  <strong> Experience</strong> was founded in 2017, beginning as a small camp in the heart of the desert, inspired by a passion for the Bedouin lifestyle. Over the years, Desert Adventure Tourism Company –  Experience – has become synonymous with unforgettable desert adventures.
                 </p>
                 <p>
-                  In <strong>2021</strong>, Monster Experience achieved another milestone by becoming <strong>Can-Am partner – the only Can-Am Certificate Centre in the UAE</strong>. This achievement is a testament to our commitment to providing the safest and most innovative experiences to our customers.
+                  In <strong>2021</strong>,  Experience achieved another milestone by becoming <strong>Can-Am partner – the only Can-Am Certificate Centre in the UAE</strong>. This achievement is a testament to our commitment to providing the safest and most innovative experiences to our customers.
                 </p>
               </div>
               <div className="history-image">
@@ -71,13 +71,13 @@ const About = () => {
             <div className="section-label">Success Story</div>
             <h2 className="section-title">Milestones & Success Story</h2>
             <p className="section-subtitle">
-              Top Desert Adventure Tourism Company – Monster Experience
+              Top Desert Adventure Tourism Company –  Experience
             </p>
             
             <div className="milestone-content">
               <div className="milestone-text">
                 <p className="lead-text">
-                  As a <strong>private partner of the best brand for off-road Can-Am</strong>, we ensure that our customers have access to the latest and most advanced equipment for their adventures in the desert. At Monster Experience, we take pride in offering a wide range of exciting adventures and experiences.
+                  As a <strong>private partner of the best brand for off-road Can-Am</strong>, we ensure that our customers have access to the latest and most advanced equipment for their adventures in the desert. At  Experience, we take pride in offering a wide range of exciting adventures and experiences.
                 </p>
                 <p>
                   From thrilling <strong>Quad Biking Tours</strong>, <strong>Dirt Biking</strong>, <strong>Dune Buggy Rides</strong> to captivating <strong>Desert Safaris</strong>, and authentic Bedouin-inspired activities, we offer something to everyone. Our goal is to create unforgettable memories that will last a lifetime while ensuring your safety and delivering authentic experiences.
@@ -92,7 +92,7 @@ const About = () => {
                   src="https://images.unsplash.com/photo-1717169022464-1f50760d480e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNlcnQlMjBkdW5lJTIwYnVnZ3klMjByaWRlfGVufDF8fHx8MTc2ODEzMzI4MHww&ixlib=rb-4.1.0&q=80&w=1080" 
                   alt="Desert Golden Hour Can-Am Buggy" 
                 />
-                <p className="image-caption">Desert's Golden Hour with Can-Am Buggy, Monster Experience Activity Area, Al Badayer, Sharjah</p>
+                <p className="image-caption">Desert's Golden Hour with Can-Am Buggy,  Experience Activity Area, Al Badayer, Sharjah</p>
               </div>
             </div>
           </div>
@@ -107,13 +107,13 @@ const About = () => {
                   src="https://images.unsplash.com/photo-1766090648323-41d6b4de0958?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdHYlMjBxdWFkJTIwYmlrZSUyMGRlc2VydHxlbnwxfHx8fDE3NjgxMzMyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080" 
                   alt="Yamaha Raptor 700CC" 
                 />
-                <p className="image-caption">Sleek but Powerful Yamaha Raptor 700CC at Monster Experience Activity Area, Al Badayer, Sharjah</p>
+                <p className="image-caption">Sleek but Powerful Yamaha Raptor 700CC at  Experience Activity Area, Al Badayer, Sharjah</p>
               </div>
               
               <div className="experience-text">
                 <h2>More Than Just An Activity</h2>
                 <p>
-                  Taking part in an activity at Monster Experience is much more than just an activity a customer pays for. We offer a <strong>holistic approach to the entire desert experience</strong>. Our state-of-the-art facilities include a blend of well-maintained and modern infrastructure preserving Arabic culture and showcasing Bedouin Lifestyle.
+                  Taking part in an activity at  Experience is much more than just an activity a customer pays for. We offer a <strong>holistic approach to the entire desert experience</strong>. Our state-of-the-art facilities include a blend of well-maintained and modern infrastructure preserving Arabic culture and showcasing Bedouin Lifestyle.
                 </p>
                 <p>
                   Taking a break from the overwhelming adrenaline buggy ride, customers can also take full advantage of <strong>Sandboarding that is offered for FREE</strong> for each ride if informed the agent in advance. Some of our valued customers have greatly complimented our:
@@ -134,7 +134,7 @@ const About = () => {
         {/* Features Section */}
         <section className="about-section features-section">
           <div className="container">
-            <h2 className="section-title">Why Choose Monster Experience?</h2>
+            <h2 className="section-title">Why Choose  Experience?</h2>
             
             <div className="features-grid">
               <div className="feature-card">
@@ -261,7 +261,7 @@ const About = () => {
                 Ride it. Feel it. Live it with Offroad Rental Hub.
               </p>
               <p className="cta-subtitle">
-                Desert Adventure Tourism Company – Monster Experience has set a new bar in the field of unique and premium desert adventure packages!
+                Desert Adventure Tourism Company –  Experience has set a new bar in the field of unique and premium desert adventure packages!
               </p>
               <div className="cta-buttons">
                 <Link to="/cars" className="btn btn-primary">Browse Our Vehicles</Link>

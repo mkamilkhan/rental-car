@@ -4,6 +4,8 @@ import HeroCarousel from '../components/HeroCarousel';
 import { useLanguage } from '../context/LanguageContext';
 import { ImageWithFallback } from '../components/ImageWithFallback.tsx';
 import './About.css';
+import DesertCar from "../../src/assets/desertCar.jpeg";
+import DesertQuads from "../../src/assets/desertQuads.jpeg";
 
 const About = () => {
   const { t } = useLanguage();
@@ -31,10 +33,7 @@ const About = () => {
                 </p>
               </div>
               <div className="history-image">
-                <ImageWithFallback 
-                  src="https://images.unsplash.com/photo-1707306306841-69113c7d391c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkdWJhaSUyMGRlc2VydCUyMHNhZmFyaSUyMHN1bnNldHxlbnwxfHx8fDE3NjgxMzMyODF8MA&ixlib=rb-4.1.0&q=80&w=1080" 
-                  alt="Desert Safari Sunset Dubai" 
-                />
+               <img src={DesertCar}></img>
               </div>
             </div>
           </div>
@@ -131,50 +130,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="about-section features-section">
-          <div className="container">
-            <h2 className="section-title">Why Choose  Experience?</h2>
-            
-            <div className="features-grid">
-              <div className="feature-card">
-                <div className="feature-icon">🏆</div>
-                <h4>Only Can-Am Center in Dubai</h4>
-                <p>Can-Am brand does desert terrain testing of its new products at our location. All buggies are Brand New and regularly serviced at official Can-Am Center.</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">🎵</div>
-                <h4>Music-Equipped Buggies</h4>
-                <p>Rock the rough sand dunes on your favourite music beat - all our buggies are equipped with Music!</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">🛡️</div>
-                <h4>Safety First</h4>
-                <p>All buggies have bumpers preventing roll-overs through rough terrain. Professional dedicated tour guides accompany you throughout.</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">🌙</div>
-                <h4>Night Rides Available</h4>
-                <p>For exotic night rides, our buggies have flags at the top for lighting and marking purposes.</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">⭐</div>
-                <h4>Award Winning</h4>
-                <p>Trip Advisor Travelers' Choice 2022 and 2023 Winner with stellar 5-star ratings across all platforms.</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">🎁</div>
-                <h4>Free Sandboarding</h4>
-                <p>Complimentary sandboarding included with every ride - just inform your agent in advance!</p>
-              </div>
-            </div>
-          </div>
-        </section>
+      
 
         {/* Activities Showcase */}
         <section className="about-section activities-showcase">
@@ -206,10 +162,7 @@ const About = () => {
               </div>
               
               <div className="activity-card">
-                <ImageWithFallback 
-                  src="https://images.unsplash.com/photo-1707306306841-69113c7d391c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkdWJhaSUyMGRlc2VydCUyMHNhZmFyaSUyMHN1bnNldHxlbnwxfHx8fDE3NjgxMzMyODF8MA&ixlib=rb-4.1.0&q=80&w=1080" 
-                  alt="Desert Safari" 
-                />
+                <img src={DesertQuads}></img>
                 <div className="activity-info">
                   <h3>Desert Safari</h3>
                   <p>Captivating desert experiences with authentic Bedouin activities</p>

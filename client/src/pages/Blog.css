@@ -1,0 +1,211 @@
+/* =========================
+   GLOBAL
+========================= */
+.blog-page {
+
+ background: #1A1A1A;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.blog-wrapper {
+  display: grid;
+  grid-template-columns: 2.3fr 1fr;
+  gap: 50px;
+  padding: 70px 0;
+}
+
+/* =========================
+   LEFT BLOG POSTS
+========================= */
+.blog-post {
+  margin-bottom: 70px;
+  padding: 32px;
+  margin-top: 64px;
+  border-radius: 12px;
+  /* background-color: #111111; */
+}
+
+.blog-post img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+/* META */
+.post-meta {
+  display: flex;
+  gap: 18px;
+  font-size: 14px;
+  color: #7a7a7a;
+  margin: 18px 0 10px;
+}
+
+/* TITLE */
+.blog-post h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+/* TEXT */
+.blog-post p {
+  font-size: 18px;
+  color: #bebdbd;
+  line-height: 1.8;
+  max-width: 95%;
+}
+
+/* READ MORE */
+.read-more {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: #c67d00;
+  text-decoration: none;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.blog-sidebar {
+  position: sticky;
+  top: 110px;
+}
+
+/* SIDEBAR BOX */
+.sidebar-box {
+  background-color: #111111;
+  padding: 26px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+}
+
+/* SIDEBAR HEADING */
+.sidebar-box h4 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #d1950a;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #00a7c6;
+  padding-bottom: 10px;
+}
+
+/* =========================
+   SEARCH
+========================= */
+.search-box {
+  display: flex;
+  margin-top: 64px;
+  /* background-color: #111111; */
+  overflow: hidden;
+
+}
+
+.search-box input {
+  flex: 1;
+  padding: 8px 18px;
+  border: none;
+  background: #111111;
+  color: #f4f4f4;
+  font-size: 15px;
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #252525;
+}
+
+
+
+/* =========================
+   CHECKBOX LIST
+========================= */
+.sidebar-box label {
+  display: block;
+  font-size: 15px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.sidebar-box input {
+  margin-right: 8px;
+}
+
+/* =========================
+   RECENT POSTS
+========================= */
+.recent-post {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.recent-post img {
+  width: 70px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.recent-post p {
+  font-size: 14px;
+  margin: 0;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.recent-post span {
+  font-size: 12px;
+  color: #bbb6b6;
+}
+
+/* =========================
+   TAGS
+========================= */
+.tags span {
+  display: inline-block;
+  background: #ffffff;
+  color: #0b3c49;
+  padding: 7px 16px;
+  border-radius: 25px;
+  margin: 6px 6px 0 0;
+  font-size: 13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 992px) {
+  .blog-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-post img {
+    height: 260px;
+  }
+
+  .blog-post h2 {
+    font-size: 26px;
+  }
+
+  .blog-post p {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,3380 @@
+.home {
+  padding-top: 0;
+}
+
+.hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #111111;
+  border: 1px solid #171819ee;
+}
+
+/* Slides */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* Video */
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.95) contrast(1.1) saturate(1.15);
+}
+
+/* Overlay like Offroad Rental Hub */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.88) 35%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  /* border: 1px solid #171819ee; */
+}
+
+.hero-content {
+  max-width: 720px;
+  color: #fff;
+}
+
+/* Small gold label */
+.hero-label {
+  display: inline-block;
+  color: #FDB43C;
+  font-size: 14px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+/* Heading */
+.hero-content h1 {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+/* Paragraphs */
+.hero-content p {
+  font-size: 19px;
+  line-height: 1.7;
+  color: #e6e6e6;
+  text-align: left;
+  margin-bottom: 22px;
+  max-width: 650px;
+}
+
+/* Highlight line */
+.hero-highlight {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FDB43C;
+  margin-top: 20px;
+}
+
+/* Button */
+.btn-hero {
+  display: inline-block;
+  margin-top: 35px;
+  background: #FDB43C;
+  color: #000;
+  padding: 16px 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  
+}
+.btn-hero-parent{
+  justify-content: start;
+  display: flex;
+}
+
+.btn-hero:hover {
+  background: #FDB43C;
+}
+
+/* Indicators */
+.hero-indicators {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  background: #777;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.indicator.active {
+  background: #FDB43C;
+}
+/* Initial state: move content left and invisible */
+.animate-hero {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: heroSlideIn 1s ease-out forwards;
+  animation-delay: 0.3s; /* delay before starting */
+}
+
+/* Keyframes: slide in and fade in */
+@keyframes heroSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Optional: stagger inner elements */
+.animate-hero span,
+.animate-hero h1,
+.animate-hero p,
+.animate-hero .btn-hero-parent {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideInStagger 0.8s ease-out forwards;
+}
+
+.animate-hero span {
+  animation-delay: 0.2s;
+}
+
+.animate-hero h1 {
+  animation-delay: 0.4s;
+}
+
+.animate-hero p {
+  animation-delay: 0.6s;
+}
+
+.animate-hero .btn-hero-parent {
+  animation-delay: 0.8s;
+}
+
+@keyframes slideInStagger {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 42px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+}
+
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.indicator.active {
+  background: #FDB43C;
+  width: 30px;
+  border-radius: 6px;
+}
+
+.tour-categories-section {
+  padding: 30px 0 100px 0;
+  position: relative;
+  scroll-margin-top: 30px;
+  scroll-padding-top: 30px;
+
+  /* Background image */
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLZQ_LVBPOEbkODgSODg65k8Hsx0so7UJHng&s");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Dark base color fallback */
+  background-color: #303030b7;
+}
+
+.tour-categories-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* Opacity for the overlay */
+  background: rgba(0, 0, 0, 0.785);
+
+  z-index: 0;
+}
+
+.tour-categories-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* Script Font for "Wonderful Place For You" */
+.section-label-script {
+  display: block;
+  font-family: 'Dancing Script', 'Brush Script MT', 'Lucida Handwriting', cursive;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #e89608;
+  margin-bottom: 0.25rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Large Bold Title "Tour Categories" - Dark Green */
+.section-title-tour-categories {
+  color: #056C89;
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .section-label-script {
+    font-size: 1.25rem;
+  }
+  
+  .section-title-tour-categories {
+    font-size: 2rem;
+  }
+}
+
+.section-label {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+
+}
+
+.section-header h2 {
+  color: #FDB43C;
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+
+}
+
+.section-header p {
+  color: #e0d8d8;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+/* ===============================
+   CATEGORY RHOMBUS STICKER
+   =============================== */
+
+   .category-sticker {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+  
+    width: 70px;
+    height: 70px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    background: linear-gradient(
+      135deg,
+      #FDB43C,
+      #F59E0C,
+      #FDB43C
+    );
+  
+    color: #000;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  
+    transform: rotate(45deg);
+    border-radius: 12px;
+  
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.5),
+      0 0 30px #FDB43C;
+  
+    animation: sticker-float 4s ease-in-out infinite;
+    z-index: 5;
+  }
+  
+  /* Rotate text back straight */
+  .category-sticker::after {
+    content: attr(data-text);
+  }
+  
+  /* ===============================
+     STICKER ANIMATION
+     =============================== */
+  
+  @keyframes sticker-float {
+    0% {
+      transform: rotate(45deg) translateY(0);
+    }
+    50% {
+      transform: rotate(40deg) translateY(-6px);
+    }
+    100% {
+      transform: rotate(45deg) translateY(0);
+    }
+  }
+  
+  /* Hover glow boost */
+  .category-card:hover .category-sticker {
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.7),
+      0 0 50px #FDB43C;
+  }
+  
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+.category-card {
+  position: relative;
+  height: 300px;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-8px);
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover img {
+  transform: scale(1.1);
+}
+
+.category-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 25px;
+  color: white;
+}
+
+.category-overlay h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.category-link {
+  color: #FDB43C;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ============================================
+   FEATURED SECTION - EXACT SCREENSHOT STYLE
+   ============================================ */
+/* ============================================
+   FEATURED SECTION - EXACT SCREENSHOT STYLE
+   ============================================ */
+
+ /* ============================================
+   FEATURED SECTION - EXACT SCREENSHOT STYLE
+   2 Cards Per Row - Green & Yellow Design
+   ============================================ */
+
+.featured-section {
+  padding: 80px 0;
+  background: #111111;
+  border: 1px solid #171819ee;
+
+}
+
+
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  letter-spacing: -1px;
+}
+
+.section-subtitle {
+  color: #9ca3af;
+  font-size: 1.125rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* ============================================
+   FEATURED GRID - 2 CARDS PER ROW
+   ============================================ */
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 40px;
+}
+
+/* ============================================
+   MONSTER CARD - GREEN GLOWING BORDER
+   ============================================ */
+
+.monster-card {
+  background: #000000;
+  border-radius: 32px;
+  padding: 12px;
+  position: relative;
+  border: 2px solid #FDB43C;
+  box-shadow: 
+    0 0 7px rgba(#FDB43C),
+    0 0 7px rgba(#FDB43C),
+    0 0 7px rgba(#FDB43C);
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+/* .monster-card:hover {
+  box-shadow: 
+    0 0 40px rgba(184, 255, 60, 0.8),
+    0 0 80px rgba(184, 255, 60, 0.5),
+    0 0 120px rgba(184, 255, 60, 0.3);
+  transform: translateY(-8px);
+} */
+
+/* ============================================
+   CARD INNER - YELLOW/GOLDEN BORDER
+   ============================================ */
+
+.monster-card-inner {
+  display: flex;
+  flex-direction: column;
+  background: #1a1a1a;
+  border-radius: 24px;
+  border: 4px solid #FDB43C;
+  overflow: hidden;
+}
+
+/* ============================================
+   IMAGE SECTION - TOP WITH ROUNDED CORNERS
+   ============================================ */
+
+.monster-card-image-wrapper {
+  position: relative;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+}
+
+.monster-card-image {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.monster-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+
+/* PRICE BADGE - BOTTOM LEFT ON IMAGE */
+.image-price-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #000000;
+  color: #FDB43C;
+  padding: 12px 20px;
+  border-radius: 12px;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 2px solid #FDB43C;
+}
+
+.price-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.price-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+/* ============================================
+   CONTENT SECTION - DARK AREA BELOW IMAGE
+   ============================================ */
+
+.monster-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 30px;
+  background: #1a1a1a;
+}
+
+/* Car Title */
+.monster-card-title {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+/* Features with Yellow Icons */
+.monster-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #d1d5db;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.feature-item svg {
+  width: 16px;
+  height: 16px;
+  color: #FDB43C;
+  fill: #FDB43C;
+  flex-shrink: 0;
+}
+
+/* Description */
+.monster-description {
+  margin: 0;
+}
+
+.monster-description p {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ============================================
+   BOOK NOW BUTTON
+   ============================================ */
+
+.monster-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 14px 32px;
+  background: #FDB43C;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 0;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  border: none;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.monster-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.monster-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #000000;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+  stroke-width: 3;
+}
+
+.monster-btn:hover {
+  background: #FDB43C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(184, 255, 60, 0.4);
+}
+
+.monster-btn:hover svg {
+  transform: translateX(5px);
+}
+
+/* ============================================
+   HIDE OLD STYLES
+   ============================================ */
+
+.featured-card {
+  display: none;
+}
+
+.featured-content {
+  display: none;
+}
+
+.featured-price {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE - LARGE TABLET (max 1200px)
+   ============================================ */
+
+@media (max-width: 1200px) {
+  .featured-grid {
+    gap: 2rem;
+  }
+
+  .monster-card-image {
+    height: 280px;
+  }
+
+  .monster-card-title {
+    font-size: 1.75rem;
+  }
+
+  .monster-card-content {
+    padding: 25px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - TABLET (max 1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .featured-section {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .section-header {
+    margin-bottom: 50px;
+  }
+
+  .featured-grid {
+    gap: 1.75rem;
+  }
+
+  .monster-card {
+    padding: 10px;
+    border-width: 3px;
+  }
+
+  .monster-card-inner {
+    border-width: 3px;
+  }
+
+  .monster-card-image {
+    height: 260px;
+  }
+
+  .monster-card-title {
+    font-size: 1.6rem;
+  }
+
+  .monster-card-content {
+    padding: 22px;
+  }
+
+  .price-value {
+    font-size: 1.3rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL TABLET (max 768px)
+   Switch to 1 Column
+   ============================================ */
+
+@media (max-width: 768px) {
+  .featured-section {
+    padding: 50px 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 15px;
+  }
+
+  .monster-card {
+    padding: 12px;
+  }
+
+  .monster-card-image {
+    height: 300px;
+  }
+
+  .monster-card-title {
+    font-size: 1.8rem;
+  }
+
+  .monster-card-content {
+    padding: 25px;
+  }
+
+  .price-badge {
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 16px;
+  }
+
+  .price-value {
+    font-size: 1.4rem;
+  }
+
+  .monster-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .monster-features {
+    gap: 0.6rem;
+  }
+
+  .feature-item {
+    font-size: 0.85rem;
+  }
+
+  .feature-item svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .monster-description p {
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (max 480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .featured-section {
+    padding: 40px 0;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-header {
+    margin-bottom: 30px;
+  }
+
+  .featured-grid {
+    gap: 1.5rem;
+  }
+
+  .monster-card {
+    border-radius: 24px;
+    padding: 10px;
+  }
+
+  .monster-card-inner {
+    border-radius: 18px;
+  }
+
+  .monster-card-image-wrapper {
+    padding: 15px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .monster-card-image {
+    height: 260px;
+    border-radius: 12px;
+  }
+
+  .image-price-badge {
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    border-radius: 10px;
+  }
+
+  .price-label {
+    font-size: 0.65rem;
+  }
+
+  .price-value {
+    font-size: 1.2rem;
+  }
+
+  .monster-card-content {
+    padding: 20px;
+  }
+
+  .monster-card-title {
+    font-size: 1.5rem;
+    letter-spacing: -0.3px;
+  }
+
+  .monster-features {
+    gap: 0.5rem;
+  }
+
+  .feature-item {
+    font-size: 0.8rem;
+  }
+
+  .feature-item svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .monster-description p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .monster-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .monster-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - EXTRA SMALL (max 375px)
+   ============================================ */
+
+@media (max-width: 375px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .monster-card {
+    padding: 8px;
+  }
+
+  .monster-card-image-wrapper {
+    padding: 12px;
+  }
+
+  .monster-card-image {
+    height: 240px;
+  }
+
+  .image-price-badge {
+    bottom: 12px;
+    left: 12px;
+    padding: 8px 14px;
+  }
+
+  .price-label {
+    font-size: 0.6rem;
+  }
+
+  .price-value {
+    font-size: 1.1rem;
+  }
+
+  .monster-card-content {
+    padding: 18px 15px;
+  }
+
+  .monster-card-title {
+    font-size: 1.3rem;
+  }
+
+  .monster-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================
+   RTL SUPPORT
+   ============================================ */
+
+[dir="rtl"] .image-price-badge {
+  left: auto;
+  right: 20px;
+}
+
+[dir="rtl"] .monster-btn {
+  align-self: flex-end;
+}
+
+[dir="rtl"] .monster-btn:hover svg {
+  transform: translateX(-5px);
+}
+
+@media (max-width: 768px) {
+  [dir="rtl"] .image-price-badge {
+    right: 15px;
+  }
+  
+  [dir="rtl"] .monster-btn {
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  [dir="rtl"] .image-price-badge {
+    right: 15px;
+  }
+}
+
+@media (max-width: 375px) {
+  [dir="rtl"] .image-price-badge {
+    right: 12px;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.monster-card {
+  animation: fadeInUp 0.6s ease backwards;
+}
+
+.monster-card:nth-child(1) { animation-delay: 0s; }
+.monster-card:nth-child(2) { animation-delay: 0.1s; }
+.monster-card:nth-child(3) { animation-delay: 0.2s; }
+.monster-card:nth-child(4) { animation-delay: 0.3s; }
+.monster-card:nth-child(5) { animation-delay: 0.4s; }
+.monster-card:nth-child(6) { animation-delay: 0.5s; }
+
+/* Reduce animations for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .monster-card {
+    animation: none;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .featured-section {
+    background: white;
+  }
+
+  .monster-card {
+    border: 2px solid #000;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+
+  .monster-btn {
+    display: none;
+  }
+}
+  
+.view-all {
+  text-align: center;
+  margin-top: 40px;
+}
+/* Gallery Section Styles */
+.gallery-section {
+  background-color: #000;
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  color: #FDB43C;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #fff;
+}
+
+/* Gallery Grid */
+
+/* Gallery Card Styles */
+/* Gallery Card Styles */
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+
+
+
+
+/* Card Overlay */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+}
+
+.card-title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  color: #FDB43C;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+}
+
+.card-info {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #181616;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-item svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Contact Banner */
+.contact-banner {
+  height: 400px;
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.contact-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.contact-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+}
+
+.contact-content {
+  padding: 0 2rem;
+  max-width: 32rem;
+  font-size: 1rem;
+}
+
+.contact-titles {
+  font-size: 2rem;
+  padding: 12px;
+  font-weight: 900;
+  color: #FDB43C;
+  text-transform: uppercase;
+   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.contact-titles .white-text {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.contact-divider {
+  border-top: 2px solid #FDB43C;
+  width: 12rem;
+}
+
+.contact-infos {
+  display: flex;
+  gap: 2rem;
+  color: #fff;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.contact-label {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.contact-divider-vertical {
+  border-left: 2px solid #fff;
+  height: 3rem;
+  display: none;
+}
+
+.contact-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-number {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+/* Content Section */
+.content-section {
+  position: relative;
+  padding: 4rem 0;
+  color: #fff;
+  background: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1920&auto=format&fit=crop")
+              center/cover no-repeat;
+}
+
+/* Dark overlay layer */
+.content-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.883);
+  z-index: 1;
+}
+
+/* Content above overlay */
+.content-container {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+/* Content container width & alignment */
+.content-container {
+  max-width: 1200px;          /* 👈 readability */
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Title */
+.content-title {
+  color: #ffffff;            /* 👈 pure white */
+  font-size: 2.2rem;
+  line-height: 1.35;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  
+}
+
+/* Text block */
+.content-text {
+  color: #ffffff;            /* 👈 white text */
+  font-size: 1.05rem;
+  line-height: 1.75;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  text-align: justify;       /* 👈 neat look */
+}
+
+/* Strong highlight */
+.content-text span {
+  color: #df9b07;            /* gold accent */
+  font-weight: 800;
+  font-family: 'Brush Script MT', cursive;
+}
+
+/* Paragraph spacing */
+.content-text p {
+  margin: 0;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .content-title {
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+
+  .content-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: left;        /* 👈 better on mobile */
+  }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gallery-card {
+    height: 350px;
+  }
+  
+  .contact-banner {
+    height: 500px;
+  }
+  
+  .contact-title {
+    font-size: 2rem;
+  }
+  
+  .contact-divider {
+    width: 10rem;
+  }
+  
+  .contact-number {
+    font-size: 1.25rem;
+  }
+  
+  .section-title {
+    font-size: 1.875rem;
+  }
+  
+  .content-title {
+    font-size: 1.875rem;
+  }
+  
+  .content-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .contact-divider {
+    width: 32rem;
+  }
+  
+  .contact-divider-vertical {
+    display: block;
+  }
+  
+  .contact-title {
+    font-size: 3rem;
+    margin-left: 32px;
+  }
+  
+  .contact-number {
+    font-size: 1.5rem;
+    margin-left: 32px;
+  }
+  
+  .contact-label {
+    font-size: 1.125rem;
+    margin-left: 32px;
+  }
+}
+
+/* Contact Banner Styles */
+.contact-banner {
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gallery-card {
+    max-height: 500px;
+  }
+  
+  .gallery-card-image {
+    height: 240px;
+  }
+  
+  .contact-banner {
+    height: 450px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .gallery-card-image {
+    height: 260px;
+  }
+}
+
+/* Content Section */
+.content-section {
+  background-color: #fff;
+  color: #000;
+  padding: 4rem 0;
+}
+
+.content-section h2 {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.content-section p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.content-section strong {
+  font-weight: 700;
+  color: #000;
+}
+
+/* ============================================
+   VERTICAL GALLERY - EXPANDING CARDS DESIGN
+   ============================================ */
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: #f5f5f5;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   GALLERY PAGE
+   ============================================ */
+
+.gallery-page {
+  min-height: 100vh;
+  background: #303030;
+  padding: 2rem 0;
+}
+
+/* Header Section */
+.gallery-header {
+  text-align: center;
+  padding: 1rem 0 2rem;
+}
+
+.gallery-title {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #FDB43C;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px #FDB43C;
+  text-stroke: 2px #FDB43C;
+}
+
+/* ============================================
+   VERTICAL GALLERY CONTAINER
+   ============================================ */
+
+.vertical-gallery-container {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  height: 600px;
+  overflow: hidden;
+}
+
+/* ============================================
+   VERTICAL CARD - EXPANDABLE
+   ============================================ */
+
+.vertical-card {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Expanded State */
+.vertical-card.expanded {
+  flex: 3;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Image Container */
+.vertical-card-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.vertical-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vertical-card:hover .vertical-card-image img {
+  transform: scale(1.08);
+}
+
+.vertical-card.expanded .vertical-card-image img {
+  transform: scale(1.05);
+}
+
+/* ============================================
+   CARD OVERLAY & CONTENT
+   ============================================ */
+
+.vertical-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 30%,
+    rgba(0, 0, 0, 0.179) 60%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+  transition: all 0.6s ease;
+}
+
+.card-content-text {
+  width: 100%;
+  transform: translateY(0);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Title - Rotated on Small Cards, Normal on Expanded */
+.vertical-card-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.vertical-card.expanded .vertical-card-title {
+  writing-mode: horizontal-tb;
+  transform: rotate(0deg);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Subtitle - Hidden on Small, Visible on Expanded */
+.vertical-card-subtitle {
+  font-size: 1rem;
+  color: #FDB43C;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 0;
+}
+
+.vertical-card.expanded .vertical-card-subtitle {
+  opacity: 1;
+  max-height: 50px;
+  margin-bottom: 1.5rem;
+}
+
+/* Book Now Button - Hidden on Small, Visible on Expanded */
+.book-now-btn {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #000000;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  margin-top: 0;
+}
+
+.vertical-card.expanded .book-now-btn {
+  opacity: 1;
+  max-height: 100px;
+  margin-top: 1rem;
+}
+
+.book-now-btn:hover {
+  background: transparent;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   HOVER EFFECTS
+   ============================================ */
+
+.vertical-card:hover {
+  transform: translateY(-5px);
+}
+
+.vertical-card.expanded:hover {
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* TABLET (max 1024px) */
+@media (max-width: 1024px) {
+  .vertical-gallery-container {
+    height: 500px;
+    padding: 1.5rem;
+  }
+
+  .gallery-title {
+    font-size: 2.5rem;
+  }
+
+  .vertical-card-title {
+    font-size: 1.5rem;
+  }
+
+  .vertical-card.expanded .vertical-card-title {
+    font-size: 2rem;
+  }
+
+  .vertical-card.expanded .book-now-btn {
+    padding: 0.875rem 2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* MOBILE (max 768px) */
+@media (max-width: 768px) {
+  .gallery-header {
+    padding: 0.5rem 0 1.5rem;
+  }
+
+  .gallery-title {
+    font-size: 2rem;
+  }
+
+  .vertical-gallery-container {
+    flex-direction: column;
+    height: auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .vertical-card {
+    min-height: 300px;
+    height: 300px;
+  }
+
+  .vertical-card.expanded {
+    flex: 1;
+    min-height: 450px;
+    height: 450px;
+  }
+
+  .vertical-card-title {
+    writing-mode: horizontal-tb;
+    transform: rotate(0deg);
+    font-size: 1.8rem;
+  }
+
+  .vertical-card.expanded .vertical-card-title {
+    font-size: 2.2rem;
+  }
+
+  .vertical-card-subtitle {
+    opacity: 1;
+    max-height: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .vertical-card.expanded .book-now-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* SMALL MOBILE (max 480px) */
+@media (max-width: 480px) {
+  .gallery-title {
+    font-size: 1.75rem;
+  }
+
+  .vertical-gallery-container {
+    padding: 0.75rem;
+  }
+
+  .vertical-card {
+    min-height: 250px;
+    height: 250px;
+    border-radius: 12px;
+  }
+
+  .vertical-card.expanded {
+    min-height: 400px;
+    height: 400px;
+  }
+
+  .vertical-card-overlay {
+    padding: 1.5rem;
+  }
+
+  .vertical-card-title {
+    font-size: 1.5rem;
+  }
+
+  .vertical-card.expanded .vertical-card-title {
+    font-size: 1.8rem;
+  }
+
+  .vertical-card-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .vertical-card.expanded .book-now-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.vertical-card {
+  animation: fadeInScale 0.5s ease backwards;
+}
+
+.vertical-card:nth-child(1) { animation-delay: 0.1s; }
+.vertical-card:nth-child(2) { animation-delay: 0.2s; }
+.vertical-card:nth-child(3) { animation-delay: 0.3s; }
+.vertical-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+
+/* ============================================
+   MONSTER EXPERIENCE CARD DESIGN
+   ============================================ */
+/* ============================================
+   BUGGY COLLECTION PAGE - HORIZONTAL LAYOUT
+   Exact Screenshot Design - Black & Gold Theme
+   ============================================ */
+
+/* ============================================
+   BUGGY COLLECTION PAGE - EXACT SCREENSHOT
+   Border UNDER Image, Not Around Card
+   ============================================ */
+/* ============================================
+   BUGGY COLLECTION PAGE - EXACT SCREENSHOT
+   Border UNDER Image, Not Around Card
+   ============================================ */
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: #000000;
+  color: #ffffff;
+}
+
+/* ============================================
+   BUGGY COLLECTION PAGE
+   ============================================ */
+
+.buggy-collection-page {
+  min-height: 100vh;
+  background: #111111;
+  padding: 3rem 0;
+}
+
+/* Header Section */
+.collection-header {
+  text-align: center;
+  padding: 2rem 0 4rem;
+}
+
+.collection-title {
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px #FDB43C;
+  text-stroke: 2px #FDB43C;
+}
+
+/* ============================================
+   BUGGY CONTAINER
+   ============================================ */
+
+.buggy-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  /* padding: 0 2rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  /* background-color: #0F0F0F; */
+  /* border: 1px solid #212224ee; */
+}
+
+/* ============================================
+   HORIZONTAL BUGGY CARD - NO BORDER ON CARD
+   ============================================ */
+
+   .buggy-card-horizontal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  
+    /* BACKGROUND IMAGE */
+    background-image: url("https://img.freepik.com/premium-photo/abstract-digital-network-background-with-glowing-nodes_1174990-196148.jpg?semt=ais_hybrid&w=740&q=80");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+    /* BASE DARK COLOR */
+    background-color: #0F0F0F;
+  
+    border: 1px solid #212224ee;
+    overflow: visible;
+    min-height: 500px;
+  
+    /* POSITION RELATIVE for overlay */
+    position: relative;
+  }
+  
+  .buggy-card-horizontal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+  
+    /* Dark layer + opacity */
+    background: rgba(12, 12, 12, 0.953);  /* ⬅️ opacity adjust here */
+    z-index: 0;
+  }
+  .buggy-card-horizontal > * {
+    position: relative;
+    z-index: 1;
+  }
+    
+/* ============================================
+   LEFT SIDE - IMAGE SECTION WITH BOTTOM BORDER
+   ============================================ */
+
+.buggy-image-section {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  /* BORDER AT BOTTOM - EXACTLY LIKE SCREENSHOT */
+  border-bottom: 4px solid #FDB43C;
+  box-shadow: 0 4px 0 0 rgba(201, 169, 97, 0.3);
+}
+
+.buggy-image-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.buggy-image-wrapper img {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+
+  /* OPACITY */
+  opacity: 0.9;  /* 0.0 = invisible, 1.0 = full */
+}
+
+
+.buggy-card-horizontal:hover .buggy-image-wrapper img {
+  transform: scale(1.03);
+}
+
+
+
+/* ============================================
+   RIGHT SIDE - DETAILS SECTION
+   ============================================ */
+
+.buggy-details-section {
+  background: transparent;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* Vehicle Name */
+.buggy-name {
+  font-size: 2.75rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+/* Price Label */
+.buggy-price-label {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #FDB43C;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0.5rem 0 0 0;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+/* Subtitle */
+.buggy-subtitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #FDB43C;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Tagline */
+.buggy-tagline {
+  font-size: 1rem;
+  font-style: italic;
+  color: #d28d05;
+}
+
+/* ============================================
+   PRICING OPTIONS WITH DESCRIPTION INSIDE
+   ============================================ */
+
+.buggy-pricing-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+/* Pricing Grid */
+.buggy-pricing-options > div:first-child {
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+
+
+.pricing-option-block {
+  flex-direction: row;    
+}
+.pricing-option {
+  display: flex;           /* Arrange children in a row */
+  justify-content: space-between; /* Evenly space them across the row */
+  align-items: center;     /* Vertically center the content */
+  gap: 10px;               /* Optional: spacing between boxes */
+  flex-wrap: wrap;         /* Allow wrapping on small screens */
+  margin-top: 20px;
+}
+
+.pricing-option .duration {
+  background: #000000;       /* Optional: box background */
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  flex: 1;                /* Make boxes flexible and equal width */
+  min-width: 70px;       /* Optional: prevent boxes from getting too small */
+}
+
+.pricing-option .duration p {
+  margin: 5px 0;
+}
+
+.pricing-option .duration .price {
+  font-weight: bold;
+  font-size: 18px;
+  color: #e67e22; /* Example: make price standout */
+}
+
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.buggy-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.buggy-actions a {
+  text-decoration: none;
+  flex: 1;
+}
+
+.btn-availability,
+.btn-details {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.btn-availability {
+  background: #FDB43C;
+  color: #ffffff;
+}
+
+.btn-availability:hover {
+  background: #FDB43C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px FDB43C;
+}
+
+.btn-details {
+  background: transparent;
+  color: #FDB43C;
+  border: 2px solid #FDB43C;
+}
+
+.btn-details:hover {
+  background: #FDB43C;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(201, 169, 97, 0.5);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* LARGE DESKTOP (1400px+) */
+@media (min-width: 1400px) {
+  .buggy-card-horizontal {
+    min-height: 550px;
+    gap: 4rem;
+  }
+
+  .buggy-name {
+    font-size: 3rem;
+  }
+
+  .buggy-image-wrapper img {
+    max-height: 500px;
+  }
+}
+
+/* DESKTOP (1024px - 1400px) */
+@media (max-width: 1400px) {
+  .buggy-card-horizontal {
+    gap: 2.5rem;
+  }
+
+  .buggy-name {
+    font-size: 2.5rem;
+  }
+}
+
+/* TABLET (768px - 1024px) */
+@media (max-width: 1024px) {
+  .collection-title {
+    font-size: 3rem;
+  }
+
+  .buggy-card-horizontal {
+    min-height: 450px;
+    gap: 2rem;
+  }
+
+  .buggy-name {
+    font-size: 2rem;
+  }
+
+  .buggy-price-label {
+    font-size: 1.25rem;
+  }
+
+  .buggy-subtitle {
+    font-size: 1rem;
+  }
+
+  .buggy-tagline {
+    font-size: 0.9rem;
+  }
+
+  .buggy-image-section {
+    padding: 1.5rem;
+  }
+}
+
+/* MOBILE & SMALL TABLETS (max 768px) */
+@media (max-width: 768px) {
+  .collection-header {
+    padding: 1rem 0 2rem;
+  }
+
+  .collection-title {
+    font-size: 2.5rem;
+  }
+
+  .buggy-container {
+    padding: 0 1rem;
+    gap: 3rem;
+  }
+
+  /* STACK LAYOUT ON MOBILE */
+  .buggy-card-horizontal {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: auto;
+  }
+
+  .buggy-image-section {
+    padding: 1.5rem;
+    min-height: 300px;
+    border-bottom: 3px solid #FDB43C;
+  }
+
+  .buggy-image-wrapper img {
+    max-height: 280px;
+  }
+
+  .buggy-details-section {
+    padding: 1rem 0;
+  }
+
+  .buggy-name {
+    font-size: 1.75rem;
+  }
+
+  .buggy-price-label {
+    font-size: 1.125rem;
+  }
+
+  .buggy-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .buggy-tagline {
+    font-size: 0.875rem;
+    margin: 0.75rem 0 1rem 0;
+  }
+
+  .buggy-pricing-options {
+    gap: 1rem;
+  }
+
+  .buggy-pricing-options > div:first-child {
+    gap: 1.5rem;
+  }
+
+  .buggy-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-availability,
+  .btn-details {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* SMALL MOBILE (max 480px) */
+@media (max-width: 480px) {
+  .collection-title {
+    font-size: 2rem;
+  }
+
+  .buggy-container {
+    padding: 0 0.75rem;
+    gap: 2.5rem;
+  }
+
+  .buggy-image-section {
+    padding: 1rem;
+    min-height: 250px;
+    border-bottom: 2px solid #FDB43C;
+  }
+
+  .buggy-image-wrapper img {
+    max-height: 220px;
+  }
+
+  .buggy-details-section {
+    padding: 0.5rem 0;
+    gap: 1rem;
+  }
+
+  .buggy-name {
+    font-size: 1.5rem;
+  }
+
+  .buggy-price-label {
+    font-size: 1rem;
+  }
+
+  .buggy-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .buggy-tagline {
+    font-size: 0.8rem;
+  }
+
+  .buggy-pricing-options > div:first-child {
+    gap: 1rem;
+  }
+
+  .pricing-option .duration {
+    font-size: 0.75rem;
+    
+  }
+
+  .pricing-option .price {
+    font-size: 1rem;
+  }
+
+  .buggy-pricing-options p {
+    font-size: 0.85rem;
+  }
+
+  .btn-availability,
+  .btn-details {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+  }
+
+  .buggy-image-section::before,
+  .buggy-image-section::after {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* EXTRA SMALL (max 375px) */
+@media (max-width: 375px) {
+  .collection-title {
+    font-size: 1.75rem;
+  }
+
+  .buggy-name {
+    font-size: 1.3rem;
+  }
+
+  .buggy-image-wrapper img {
+    max-height: 200px;
+  }
+}
+
+/* ============================================
+   RTL SUPPORT
+   ============================================ */
+
+[dir="rtl"] .buggy-image-section::before {
+  left: auto;
+  right: 10px;
+  clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%);
+}
+
+[dir="rtl"] .buggy-image-section::after {
+  right: auto;
+  left: 10px;
+  clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.buggy-card-horizontal {
+  animation: fadeInUp 0.6s ease backwards;
+}
+
+.buggy-card-horizontal:nth-child(1) { animation-delay: 0.1s; }
+.buggy-card-horizontal:nth-child(2) { animation-delay: 0.2s; }
+.buggy-card-horizontal:nth-child(3) { animation-delay: 0.3s; }
+.buggy-card-horizontal:nth-child(4) { animation-delay: 0.4s; }
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .buggy-collection-page {
+    background: white;
+  }
+
+  .buggy-image-section {
+    border-bottom: 2px solid #000;
+  }
+
+  .btn-availability,
+  .btn-details {
+    display: none;
+  }
+}
+
+
+
+
+
+/*  */
+   .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 0;
+  }
+  
+  .monster-card {
+    background: #000000;
+    border-radius: 30px;
+    padding: 1.5rem;
+    position: relative;
+  }
+  
+  .monster-card-inner {
+    background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 24px;
+    border: 2px solid #FDB43C;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+    transition: all 0.4s ease;
+  }
+  
+  .monster-card-inner::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #FDB43C, #F59E0C, #FDB43C);
+    border-radius: 24px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+  }
+  
+  .monster-card:hover .monster-card-inner::before {
+    opacity: 0.6;
+  }
+  
+  .monster-card:hover .monster-card-inner {
+    transform: translateY(-5px);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+  }
+  
+  /* Image Wrapper with Yellow Glow Border */
+  .monster-card-image-wrapper {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+  }
+  
+  .monster-card-image {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid #FDB43C;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.5), 
+                inset 0 0 20px rgba(251, 191, 36, 0.1);
+  }
+  
+  .monster-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  
+  .monster-card:hover .monster-card-image img {
+    transform: scale(1.08);
+  }
+  
+  /* Big Title Sticker on Image - Like Screenshot */
+/* ============================================
+   CREATIVE TITLE STICKER - RESPONSIVE
+   ============================================ */
+
+/* ============================================
+   CREATIVE TITLE STICKER - RESPONSIVE
+   ============================================ */
+
+   .image-title-sticker {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transform: rotate(3deg);
+    background: linear-gradient(135deg, #FDB43C 0%, #FDB43C 100%);
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(255, 237, 78, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 2;
+    max-width: 60%;
+    border: 3px solid #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .monster-card:hover .image-title-sticker {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 
+      0 12px 35px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(255, 237, 78, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  
+  .image-title-sticker h2 {
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 1.5px;
+    text-align: center;
+    line-height: 1.2;
+    text-transform: uppercase;
+    text-shadow: 
+      1px 1px 2px rgba(255, 255, 255, 0.5),
+      -1px -1px 2px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+  }
+  
+  /* ============================================
+     CREATIVE PRICE BADGE - RESPONSIVE
+     ============================================ */
+  
+  .image-price-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    color: #FDB43C;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(251, 191, 36, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 3;
+    border: 2px solid #FDB43C;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+  
+  .monster-card:hover .image-price-badge {
+    transform: scale(1.05);
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(251, 191, 36, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .image-price-badge::before {
+    content: 'STARTING';
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 1px;
+  }
+  
+  .image-price-badge span {
+    display: block;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  }
+  
+  /* ============================================
+     TABLET RESPONSIVE (768px - 1024px)
+     ============================================ */
+  
+  @media (max-width: 1024px) {
+    .image-title-sticker {
+      top: 12px;
+      right: 12px;
+      padding: 0.65rem 1.1rem;
+      max-width: 65%;
+      border-width: 2.5px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1rem;
+      letter-spacing: 1.2px;
+    }
+  
+    .image-price-badge {
+      bottom: 12px;
+      left: 12px;
+      padding: 0.75rem 1.3rem;
+      font-size: 1.15rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE LANDSCAPE (481px - 768px)
+     ============================================ */
+  
+  @media (max-width: 768px) {
+    .image-title-sticker {
+      top: 10px;
+      right: 10px;
+      padding: 0.6rem 1rem;
+      max-width: 70%;
+      border-radius: 10px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  
+    .image-price-badge {
+      bottom: 10px;
+      left: 10px;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      letter-spacing: 1.2px;
+      border-radius: 10px;
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.5rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE PORTRAIT (320px - 480px)
+     ============================================ */
+  
+  @media (max-width: 480px) {
+    .image-title-sticker {
+      top: 100px;
+      right: 8px;
+      padding: 0.5rem 0.85rem;
+      max-width: 75%;
+      border-radius: 8px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.75rem;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+  
+    .image-price-badge {
+      top: 28px;
+      left: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      border-width: 1.5px;
+    width: 80px;
+    height: 70px;
+
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.45rem;
+    }
+  }
+  
+  /* ============================================
+     EXTRA SMALL MOBILE (max 375px)
+     ============================================ */
+  
+  @media (max-width: 375px) {
+    .image-title-sticker {
+      top: 6px;
+      right: 6px;
+      padding: 0.45rem 0.75rem;
+      max-width: 80%;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+  
+    .image-price-badge {
+      bottom: 6px;
+      left: 6px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* ============================================
+     ALTERNATIVE CREATIVE DESIGNS (OPTIONAL)
+     ============================================ */
+  
+  /* Option 1: Ribbon Style Sticker */
+  .image-title-sticker.ribbon-style {
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    padding: 0.9rem 1.5rem;
+  }
+  
+  /* Option 2: Stamp Style */
+  .image-title-sticker.stamp-style {
+    border-radius: 4px;
+    border: 3px dashed #000000;
+    background: #FDB43C;
+    box-shadow: inset 0 0 0 6px #FDB43C;
+  }
+  
+  /* Option 3: Glowing Price Badge */
+  .image-price-badge.glow-style {
+    animation: priceGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes priceGlow {
+    0%, 100% {
+      box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(251, 191, 36, 0.3);
+    }
+    50% {
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(251, 191, 36, 0.6);
+    }
+  }
+  
+  /* ============================================
+     RTL SUPPORT
+     ============================================ */
+  
+  [dir="rtl"] .image-title-sticker {
+    right: auto;
+    left: 15px;
+    transform: rotate(-3deg);
+  }
+  
+  [dir="rtl"] .monster-card:hover .image-title-sticker {
+    transform: rotate(0deg) scale(1.05);
+  }
+  
+  [dir="rtl"] .image-price-badge {
+    left: auto;
+    right: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    [dir="rtl"] .image-title-sticker {
+      left: 10px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    [dir="rtl"] .image-title-sticker {
+      left:8px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 8px;
+    }
+  }
+  
+  /* ============================================
+     CREATIVE PRICE BADGE - RESPONSIVE
+     ============================================ */
+  
+  .image-price-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    color: #FDB43C;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(251, 191, 36, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 3;
+    border: 2px solid #FDB43C;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+  
+  .monster-card:hover .image-price-badge {
+    transform: scale(1.05);
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(251, 191, 36, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .image-price-badge::before {
+    content: 'STARTING';
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 1px;
+  }
+  
+  .image-price-badge span {
+    display: block;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  }
+  
+  /* ============================================
+     TABLET RESPONSIVE (768px - 1024px)
+     ============================================ */
+  
+  @media (max-width: 1024px) {
+    .image-title-sticker {
+      top: 12px;
+      right: 12px;
+      padding: 0.65rem 1.1rem;
+      max-width: 65%;
+      border-width: 2.5px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1rem;
+      letter-spacing: 1.2px;
+    }
+  
+    .image-price-badge {
+      bottom: 12px;
+      left: 12px;
+      padding: 0.75rem 1.3rem;
+      font-size: 1.15rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE LANDSCAPE (481px - 768px)
+     ============================================ */
+  
+  @media (max-width: 768px) {
+    .image-title-sticker {
+      top: 10px;
+      right: 10px;
+      padding: 0.6rem 1rem;
+      max-width: 70%;
+      border-radius: 10px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  
+    .image-price-badge {
+      bottom: 10px;
+      left: 10px;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      letter-spacing: 1.2px;
+      border-radius: 10px;
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.5rem;
+    }
+  }
+  
+  /* ============================================
+     MOBILE PORTRAIT (320px - 480px)
+     ============================================ */
+  
+  @media (max-width: 480px) {
+    .image-title-sticker {
+      top: 8px;
+      right: 8px;
+      padding: 0.5rem 0.85rem;
+      max-width: 75%;
+      border-radius: 8px;
+      border-width: 2px;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.75rem;
+      letter-spacing: 0.8px;
+      line-height: 1.3;
+    }
+  
+    .image-price-badge {
+      bottom: 8px;
+      left: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      border-width: 1.5px;
+    }
+  
+    .image-price-badge::before {
+      font-size: 0.45rem;
+    }
+  }
+  
+  /* ============================================
+     EXTRA SMALL MOBILE (max 375px)
+     ============================================ */
+  
+  @media (max-width: 375px) {
+    .image-title-sticker {
+      top: 6px;
+      right: 6px;
+      padding: 0.45rem 0.75rem;
+      max-width: 80%;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+  
+    .image-price-badge {
+      bottom: 6px;
+      left: 6px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* ============================================
+     ALTERNATIVE CREATIVE DESIGNS (OPTIONAL)
+     ============================================ */
+  
+  /* Option 1: Ribbon Style Sticker */
+  .image-title-sticker.ribbon-style {
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    padding: 0.9rem 1.5rem;
+  }
+  
+  /* Option 2: Stamp Style */
+  .image-title-sticker.stamp-style {
+    border-radius: 4px;
+    border: 3px dashed #000000;
+    background: #FDB43C;
+    box-shadow: inset 0 0 0 6px #FDB43C;
+  }
+  
+  /* Option 3: Glowing Price Badge */
+  .image-price-badge.glow-style {
+    animation: priceGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes priceGlow {
+    0%, 100% {
+      box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(251, 191, 36, 0.3);
+    }
+    50% {
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(251, 191, 36, 0.6);
+    }
+  }
+  
+  /* ============================================
+     RTL SUPPORT
+     ============================================ */
+  
+  [dir="rtl"] .image-title-sticker {
+    right: auto;
+    left: 15px;
+    transform: rotate(-3deg);
+  }
+  
+  [dir="rtl"] .monster-card:hover .image-title-sticker {
+    transform: rotate(0deg) scale(1.05);
+  }
+  
+  [dir="rtl"] .image-price-badge {
+    left: auto;
+    right: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    [dir="rtl"] .image-title-sticker {
+      left: 10px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    [dir="rtl"] .image-title-sticker {
+      left: 8px;
+    }
+    
+    [dir="rtl"] .image-price-badge {
+      right: 8px;
+    }
+  }
+  
+  /* Card Content */
+  .monster-card-content {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  
+  .monster-card-title {
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 900;
+    margin-bottom: 1.25rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  /* Features with Yellow Icons */
+  .monster-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .feature-item svg {
+    width: 22px;
+    height: 22px;
+    color: #FDB43C;
+    fill: #FDB43C;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+  }
+  
+  .feature-item span {
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  /* Description */
+  .monster-description {
+    margin-bottom: 1.75rem;
+    padding: 1rem;
+    background: rgba(251, 191, 36, 0.05);
+    border-left: 3px solid #FDB43C;
+    border-radius: 8px;
+  }
+  
+  .monster-description p {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  /* Monster Button */
+  .monster-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #FDB43C, #F59E0C);
+    color: #000000;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .monster-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .monster-btn:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .monster-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #000000;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .monster-btn span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .monster-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(251, 191, 36, 0.6);
+  }
+  
+  .monster-btn:hover svg {
+    transform: translateX(5px);
+  }
+  
+  /* ============================================
+     RESPONSIVE DESIGN
+     ============================================ */
+  
+  @media (max-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  
+    .monster-card-image {
+      height: 250px;
+    }
+  
+    .image-title-sticker {
+      padding: 1rem 1.5rem;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1.75rem;
+    }
+  
+    .image-price-badge {
+      font-size: 0.95rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .monster-card {
+      padding: 1rem;
+    }
+  
+    .monster-card-image {
+      height: 220px;
+    }
+  
+    .image-title-sticker {
+      padding: 0.75rem 1rem;
+    }
+  
+    .image-title-sticker h2 {
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+  
+    .image-price-badge {
+      top: 140px;
+      left: 10px;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+    }
+  
+    .monster-card-title {
+      font-size: 1.5rem;
+    }
+  
+    .monster-btn {
+      font-size: 1em;
+      padding: 0.875rem 1.5rem;
+    }
+  }
+  
+  /* ============================================
+     RTL SUPPORT
+     ============================================ */
+  
+  [dir="rtl"] .monster-description {
+    border-left: none;
+    border-right: 3px solid #FDB43C;
+  }
+  
+  [dir="rtl"] .image-price-badge {
+    left: auto;
+    right: 20px;
+  }
+  
+  [dir="rtl"] .monster-btn:hover svg {
+    transform: translateX(-9px) rotate(180deg);
+  }
+  
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 50px rgba(251, 191, 36, 0.8);
+    }
+  }
+  
+  .monster-card-image {
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .monster-card {
+    animation: fadeInUp 0.6s ease backwards;
+  }
+  
+  .monster-card:nth-child(1) { animation-delay: 0.1s; }
+  .monster-card:nth-child(2) { animation-delay: 0.2s; }
+  .monster-card:nth-child(3) { animation-delay: 0.3s; }
+  .monster-card:nth-child(4) { animation-delay: 0.4s; }
+  .monster-card:nth-child(5) { animation-delay: 0.5s; }
+  .monster-card:nth-child(6) { animation-delay: 0.6s; }

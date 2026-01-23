@@ -1,0 +1,651 @@
+/* ============================================
+   CAR DETAILS PAGE - EXACT SCREENSHOT DESIGN
+   3 Sections: Hero, Experience, Pricing
+   ============================================ */
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.car-details-page {
+  background: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* ============================================
+   SECTION 1: HERO SECTION
+   ============================================ */
+
+.hero-section-detail {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay-detail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+}
+
+.hero-content-detail {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  padding: 2rem;
+  text-align: left;
+}
+
+/* Badges */
+.badges-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.badge-yellow {
+  background: #d4a028;
+  color: #000000;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.badge-white {
+  background: #ffffff;
+  color: #000000;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Hero Title */
+.hero-title-detail {
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.title-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px #d4a028;
+  text-stroke: 2px #d4a028;
+}
+
+/* Tagline */
+.hero-tagline {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #e0e0e0;
+  margin-bottom: 3rem;
+  padding-left: 1.5rem;
+  border-left: 4px solid #d4a028;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.btn-view-pricing {
+  background: #d4a028;
+  color: #000000;
+  border: none;
+  padding: 1.25rem 3rem;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.btn-view-pricing:hover {
+  background: #b8891e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 160, 40, 0.5);
+}
+
+.btn-ask-question {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 1.25rem 3rem;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.btn-ask-question:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   SECTION 2: THE EXPERIENCE
+   ============================================ */
+
+.experience-section {
+  background: #1a1a1a;
+  padding: 5rem 2rem;
+}
+
+.experience-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 4rem;
+}
+
+.experience-left {
+  padding-right: 2rem;
+}
+
+.experience-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.experience-text {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #b0b0b0;
+  margin-bottom: 1.5rem;
+}
+
+/* WHAT'S INCLUDED */
+.whats-included {
+  margin-top: 4rem;
+}
+
+.included-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #d4a028;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.included-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.included-item {
+  display: flex;
+  gap: 1.5rem;
+  background: rgba(212, 160, 40, 0.05);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 3px solid #d4a028;
+}
+
+.included-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.included-content h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.included-content p {
+  font-size: 0.95rem;
+  color: #999999;
+}
+
+/* ============================================
+   QUICK STATS SIDEBAR
+   ============================================ */
+
+.quick-stats-sidebar {
+  background: #0a0a0a;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.stats-title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: #808080;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.125rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* Requirements */
+.requirements-box {
+  background: rgba(212, 160, 40, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #d4a028;
+}
+
+.requirements-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #d4a028;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requirements-list li {
+  font-size: 0.875rem;
+  color: #b0b0b0;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.requirements-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #d4a028;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* ============================================
+   SECTION 3: PRICING OPTIONS
+   ============================================ */
+
+.pricing-section {
+  background: linear-gradient(135deg, #3d2f1f 0%, #1a1310 100%);
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.pricing-header {
+  margin-bottom: 4rem;
+}
+
+.pricing-subtitle {
+  font-size: 0.875rem;
+  color: #d4a028;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.pricing-title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.title-outline-pricing {
+  color: transparent;
+  -webkit-text-stroke: 2px #d4a028;
+  text-stroke: 2px #d4a028;
+}
+
+.pricing-availability {
+  font-size: 1.125rem;
+  color: #b0b0b0;
+  font-style: italic;
+}
+
+/* Pricing Cards */
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: #1a1a1a;
+  border: 2px solid #333333;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.pricing-card.popular {
+  border-color: #d4a028;
+  background: linear-gradient(135deg, #2a2310 0%, #1a1a1a 100%);
+  transform: scale(1.05);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(212, 160, 40, 0.3);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d4a028;
+  color: #000000;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.pricing-duration {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.pricing-card-subtitle {
+  font-size: 1rem;
+  color: #808080;
+  margin-bottom: 2rem;
+}
+
+.pricing-amount {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #d4a028;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.pricing-per {
+  font-size: 0.95rem;
+  color: #999999;
+  margin-bottom: 2.5rem;
+}
+
+.pricing-book-btn {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  background: transparent;
+  color: #d4a028;
+  border: 2px solid #d4a028;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.pricing-book-btn:hover {
+  background: #d4a028;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+.pricing-book-btn.popular-btn {
+  background: #d4a028;
+  color: #000000;
+  border-color: #d4a028;
+}
+
+.pricing-book-btn.popular-btn:hover {
+  background: #b8891e;
+}
+
+/* ============================================
+   BACK TO COLLECTION
+   ============================================ */
+
+.back-to-collection {
+  background: #000000;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.back-link-detail {
+  color: #d4a028;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.back-link-detail:hover {
+  color: #ffffff;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* TABLET (max 1024px) */
+@media (max-width: 1024px) {
+  .hero-title-detail {
+    font-size: 4rem;
+  }
+
+  .experience-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .experience-left {
+    padding-right: 0;
+  }
+
+  .quick-stats-sidebar {
+    position: relative;
+    top: 0;
+  }
+
+  .included-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-title {
+    font-size: 3rem;
+  }
+}
+
+/* MOBILE (max 768px) */
+@media (max-width: 768px) {
+  .hero-title-detail {
+    font-size: 3rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.125rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .experience-title {
+    font-size: 2.5rem;
+  }
+
+  .experience-text {
+    font-size: 1rem;
+  }
+
+  .pricing-cards {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .pricing-card.popular {
+    transform: scale(1);
+  }
+
+  .pricing-title {
+    font-size: 2.5rem;
+  }
+
+  .pricing-duration {
+    font-size: 2rem;
+  }
+
+  .pricing-amount {
+    font-size: 2.5rem;
+  }
+}
+
+/* SMALL MOBILE (max 480px) */
+@media (max-width: 480px) {
+  .hero-title-detail {
+    font-size: 2.5rem;
+  }
+
+  .badges-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .badge-yellow,
+  .badge-white {
+    text-align: center;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    padding-left: 1rem;
+  }
+
+  .btn-view-pricing,
+  .btn-ask-question {
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+  }
+
+  .experience-section {
+    padding: 3rem 1rem;
+  }
+
+  .experience-title {
+    font-size: 2rem;
+  }
+
+  .included-icon {
+    font-size: 2rem;
+  }
+
+  .pricing-section {
+    padding: 3rem 1rem;
+  }
+
+  .pricing-title {
+    font-size: 2rem;
+  }
+
+  .pricing-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  color: #d4a028;
+  font-size: 1.5rem;
+  font-weight: 700;
+}

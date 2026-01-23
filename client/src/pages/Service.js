@@ -12,7 +12,7 @@ import Polaris1Seater from "../assets/Polaris-rzr1000-single-seater.jpeg";
 const galleryData = [
   {
     type: "video",
-    src: "https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_36962.mov",
+    src: "https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov",
     title: "The Maverick Crew",
     subtitle: "POLARIS 2000CC • UK",
     count: "1/3",

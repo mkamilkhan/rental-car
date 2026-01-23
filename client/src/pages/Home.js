@@ -73,10 +73,8 @@ const Home = () => {
   // Hero background videos - Now using Cloudinary URLs
   const heroVideos = [
     'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_21481.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_28415.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_36962.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_37343.mov',
+    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov',
+    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', // Using IMG_1631 as fallback until others upload
   ];
 
   useEffect(() => {

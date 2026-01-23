@@ -10,11 +10,11 @@ import '../components/VideoCardSlider.css';
 // import desertVideo5 from '../assets/IMG_37343.MOV';
 
 const storiesData = [
-  { id: 1, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_21481.mov', username: 'john_doe', caption: 'Desert adventure!' },
-  { id: 2, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_28415.mov', username: 'jane_doe', caption: 'Fun ride!' },
-  { id: 3, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_36304.mp4', username: 'alex_smith', caption: 'Bike ride!' },
-  { id: 4, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_36962.mov', username: 'alex_smith', caption: 'More desert fun!' },
-  { id: 5, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_37343.mov', username: 'alex_smith', caption: 'Another ride!' },
+  { id: 1, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', username: 'john_doe', caption: 'Desert adventure!' },
+  { id: 2, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov', username: 'jane_doe', caption: 'Fun ride!' },
+  { id: 3, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'Bike ride!' },
+  { id: 4, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'More desert fun!' },
+  { id: 5, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov', username: 'alex_smith', caption: 'Another ride!' },
 ];
 
 

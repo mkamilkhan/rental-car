@@ -10,11 +10,11 @@ import '../components/VideoCardSlider.css';
 // import desertVideo5 from '../assets/IMG_37343.MOV';
 
 const storiesData = [
-  { id: 1, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', username: 'john_doe', caption: 'Desert adventure!' },
-  { id: 2, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov', username: 'jane_doe', caption: 'Fun ride!' },
-  { id: 3, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'Bike ride!' },
-  { id: 4, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'More desert fun!' },
-  { id: 5, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov', username: 'alex_smith', caption: 'Another ride!' },
+  { id: 1, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', username: 'john_doe', caption: 'Desert adventure!' },
+  { id: 2, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov', username: 'jane_doe', caption: 'Fun ride!' },
+  { id: 3, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'Bike ride!' },
+  { id: 4, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'More desert fun!' },
+  { id: 5, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov', username: 'alex_smith', caption: 'Another ride!' },
 ];
 
 
@@ -80,9 +80,17 @@ export const VideoCardSlider = () => {
                   playsInline
                   preload="auto"
                   onEnded={() => handleVideoEnded(index)}
+                  onError={(e) => {
+                    console.error('Video load error:', story.videoUrl);
+                    e.target.style.display = 'none';
+                  }}
+                  onLoadedData={() => {
+                    const video = videoRefs.current[index];
+                    if (video) video.play().catch(() => {});
+                  }}
                 >
-                  <source src={story.videoUrl} type="video/quicktime" />
                   <source src={story.videoUrl} type="video/mp4" />
+                  <source src={story.videoUrl} type="video/quicktime" />
                   Your browser does not support the video tag.
                 </video>
               </div>

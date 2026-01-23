@@ -98,8 +98,8 @@ const Destination = () => {
           playsInline
           preload="auto"
         >
-          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov" type="video/mp4" />
-          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov" type="video/quicktime" />
+          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov" type="video/quicktime" />
         </video>
 
         <div className="fleet-hero-overlay"></div>

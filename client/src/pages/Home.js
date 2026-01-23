@@ -70,11 +70,11 @@ const Home = () => {
   // ];
 
 
-  // Hero background videos - Now using Cloudinary URLs
+  // Hero background videos - Now using Cloudinary URLs with MP4 transformation
   const heroVideos = [
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', // Using IMG_1631 as fallback until others upload
+    'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov',
+    'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov',
+    'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', // Using IMG_1631 as fallback until others upload
   ];
 
   useEffect(() => {
@@ -139,9 +139,16 @@ const Home = () => {
               playsInline
               className="hero-video"
               preload="auto"
+              onError={(e) => {
+                console.error('Hero video load error:', video);
+                e.target.style.display = 'none';
+              }}
+              onLoadedData={(e) => {
+                e.target.play().catch(() => {});
+              }}
             >
-              <source src={video} type="video/quicktime" />
               <source src={video} type="video/mp4" />
+              <source src={video} type="video/quicktime" />
               Your browser does not support the video tag.
             </video>
           </div>

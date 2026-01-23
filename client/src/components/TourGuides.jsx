@@ -9,7 +9,7 @@ import './TourGuides.css';
 // import desertBackgroundVideo from '../assets/IMG_21481.MOV';
 // import desertBackgroundVideo from '../../public/assets/vehicles/MG_21481.MOV';
 
-const heroVideos = 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov' // Cloudinary URL
+const heroVideos = 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov' // Cloudinary URL with MP4 format
 ;
 
 const guides = [

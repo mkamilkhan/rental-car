@@ -12,7 +12,7 @@ import Polaris1Seater from "../assets/Polaris-rzr1000-single-seater.jpeg";
 const galleryData = [
   {
     type: "video",
-    src: "https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov",
+    src: "https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov",
     title: "The Maverick Crew",
     subtitle: "POLARIS 2000CC • UK",
     count: "1/3",
@@ -74,8 +74,8 @@ const Service = () => {
       {/* HERO */}
       <section className="service-fleet-hero">
         <video className="service-fleet-hero-video" autoPlay muted loop playsInline preload="auto">
-          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov" type="video/mp4" />
-          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_28415.mov" type="video/quicktime" />
+          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov" type="video/quicktime" />
         </video>
         <div className="service-fleet-hero-overlay" />
         <div className="service-fleet-hero-content">

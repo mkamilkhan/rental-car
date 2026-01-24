@@ -11,7 +11,7 @@ const CategoriesSlider = ({ categories = [] }) => {
 
   const settings = {
     dots: true,
-    infinite: categories.length > 5, // 🔥 important
+    infinite: categories.length > 5,
     speed: 600,
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -19,6 +19,8 @@ const CategoriesSlider = ({ categories = [] }) => {
     centerPadding: "0px",
     arrows: false,
     focusOnSelect: true,
+    swipeToSlide: true,
+    touchMove: true,
 
     responsive: [
       {
@@ -28,6 +30,7 @@ const CategoriesSlider = ({ categories = [] }) => {
           slidesToScroll: 1,
           centerMode: true,
           infinite: categories.length > 3,
+          centerPadding: "0px",
         },
       },
       {

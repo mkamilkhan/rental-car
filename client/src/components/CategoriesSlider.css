@@ -15,17 +15,21 @@
 .categories-slick-slider .slick-track {
   display: flex;
   align-items: flex-end;
+  padding: 20px 0;
 }
 
 /* LIST */
 .categories-slick-slider .slick-list {
   overflow: visible;
+  padding: 0 !important;
 }
 
 /* SLIDE */
 .category-slide {
   display: flex !important;
   justify-content: center;
+  margin: 0 25px; /* 25px left + 25px right = 50px gap between cards */
+  padding: 0;
 }
 
 /* CARD */
@@ -34,36 +38,39 @@
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s ease, opacity 0.6s ease;
   transform-origin: center bottom;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   opacity: 1;
+  margin: 0;
 }
 
-/* 🔝 CENTER CARD (HIGHEST) */
+/* 🔝 CARDS 2, 3, 4 (ELEVATED - TOP) */
+.category-slide.slick-active .category-card-tour {
+  transform: translateY(-20px) scale(1);
+  z-index: 8;
+  opacity: 1;
+}
+
+/* 🔝 CENTER CARD (HIGHEST - CARD 3) */
 .category-slide.slick-center .category-card-tour {
-  transform: translateY(-55px) scale(1);
+  transform: translateY(-55px) scale(1.05);
   z-index: 10;
   opacity: 1;
 }
 
-/* ⬇️ LEFT & RIGHT (MID LEVEL) */
-.category-slide.slick-active:not(.slick-center) .category-card-tour {
-  transform: translateY(-15px) scale(0.96);
-  z-index: 6;
-}
-
-/* ⬇️⬇️ FAR SIDES (LOWEST) */
+/* ⬇️ CARDS 1 & 5 (LOWER - BOTTOM) */
 .category-slide:not(.slick-active) .category-card-tour {
-  transform: translateY(45px) scale(0.92);
+  transform: translateY(25px) scale(0.92);
   z-index: 2;
+  opacity: 0.85;
 }
 
 /* IMAGE */
 .category-image-wrapper {
-  width: 100%;
+    width: 100%;
   height: 240px;
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .category-image {
@@ -120,33 +127,39 @@
   background: #f6b53b;
 }
 
-/* 📱 MOBILE FIX */
+/* 📱 MOBILE FIX - SIRF 1 CARD VISIBLE */
 @media (max-width: 768px) {
   .categories-slider-wrapper {
     padding: 2rem 0 7rem;
   }
 
-  /* CARD BIGGER - Full width on mobile */
+  /* LIST - Hide overflow on mobile */
+  .categories-slick-slider .slick-list {
+    overflow: hidden !important;
+  }
+
+  /* CARD BIGGER - Single large card on mobile */
   .category-card-tour {
     width: 85vw !important;
-    max-width: 100% !important;
-    margin: 0 auto;
-    opacity: 1 !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
   }
   
   .category-slide {
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
-    opacity: 1 !important;
   }
   
-  /* CENTER CARD - Full size on mobile, fully visible */
+  /* CENTER CARD - Sirf yeh card visible hai */
   .category-slide.slick-center .category-card-tour {
     transform: translateY(0) scale(1) !important;
     width: 85vw !important;
+    max-width: 340px !important;
     opacity: 1 !important;
     z-index: 10 !important;
+    display: block !important;
+    visibility: visible !important;
   }
   
   .category-slide.slick-center .category-content {
@@ -163,41 +176,64 @@
     color: #056c89 !important;
   }
 
-  /* SIDE SLIDES - Hide on mobile since we show only 1 */
+  /* SIDE SLIDES - COMPLETELY HIDE on mobile */
   .category-slide.slick-active:not(.slick-center) .category-card-tour {
-    transform: translateY(0) scale(0.95);
-    opacity: 0.3;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   .category-slide:not(.slick-active) .category-card-tour {
-    transform: translateY(0) scale(0.9);
-    opacity: 0.1;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   /* IMAGE */
-  .category-image-wrapper {
-    height: 250px;
+  .category-slide.slick-center .category-image-wrapper {
+    height: 220px;
   }
   
-  .category-image {
+  .category-slide.slick-center .category-image {
     opacity: 1 !important;
   }
 
   /* 🔵 BULLETS AUR NEECHE */
   .categories-slick-slider .slick-dots {
-    bottom: -80px !important;
+    bottom: -90px !important;
+  }
+  
+  /* TRACK - Remove padding on mobile */
+  .categories-slick-slider .slick-track {
+    padding: 0;
+    align-items: center;
   }
 }
 
 @media (max-width: 480px) {
+  /* SIRF 1 CARD VISIBLE - Small mobile */
+  .categories-slick-slider .slick-list {
+    overflow: hidden !important;
+  }
+
   .category-card-tour {
     width: 90vw !important;
-    opacity: 1 !important;
+    max-width: 320px !important;
   }
   
   .category-slide.slick-center .category-card-tour {
     width: 90vw !important;
+    max-width: 320px !important;
     opacity: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  /* Hide all other cards */
+  .category-slide:not(.slick-center) .category-card-tour {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
   
   .category-slide.slick-center .category-content {
@@ -214,11 +250,11 @@
     color: #056c89 !important;
   }
   
-  .category-image-wrapper {
-    height: 220px;
+  .category-slide.slick-center .category-image-wrapper {
+    height: 200px;
   }
   
-  .category-image {
+  .category-slide.slick-center .category-image {
     opacity: 1 !important;
   }
 }
@@ -230,3 +266,4 @@
   padding: 3rem;
   color: #fdfafa;
 }
+  

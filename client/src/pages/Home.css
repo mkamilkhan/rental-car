@@ -1,5 +1,6 @@
 .home {
   padding-top: 0;
+  margin-top: 0;
 }
 
 .hero-section {
@@ -8,6 +9,9 @@
   overflow: hidden;
   background: #111111;
   border: 1px solid #171819ee;
+  z-index: 1;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* Slides */
@@ -42,7 +46,7 @@
   );
   display: flex;
   align-items: center;
-  z-index: 2;
+  z-index: 1001;
   /* border: 1px solid #171819ee; */
 }
 
@@ -123,7 +127,7 @@
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
-  z-index: 3;
+  z-index: 1002;
 }
 
 .indicator {
@@ -196,12 +200,115 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+  .home {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  .hero-section {
+    min-height: 60vh;
+    height: 60vh;
+    margin-top: 0;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .hero-overlay {
+    z-index: 1001;
+    padding-top: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .hero-content {
+    padding-top: 20px;
+    position: relative;
+    z-index: 1002;
+  }
+  
   .hero-content h1 {
     font-size: 42px;
   }
 
   .hero-content p {
     font-size: 16px;
+  }
+  
+  .hero-indicators {
+    bottom: 20px;
+    z-index: 1003;
+    position: absolute;
+  }
+  
+  .btn-hero-parent {
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1002;
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  .hero-section {
+    min-height: 50vh;
+    height: 50vh;
+    margin-top: 0;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-overlay {
+    z-index: 1001;
+    padding-top: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .hero-content {
+    padding-top: 15px;
+    position: relative;
+    z-index: 1002;
+  }
+  
+  .hero-content h1 {
+    font-size: 32px;
+    line-height: 1.1;
+  }
+  
+  .hero-content p {
+    font-size: 14px;
+  }
+  
+  .hero-indicators {
+    bottom: 15px;
+    z-index: 1003;
+    position: absolute;
+  }
+  
+  .btn-hero-parent {
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1002;
   }
 }
 

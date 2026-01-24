@@ -36,10 +36,20 @@ const CategoriesSlider = ({ categories = [] }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           centerMode: true,
-          centerPadding: "0px"
+          centerPadding: "0px",
+          infinite: categories.length > 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: "0px",
+          infinite: categories.length > 1,
         }
       }
-      
     ],
   };
 

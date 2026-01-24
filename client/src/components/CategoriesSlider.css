@@ -120,37 +120,104 @@
 
 /* 📱 MOBILE FIX */
 @media (max-width: 768px) {
-
-  /* CARD BIGGER */
-  .category-card-tour {
-    width: 90vw;           /* 🔥 almost full screen */
-    max-width: 340px;     /* control */
-  }
   .categories-slider-wrapper {
-    padding-bottom: 9rem;
-  }
-  /* CENTER CARD */
-  .category-slide.slick-center .category-card-tour {
-    transform: translateY(-20px) scale(1);
+    padding: 2rem 0 7rem;
   }
 
-  /* SIDE SLIDES (mostly hidden anyway) */
+  /* CARD BIGGER - Full width on mobile */
+  .category-card-tour {
+    width: 85vw !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+    opacity: 1 !important;
+  }
+  
+  .category-slide {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+  }
+  
+  /* CENTER CARD - Full size on mobile, fully visible */
+  .category-slide.slick-center .category-card-tour {
+    transform: translateY(0) scale(1) !important;
+    width: 85vw !important;
+    opacity: 1 !important;
+    z-index: 10 !important;
+  }
+  
+  .category-slide.slick-center .category-content {
+    opacity: 1 !important;
+  }
+  
+  .category-slide.slick-center .category-title {
+    opacity: 1 !important;
+    color: #1a1a1a !important;
+  }
+  
+  .category-slide.slick-center .category-see-more {
+    opacity: 1 !important;
+    color: #056c89 !important;
+  }
+
+  /* SIDE SLIDES - Hide on mobile since we show only 1 */
   .category-slide.slick-active:not(.slick-center) .category-card-tour {
-    transform: translateY(10px) scale(0.92);
+    transform: translateY(0) scale(0.95);
+    opacity: 0.3;
   }
 
   .category-slide:not(.slick-active) .category-card-tour {
-    transform: translateY(25px) scale(0.9);
+    transform: translateY(0) scale(0.9);
+    opacity: 0.1;
   }
 
   /* IMAGE */
   .category-image-wrapper {
-    height: 220px;
+    height: 250px;
+  }
+  
+  .category-image {
+    opacity: 1 !important;
   }
 
   /* 🔵 BULLETS AUR NEECHE */
   .categories-slick-slider .slick-dots {
-    bottom: -90px !important;
+    bottom: -80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-card-tour {
+    width: 90vw !important;
+    opacity: 1 !important;
+  }
+  
+  .category-slide.slick-center .category-card-tour {
+    width: 90vw !important;
+    opacity: 1 !important;
+  }
+  
+  .category-slide.slick-center .category-content {
+    opacity: 1 !important;
+  }
+  
+  .category-slide.slick-center .category-title {
+    opacity: 1 !important;
+    color: #1a1a1a !important;
+  }
+  
+  .category-slide.slick-center .category-see-more {
+    opacity: 1 !important;
+    color: #056c89 !important;
+  }
+  
+  .category-image-wrapper {
+    height: 220px;
+  }
+  
+  .category-image {
+    opacity: 1 !important;
   }
 }
 

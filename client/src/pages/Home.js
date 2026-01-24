@@ -139,12 +139,21 @@ const Home = () => {
               playsInline
               className="hero-video"
               preload="auto"
+              webkit-playsinline="true"
+              x5-playsinline="true"
               onError={(e) => {
                 console.error('Hero video load error:', video);
                 e.target.style.display = 'none';
               }}
               onLoadedData={(e) => {
-                e.target.play().catch(() => {});
+                e.target.play().catch((err) => {
+                  console.log('Hero video autoplay prevented:', err);
+                });
+              }}
+              onCanPlay={(e) => {
+                if (index === currentSlide) {
+                  e.target.play().catch(() => {});
+                }
               }}
             >
               <source src={video} type="video/mp4" />

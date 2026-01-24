@@ -41,20 +41,74 @@ export const VideoCardSlider = () => {
       setCurrentSlide(next);
     },
     afterChange: (current) => {
+      // Pause all videos first
+      videoRefs.current.forEach((vid) => {
+        if (vid) vid.pause();
+      });
+      // Play current video
       const video = videoRefs.current[current];
-      if (video) video.play().catch(() => {});
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch((err) => {
+          console.log('Video play prevented on slide change:', err);
+        });
+      }
     },
     responsive: [
       { breakpoint: 1440, settings: { slidesToShow: 4 } }, // smaller desktop
       { breakpoint: 1280, settings: { slidesToShow: 3 } },
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
+      { 
+        breakpoint: 768, 
+        settings: { 
+          slidesToShow: 1, 
+          slidesToScroll: 1,
+          centerMode: true, 
+          centerPadding: '0px',
+          infinite: true
+        } 
+      },
+      { 
+        breakpoint: 640, 
+        settings: { 
+          slidesToShow: 1, 
+          slidesToScroll: 1,
+          centerMode: true, 
+          centerPadding: '0px',
+          infinite: true
+        } 
+      },
+      { 
+        breakpoint: 480, 
+        settings: { 
+          slidesToShow: 1, 
+          slidesToScroll: 1,
+          centerMode: true, 
+          centerPadding: '0px',
+          infinite: true
+        } 
+      },
     ],
   };
 
   useEffect(() => {
-    const firstVideo = videoRefs.current[0];
-    if (firstVideo) firstVideo.play().catch(() => {});
+    // Mobile browsers require user interaction for autoplay
+    const playVideos = () => {
+      const firstVideo = videoRefs.current[0];
+      if (firstVideo) {
+        firstVideo.play().catch((err) => {
+          console.log('Autoplay prevented, will play on user interaction');
+        });
+      }
+    };
+    
+    // Try to play immediately
+    playVideos();
+    
+    // Also try after a small delay (for mobile)
+    const timeout = setTimeout(playVideos, 500);
+    
+    return () => clearTimeout(timeout);
   }, []);
 
   const handleVideoEnded = (index) => {
@@ -79,14 +133,36 @@ export const VideoCardSlider = () => {
                   muted
                   playsInline
                   preload="auto"
+                  webkit-playsinline="true"
+                  x5-playsinline="true"
                   onEnded={() => handleVideoEnded(index)}
                   onError={(e) => {
                     console.error('Video load error:', story.videoUrl);
-                    e.target.style.display = 'none';
+                    // Don't hide, just show black background
                   }}
                   onLoadedData={() => {
                     const video = videoRefs.current[index];
-                    if (video) video.play().catch(() => {});
+                    if (video) {
+                      video.play().catch((err) => {
+                        console.log('Video autoplay prevented:', err);
+                        // On mobile, videos might need user interaction
+                      });
+                    }
+                  }}
+                  onCanPlay={() => {
+                    const video = videoRefs.current[index];
+                    if (video && index === currentSlide) {
+                      video.play().catch(() => {});
+                    }
+                  }}
+                  onClick={(e) => {
+                    // Allow user to tap to play on mobile
+                    const video = e.target;
+                    if (video.paused) {
+                      video.play().catch(() => {});
+                    } else {
+                      video.pause();
+                    }
                   }}
                 >
                   <source src={story.videoUrl} type="video/mp4" />

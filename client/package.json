@@ -11,7 +11,6 @@
     "axios": "^1.6.2",
     "lucide-react": "^0.562.0",
     "react": "^18.2.0",
-    "react-card-slider-component": "^1.0.9",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
     "react-icons": "^4.12.0",

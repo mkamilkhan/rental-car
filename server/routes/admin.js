@@ -99,60 +99,187 @@ router.post('/bookings', async (req, res) => {
 /* ================= ADD CAR ================= */
 router.post('/cars', adminAuth, upload.single('image'), async (req, res) => {
   try {
+    console.log('📝 Creating car - Body:', req.body);
+    console.log('📝 Creating car - File:', req.file ? 'File received' : 'No file');
+    
     // Convert empty strings to null/undefined for optional fields
     const carData = { ...req.body };
     
-    // Handle price fields - convert empty strings to undefined
-    if (carData.price30min === '' || carData.price30min === null) carData.price30min = undefined;
-    if (carData.price60min === '' || carData.price60min === null) carData.price60min = undefined;
-    if (carData.price90min === '' || carData.price90min === null) carData.price90min = undefined;
-    if (carData.price120min === '' || carData.price120min === null) carData.price120min = undefined;
+    // Validate required fields
+    if (!carData.name || !carData.brand || !carData.model) {
+      return res.status(400).json({ 
+        message: 'Missing required fields: name, brand, and model are required' 
+      });
+    }
+
+    if (!carData.seats || isNaN(Number(carData.seats))) {
+      return res.status(400).json({ 
+        message: 'Seats must be a valid number' 
+      });
+    }
+
+    if (!carData.year || isNaN(Number(carData.year))) {
+      return res.status(400).json({ 
+        message: 'Year must be a valid number' 
+      });
+    }
+
+    // Convert types
+    carData.year = Number(carData.year);
+    carData.seats = Number(carData.seats);
     
-    // Convert string numbers to actual numbers
-    if (carData.price30min !== undefined) carData.price30min = Number(carData.price30min);
-    if (carData.price60min !== undefined) carData.price60min = Number(carData.price60min);
-    if (carData.price90min !== undefined) carData.price90min = Number(carData.price90min);
-    if (carData.price120min !== undefined) carData.price120min = Number(carData.price120min);
+    // Handle boolean
+    if (carData.available === 'true' || carData.available === true) {
+      carData.available = true;
+    } else {
+      carData.available = false;
+    }
+    
+    // Handle price fields - convert empty strings to undefined
+    if (carData.price30min === '' || carData.price30min === null || carData.price30min === undefined) {
+      carData.price30min = undefined;
+    } else {
+      carData.price30min = Number(carData.price30min);
+    }
+    
+    if (carData.price60min === '' || carData.price60min === null || carData.price60min === undefined) {
+      carData.price60min = undefined;
+    } else {
+      carData.price60min = Number(carData.price60min);
+    }
+    
+    if (carData.price90min === '' || carData.price90min === null || carData.price90min === undefined) {
+      carData.price90min = undefined;
+    } else {
+      carData.price90min = Number(carData.price90min);
+    }
+    
+    if (carData.price120min === '' || carData.price120min === null || carData.price120min === undefined) {
+      carData.price120min = undefined;
+    } else {
+      carData.price120min = Number(carData.price120min);
+    }
+    
+    // Handle image - check Cloudinary config first
+    let imageUrl = null;
+    if (req.file) {
+      imageUrl = req.file.path || req.file.secure_url;
+      console.log('📸 Image uploaded to Cloudinary:', imageUrl);
+    } else if (!carData.image) {
+      return res.status(400).json({ 
+        message: 'Image is required for new cars' 
+      });
+    } else {
+      imageUrl = carData.image;
+    }
+    
+    // Check if Cloudinary is configured
+    if (!process.env.CLOUDINARY_CLOUD_NAME && req.file) {
+      console.warn('⚠️ Cloudinary not configured, but file was uploaded');
+    }
     
     const car = await Car.create({
       ...carData,
-      image: req.file?.path || null, // Cloudinary URL
+      image: imageUrl,
     });
 
+    console.log('✅ Car created successfully:', car._id);
     res.status(201).json(car);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to add car', error: error.message });
+    console.error('❌ Error creating car:', error);
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(e => e.message).join(', ');
+      return res.status(400).json({ 
+        message: 'Validation error', 
+        error: errors
+      });
+    }
+    
+    // Handle Cloudinary errors
+    if (error.message && error.message.includes('cloudinary')) {
+      return res.status(500).json({ 
+        message: 'Image upload failed. Please check Cloudinary configuration.', 
+        error: error.message
+      });
+    }
+    
+    res.status(500).json({ 
+      message: 'Failed to add car', 
+      error: error.message,
+      details: error.errors || error.stack
+    });
   }
 });
 
 /* ================= UPDATE CAR ================= */
 router.put('/cars/:id', adminAuth, upload.single('image'), async (req, res) => {
   try {
+    console.log('📝 Updating car - ID:', req.params.id);
+    console.log('📝 Updating car - Body:', req.body);
+    console.log('📝 Updating car - File:', req.file);
+    
     const updateData = { ...req.body };
     
-    // Handle price fields - convert empty strings to undefined
-    if (updateData.price30min === '' || updateData.price30min === null) updateData.price30min = undefined;
-    if (updateData.price60min === '' || updateData.price60min === null) updateData.price60min = undefined;
-    if (updateData.price90min === '' || updateData.price90min === null) updateData.price90min = undefined;
-    if (updateData.price120min === '' || updateData.price120min === null) updateData.price120min = undefined;
+    // Convert types if provided
+    if (updateData.year !== undefined) {
+      updateData.year = Number(updateData.year);
+    }
     
-    // Convert string numbers to actual numbers
-    if (updateData.price30min !== undefined) updateData.price30min = Number(updateData.price30min);
-    if (updateData.price60min !== undefined) updateData.price60min = Number(updateData.price60min);
-    if (updateData.price90min !== undefined) updateData.price90min = Number(updateData.price90min);
-    if (updateData.price120min !== undefined) updateData.price120min = Number(updateData.price120min);
-
-    if (req.file) {
-      updateData.image = req.file.path; // Cloudinary URL
+    if (updateData.seats !== undefined) {
+      updateData.seats = Number(updateData.seats);
+    }
+    
+    // Handle boolean
+    if (updateData.available === 'true' || updateData.available === true) {
+      updateData.available = true;
+    } else if (updateData.available === 'false' || updateData.available === false) {
+      updateData.available = false;
+    }
+    
+    // Handle price fields - convert empty strings to undefined
+    if (updateData.price30min === '' || updateData.price30min === null || updateData.price30min === undefined) {
+      updateData.price30min = undefined;
+    } else {
+      updateData.price30min = Number(updateData.price30min);
+    }
+    
+    if (updateData.price60min === '' || updateData.price60min === null || updateData.price60min === undefined) {
+      updateData.price60min = undefined;
+    } else {
+      updateData.price60min = Number(updateData.price60min);
+    }
+    
+    if (updateData.price90min === '' || updateData.price90min === null || updateData.price90min === undefined) {
+      updateData.price90min = undefined;
+    } else {
+      updateData.price90min = Number(updateData.price90min);
+    }
+    
+    if (updateData.price120min === '' || updateData.price120min === null || updateData.price120min === undefined) {
+      updateData.price120min = undefined;
+    } else {
+      updateData.price120min = Number(updateData.price120min);
     }
 
-    const car = await Car.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    if (req.file) {
+      updateData.image = req.file.path || req.file.secure_url; // Cloudinary URL
+    }
+
+    const car = await Car.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
 
     if (!car) return res.status(404).json({ message: 'Car not found' });
 
+    console.log('✅ Car updated successfully:', car._id);
     res.json(car);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('❌ Error updating car:', error);
+    res.status(500).json({ 
+      message: 'Server error', 
+      error: error.message,
+      details: error.errors || error
+    });
   }
 });
 

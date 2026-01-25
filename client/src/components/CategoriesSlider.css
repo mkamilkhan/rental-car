@@ -1,269 +1,158 @@
-/* WRAPPER */
+/* ===============================
+   WRAPPER
+=============================== */
+.tour-categories-section,
+.container {
+  overflow-x: visible;
+}
+
 .categories-slider-wrapper {
-  width: 100%;
-  padding: 3rem 0 7rem;
+  overflow: hidden;
   position: relative;
+  padding-bottom: 70px;
 }
 
-/* SLIDER */
+/* ===============================
+   SLICK SLIDER
+=============================== */
 .categories-slick-slider {
-  width: 100%;
   position: relative;
+  width: 100%;
+  padding-bottom: 90px; /* bullets gap */
+  touch-action: pan-y;
 }
 
-/* TRACK */
-.categories-slick-slider .slick-track {
-  display: flex;
-  align-items: flex-end;
-  padding: 20px 0;
-}
-
-/* LIST */
 .categories-slick-slider .slick-list {
-  overflow: visible;
+  overflow: hidden;
   padding: 0 !important;
 }
 
-/* SLIDE */
+.categories-slick-slider .slick-track {
+  display: flex;
+  align-items: center;
+}
+
+/* ===============================
+   SLIDE
+=============================== */
 .category-slide {
   display: flex !important;
   justify-content: center;
-  margin: 0 25px; /* 25px left + 25px right = 50px gap between cards */
+  margin: 0;
   padding: 0;
 }
 
-/* CARD */
+/* 👉 DESKTOP ONLY gap */
+@media (min-width: 769px) {
+  .category-slide {
+    padding: 0 14px;
+  }
+}
+
+/* ===============================
+   CARD
+=============================== */
 .category-card-tour {
-  width: 230px;
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  transform-origin: center bottom;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-  opacity: 1;
-  margin: 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
-/* 🔝 CARDS 2, 3, 4 (ELEVATED - TOP) */
-.category-slide.slick-active .category-card-tour {
-  transform: translateY(-20px) scale(1);
-  z-index: 8;
-  opacity: 1;
-}
-
-/* 🔝 CENTER CARD (HIGHEST - CARD 3) */
-.category-slide.slick-center .category-card-tour {
-  transform: translateY(-55px) scale(1.05);
-  z-index: 10;
-  opacity: 1;
-}
-
-/* ⬇️ CARDS 1 & 5 (LOWER - BOTTOM) */
-.category-slide:not(.slick-active) .category-card-tour {
-  transform: translateY(25px) scale(0.92);
-  z-index: 2;
-  opacity: 0.85;
-}
-
-/* IMAGE */
+/* ===============================
+   IMAGE
+=============================== */
 .category-image-wrapper {
-    width: 100%;
-  height: 240px;
-    overflow: hidden;
+  width: 100%;
+  height: 230px;
 }
 
 .category-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
 }
 
-.category-card-tour:hover .category-image {
-  transform: scale(1.05);
-}
-
-/* CONTENT */
+/* ===============================
+   CONTENT
+=============================== */
 .category-content {
-  padding: 1.25rem 1rem;
+  padding: 1.2rem 1rem;
 }
 
 .category-title {
   font-size: 1rem;
   font-weight: 600;
-  margin: 0;
 }
 
 .category-see-more {
-  font-size: 0.875rem;
-  color: #056c89;
+  color: #f6b53b;
+  font-weight: 600;
   text-decoration: none;
 }
 
-.category-see-more:hover {
-  text-decoration: underline;
-}
-
-/* 🔵 DOTS – ALWAYS BELOW CARDS */
+/* ===============================
+   DOTS
+=============================== */
 .categories-slick-slider .slick-dots {
-  position: absolute !important;
-  bottom: -140px !important;
-  /* ⬅️ aur neeche */
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex !important;
+  gap: 14px;
+  width: auto !important; /* fixes centering */
 }
 
+.categories-slick-slider .slick-dots li {
+  margin: 0;
+}
 
 .categories-slick-slider .slick-dots li button {
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: #ffffff;
+  background: rgba(255,255,255,0.6);
+  border: 2px solid #f6b53b;
 }
 
 .categories-slick-slider .slick-dots li.slick-active button {
+  width: 18px;
+  height: 18px;
   background: #f6b53b;
+  box-shadow: 0 0 10px rgba(246,181,59,0.9);
 }
 
-/* 📱 MOBILE FIX - SIRF 1 CARD VISIBLE */
+.categories-slick-slider .slick-dots li button::before {
+  display: none;
+}
+
+/* ===============================
+   DESKTOP CARD WIDTH
+=============================== */
+@media (min-width: 1024px) {
+  .category-card-tour {
+    width: 260px;
+  }
+}
+
+/* ===============================
+   MOBILE
+=============================== */
 @media (max-width: 768px) {
-  .categories-slider-wrapper {
-    padding: 2rem 0 7rem;
-  }
-
-  /* LIST - Hide overflow on mobile */
-  .categories-slick-slider .slick-list {
-    overflow: hidden !important;
-  }
-
-  /* CARD BIGGER - Single large card on mobile */
-  .category-card-tour {
-    width: 85vw !important;
-    max-width: 340px !important;
-    margin: 0 auto !important;
-  }
-  
   .category-slide {
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  
-  /* CENTER CARD - Sirf yeh card visible hai */
-  .category-slide.slick-center .category-card-tour {
-    transform: translateY(0) scale(1) !important;
-    width: 85vw !important;
-    max-width: 340px !important;
-    opacity: 1 !important;
-    z-index: 10 !important;
-    display: block !important;
-    visibility: visible !important;
-  }
-  
-  .category-slide.slick-center .category-content {
-    opacity: 1 !important;
-  }
-  
-  .category-slide.slick-center .category-title {
-    opacity: 1 !important;
-    color: #1a1a1a !important;
-  }
-  
-  .category-slide.slick-center .category-see-more {
-    opacity: 1 !important;
-    color: #056c89 !important;
-  }
-
-  /* SIDE SLIDES - COMPLETELY HIDE on mobile */
-  .category-slide.slick-active:not(.slick-center) .category-card-tour {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-
-  .category-slide:not(.slick-active) .category-card-tour {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-
-  /* IMAGE */
-  .category-slide.slick-center .category-image-wrapper {
-    height: 220px;
-  }
-  
-  .category-slide.slick-center .category-image {
-    opacity: 1 !important;
-  }
-
-  /* 🔵 BULLETS AUR NEECHE */
-  .categories-slick-slider .slick-dots {
-    bottom: -90px !important;
-  }
-  
-  /* TRACK - Remove padding on mobile */
-  .categories-slick-slider .slick-track {
-    padding: 0;
-    align-items: center;
-  }
-}
-
-@media (max-width: 480px) {
-  /* SIRF 1 CARD VISIBLE - Small mobile */
-  .categories-slick-slider .slick-list {
-    overflow: hidden !important;
+    padding: 0 16px; /* gap */
   }
 
   .category-card-tour {
-    width: 90vw !important;
-    max-width: 320px !important;
+    width: 100%;
   }
-  
-  .category-slide.slick-center .category-card-tour {
-    width: 90vw !important;
-    max-width: 320px !important;
-    opacity: 1 !important;
-    display: block !important;
-    visibility: visible !important;
-  }
-  
-  /* Hide all other cards */
-  .category-slide:not(.slick-center) .category-card-tour {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-  
-  .category-slide.slick-center .category-content {
-    opacity: 1 !important;
-  }
-  
-  .category-slide.slick-center .category-title {
-    opacity: 1 !important;
-    color: #1a1a1a !important;
-  }
-  
-  .category-slide.slick-center .category-see-more {
-    opacity: 1 !important;
-    color: #056c89 !important;
-  }
-  
-  .category-slide.slick-center .category-image-wrapper {
+
+  .category-image-wrapper {
     height: 200px;
   }
-  
-  .category-slide.slick-center .category-image {
-    opacity: 1 !important;
+
+  .categories-slick-slider {
+    padding-bottom: 95px;
   }
 }
-
-
-/* EMPTY */
-.no-categories {
-  text-align: center;
-  padding: 3rem;
-  color: #fdfafa;
-}
-  

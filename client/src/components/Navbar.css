@@ -6,7 +6,7 @@
     position: sticky;
     top: 0;
     width: 100%;
-    background: linear-gradient(135deg, rgba(24, 22, 22, 0.95) 0%, rgba(21, 19, 19, 0.95) 100%);
+    background: linear-gradient(135deg, rgb(22, 22, 22) 0%, rgba(7, 7, 7, 0.95) 100%);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     transition: all 0.3s ease;
@@ -31,11 +31,13 @@
      LOGO SECTION
      ============================================ */
   
-  .navbar-logo {
+  .navbar-logo99 {
     text-decoration: none;
     transition: transform 0.3s ease;
     flex-shrink: 0;
     display: flex;
+    width: 130px;
+    height: 100px;
     align-items: center;
   }
   

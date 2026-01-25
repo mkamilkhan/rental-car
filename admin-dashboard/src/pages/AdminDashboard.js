@@ -1017,6 +1017,12 @@ const AdminDashboard = () => {
   });
   
   const [imagePreview, setImagePreview] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [carToDelete, setCarToDelete] = useState(null);
     
   useEffect(() => {
     fetchBookings();
@@ -1165,11 +1171,51 @@ const AdminDashboard = () => {
     try {
       const formData = new FormData();
   
+      // Validate required fields
+      if (!carFormData.name || !carFormData.brand || !carFormData.model) {
+        setErrorMessage('Please fill in all required fields (Name, Brand, Model)');
+        setShowErrorModal(true);
+        setTimeout(() => setShowErrorModal(false), 4000);
+        return;
+      }
+
+      if (!carFormData.seats || carFormData.seats < 1) {
+        setErrorMessage('Please enter a valid number of seats (minimum 1)');
+        setShowErrorModal(true);
+        setTimeout(() => setShowErrorModal(false), 4000);
+        return;
+      }
+
+      // For new car, image is required
+      if (!editingCar && !carFormData.imageFile) {
+        setErrorMessage('Please select an image for the car');
+        setShowErrorModal(true);
+        setTimeout(() => setShowErrorModal(false), 4000);
+        return;
+      }
+  
       // Append all form fields except imageFile
       Object.entries(carFormData).forEach(([key, value]) => {
         if (key !== 'imageFile') {
-          // Booleans need to be converted to strings
-          formData.append(key, typeof value === 'boolean' ? value.toString() : value);
+          if (value === null || value === undefined || value === '') {
+            // Skip empty values for optional fields
+            if (key === 'price30min' || key === 'price60min' || key === 'price90min' || key === 'price120min' || key === 'description') {
+              return; // Skip optional fields
+            }
+          }
+          
+          // Convert types properly
+          if (key === 'year' || key === 'seats') {
+            formData.append(key, Number(value));
+          } else if (key === 'price30min' || key === 'price60min' || key === 'price90min' || key === 'price120min') {
+            if (value && value !== '') {
+              formData.append(key, Number(value));
+            }
+          } else if (key === 'available') {
+            formData.append(key, value === true || value === 'true' ? 'true' : 'false');
+          } else {
+            formData.append(key, value);
+          }
         }
       });
   
@@ -1179,32 +1225,62 @@ const AdminDashboard = () => {
       }
   
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('token');
+      
+      // Get axios instance with default headers
+      const axiosConfig = {
+        headers: {
+          // Don't set Content-Type manually - let browser set it with boundary for FormData
+          'Authorization': token ? `Bearer ${token}` : undefined
+        }
+      };
+      
+      // Remove undefined headers
+      Object.keys(axiosConfig.headers).forEach(key => {
+        if (axiosConfig.headers[key] === undefined) {
+          delete axiosConfig.headers[key];
+        }
+      });
       
       if (editingCar) {
         // Update existing car
         await axios.put(
           `${apiUrl}/api/admin/cars/${editingCar._id}`,
           formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } }
+          axiosConfig
         );
-        alert('✅ Car updated successfully');
+        setSuccessMessage('Car updated successfully!');
+        setShowSuccessModal(true);
       } else {
         // Add new car
         await axios.post(
           `${apiUrl}/api/admin/cars`,
           formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } }
+          axiosConfig
         );
-        alert('✅ Car added successfully');
+        setSuccessMessage('Car added successfully!');
+        setShowSuccessModal(true);
       }
   
       fetchCars();
       setShowCarForm(false);
       setEditingCar(null);
       setImagePreview(null);
+      
+      // Auto close modal after 3 seconds
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 3000);
     } catch (error) {
-      console.error(error);
-      alert('❌ Failed to save car');
+      console.error('Car submit error:', error);
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || error.message || 'Failed to save car';
+      setErrorMessage(errorMsg);
+      setShowErrorModal(true);
+      
+      // Auto close error modal after 4 seconds
+      setTimeout(() => {
+        setShowErrorModal(false);
+      }, 4000);
     }
   };
   
@@ -1265,16 +1341,37 @@ const AdminDashboard = () => {
   
   
 
-  const handleDeleteCar = async (carId) => {
-    if (!window.confirm('Are you sure you want to delete this car?')) {
-      return;
-    }
+  const handleDeleteCar = (carId) => {
+    const car = cars.find(c => c._id === carId);
+    setCarToDelete({ id: carId, name: car?.name || 'this car' });
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteCar = async () => {
+    if (!carToDelete) return;
+    
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      await axios.delete(`${apiUrl}/api/admin/cars/${carId}`);
+      await axios.delete(`${apiUrl}/api/admin/cars/${carToDelete.id}`);
+      setShowDeleteModal(false);
+      setCarToDelete(null);
+      setSuccessMessage('Car deleted successfully!');
+      setShowSuccessModal(true);
       fetchCars();
+      
+      // Auto close success modal after 3 seconds
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 3000);
     } catch (error) {
-      alert(error.response?.data?.message || 'Failed to delete car');
+      setShowDeleteModal(false);
+      setErrorMessage(error.response?.data?.message || 'Failed to delete car');
+      setShowErrorModal(true);
+      
+      // Auto close error modal after 4 seconds
+      setTimeout(() => {
+        setShowErrorModal(false);
+      }, 4000);
     }
   };
 
@@ -1388,7 +1485,7 @@ const AdminDashboard = () => {
               <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15"/>
               </svg>
-              Messages
+              Booking Summary
             </a>
           </li>
           <li className="sidebar-nav-item">
@@ -1400,35 +1497,10 @@ const AdminDashboard = () => {
                 <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"/>
                 <path d="M14 2V8H20"/>
               </svg>
-              Files
+              Car Overview
             </a>
           </li>
-          <li className="sidebar-nav-item">
-            <a className="sidebar-nav-link">
-              <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M7 7H17M7 12H17M7 17H12"/>
-              </svg>
-              Tags
-            </a>
-          </li>
-          <li className="sidebar-nav-item">
-            <a className="sidebar-nav-link">
-              <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M20 8C20 9.65685 18.6569 11 17 11C15.3431 11 14 9.65685 14 8C14 6.34315 15.3431 5 17 5C18.6569 5 20 6.34315 20 8Z"/>
-                <path d="M12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"/>
-              </svg>
-              Users
-            </a>
-          </li>
-          <li className="sidebar-nav-item">
-            <a className="sidebar-nav-link">
-              <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/>
-                <path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.3791 9.87119 19.8681 9.51699 19.4677C9.16279 19.0673 8.67894 18.8046 8.15 18.73C7.82978 18.6884 7.51438 18.5931 7.22 18.448C6.95272 18.2703 6.74228 18.0181 6.615 17.72C6.48115 17.4184 6.44145 17.0838 6.50023 16.7594C6.55901 16.435 6.71368 16.1357 6.944 15.9L7.004 15.84C7.18966 15.654 7.236 15.4337 7.236 15.1709C7.236 14.9081 7.18424 14.6478 7.08357 14.405C6.98291 14.1622 6.83543 13.9416 6.65 13.755C6.46426 13.569 6.24372 13.4215 6.00088 13.3209C5.75804 13.2202 5.49778 13.1684 5.235 13.1684C4.97222 13.1684 4.71196 13.2202 4.46912 13.3209C4.22628 13.4215 4.00574 13.569 3.82 13.755L3.76 13.815C3.52949 14.0457 3.37482 14.345 3.31604 14.6694C3.25726 14.9938 3.29695 15.3284 3.43 15.63C3.55684 15.9258 3.76728 16.178 4.03554 16.3557C4.3038 16.5334 4.61818 16.6287 4.94 16.63H5.05C5.58043 16.63 6.08914 16.8407 6.46421 17.2158C6.83929 17.5909 7.05 18.0996 7.05 18.63C7.05 19.1604 6.83929 19.6691 6.46421 20.0442C6.08914 20.4193 5.58043 20.63 5.05 20.63H5C4.46957 20.63 3.96086 20.4193 3.58579 20.0442C3.21071 19.6691 3 19.1604 3 18.63V18.5C3 17.9696 3.21071 17.4609 3.58579 17.0858C3.96086 16.7107 4.46957 16.5 5 16.5H5.09C5.42082 16.4923 5.73178 16.397 6 16.226Z"/>
-              </svg>
-              Setting
-            </a>
-          </li>
+        
           <li className="sidebar-nav-item">
             <a className="sidebar-nav-link" onClick={handleLogout}>
               <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1445,8 +1517,26 @@ const AdminDashboard = () => {
         {notifications.length > 0 && (
           <div className="notifications-panel">
             <div className="notifications-header">
-              <h3>📬 Recent Notifications</h3>
-              <button onClick={() => { setNotifications([]); setNewBookingsCount(0); }} className="btn-clear-notifications">
+              <div className="notifications-header-left">
+                <div className="notifications-icon-wrapper">
+                  <svg className="notifications-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="notifications-title">Recent Notifications</h3>
+                  <p className="notifications-subtitle">{notifications.length} new {notifications.length === 1 ? 'notification' : 'notifications'}</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => { setNotifications([]); setNewBookingsCount(0); }} 
+                className="btn-clear-notifications"
+                title="Clear all notifications"
+              >
+                <svg className="btn-clear-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
                 Clear All
               </button>
             </div>
@@ -2200,6 +2290,382 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div 
+          className="success-modal-overlay"
+          onClick={() => setShowSuccessModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            animation: 'fadeIn 0.3s ease'
+          }}
+        >
+          <div 
+            className="success-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)',
+              padding: '2.5rem',
+              borderRadius: '16px',
+              maxWidth: '420px',
+              width: '90%',
+              border: '2px solid #E9B949',
+              boxShadow: '0 20px 60px rgba(233, 185, 73, 0.3)',
+              textAlign: 'center',
+              animation: 'slideUp 0.3s ease',
+              position: 'relative'
+            }}
+          >
+            <div style={{
+              width: '80px',
+              height: '80px',
+              margin: '0 auto 1.5rem',
+              background: 'linear-gradient(135deg, #E9B949 0%, #f59e0c 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 24px rgba(233, 185, 73, 0.4)'
+            }}>
+              <svg 
+                width="40" 
+                height="40" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#000000" 
+                strokeWidth="3"
+                style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}
+              >
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+            </div>
+            <h3 style={{
+              color: '#ffffff',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              marginBottom: '0.75rem',
+              fontFamily: 'Impact, Arial Black, Arial, sans-serif'
+            }}>
+              Success!
+            </h3>
+            <p style={{
+              color: '#9CA3AF',
+              fontSize: '1rem',
+              marginBottom: '2rem',
+              lineHeight: '1.6'
+            }}>
+              {successMessage}
+            </p>
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              style={{
+                background: '#E9B949',
+                color: '#000000',
+                border: 'none',
+                padding: '0.875rem 2rem',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                width: '100%'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#f59e0c';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 20px rgba(233, 185, 73, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#E9B949';
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Error Modal */}
+      {showErrorModal && (
+        <div 
+          className="error-modal-overlay"
+          onClick={() => setShowErrorModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            animation: 'fadeIn 0.3s ease'
+          }}
+        >
+          <div 
+            className="error-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)',
+              padding: '2.5rem',
+              borderRadius: '16px',
+              maxWidth: '420px',
+              width: '90%',
+              border: '2px solid #ef4444',
+              boxShadow: '0 20px 60px rgba(239, 68, 68, 0.3)',
+              textAlign: 'center',
+              animation: 'slideUp 0.3s ease',
+              position: 'relative'
+            }}
+          >
+            <div style={{
+              width: '80px',
+              height: '80px',
+              margin: '0 auto 1.5rem',
+              background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 24px rgba(239, 68, 68, 0.4)'
+            }}>
+              <svg 
+                width="40" 
+                height="40" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#ffffff" 
+                strokeWidth="3"
+                style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}
+              >
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </div>
+            <h3 style={{
+              color: '#ffffff',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              marginBottom: '0.75rem',
+              fontFamily: 'Impact, Arial Black, Arial, sans-serif'
+            }}>
+              Error!
+            </h3>
+            <p style={{
+              color: '#fca5a5',
+              fontSize: '1rem',
+              marginBottom: '2rem',
+              lineHeight: '1.6'
+            }}>
+              {errorMessage}
+            </p>
+            <button
+              onClick={() => setShowErrorModal(false)}
+              style={{
+                background: '#ef4444',
+                color: '#ffffff',
+                border: 'none',
+                padding: '0.875rem 2rem',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                width: '100%'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#dc2626';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 20px rgba(239, 68, 68, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#ef4444';
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div 
+          className="delete-modal-overlay"
+          onClick={() => {
+            setShowDeleteModal(false);
+            setCarToDelete(null);
+          }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            animation: 'fadeIn 0.3s ease'
+          }}
+        >
+          <div 
+            className="delete-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)',
+              padding: '2.5rem',
+              borderRadius: '16px',
+              maxWidth: '450px',
+              width: '90%',
+              border: '2px solid #E9B949',
+              boxShadow: '0 20px 60px rgba(233, 185, 73, 0.3)',
+              textAlign: 'center',
+              animation: 'slideUp 0.3s ease',
+              position: 'relative'
+            }}
+          >
+            <div style={{
+              width: '80px',
+              height: '80px',
+              margin: '0 auto 1.5rem',
+              background: 'linear-gradient(135deg, #E9B949 0%, #f59e0c 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 24px rgba(233, 185, 73, 0.4)'
+            }}>
+              <svg 
+                width="40" 
+                height="40" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#000000" 
+                strokeWidth="3"
+                style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}
+              >
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </div>
+            <h3 style={{
+              color: '#E9B949',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              marginBottom: '1rem',
+              fontFamily: 'Impact, Arial Black, Arial, sans-serif',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
+            }}>
+              Delete Car?
+            </h3>
+            <p style={{
+              color: '#9CA3AF',
+              fontSize: '1rem',
+              marginBottom: '2rem',
+              lineHeight: '1.6'
+            }}>
+              Are you sure you want to delete <strong style={{ color: '#E9B949' }}>{carToDelete?.name}</strong>? This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setCarToDelete(null);
+                }}
+                style={{
+                  background: '#1F2937',
+                  color: '#ffffff',
+                  border: '1px solid #374151',
+                  padding: '0.875rem 2rem',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  flex: 1
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#374151';
+                  e.target.style.borderColor = '#4B5563';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = '#1F2937';
+                  e.target.style.borderColor = '#374151';
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteCar}
+                style={{
+                  background: '#E9B949',
+                  color: '#000000',
+                  border: 'none',
+                  padding: '0.875rem 2rem',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  flex: 1
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#f59e0c';
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 8px 20px rgba(233, 185, 73, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = '#E9B949';
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes slideUp {
+          from {
+            transform: translateY(30px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 };

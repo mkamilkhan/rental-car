@@ -1,70 +1,78 @@
 import React from "react";
 import "./Service.css";
 
-import aboutHero from "../assets/About-hero.jpg";
-import CanAmMaverickXRS from "../assets/CanAm-maverick XRS-Two-Seater.jpeg";
-import desertCar from "../assets/desertCar.jpeg";
-import desertQuads from "../assets/desertQuads.jpeg";
-import PolarisPro from "../assets/Polaris-rzr-Pro.jpeg";
-import Polaris4Seater from "../assets/Polaris-rzr1000-four-seate.jpeg";
-import Polaris1Seater from "../assets/Polaris-rzr1000-single-seater.jpeg";
-
 const galleryData = [
   {
     type: "video",
     src: "https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov",
-    title: "The Maverick Crew",
-    subtitle: "POLARIS 2000CC • UK",
-    count: "1/3",
-  },
-  {
-    type: "image",
-    src: CanAmMaverickXRS,
-    title: "Extreme Ride",
-    subtitle: "CAN-AM • UAE",
-    count: "1/4",
-  },
-  {
-    type: "image",
-    src: aboutHero,
-    title: "Sunset Safari",
-    subtitle: "PRIVATE TOUR",
+    title: "Desert Quad Adventure",
+    subtitle: "QUAD BIKE • DUBAI",
     count: "1/5",
+    description: "Experience the thrill of quad biking through Dubai's golden dunes. Unforgettable adventure awaits!"
   },
   {
     type: "image",
-    src: desertQuads,
-    title: "Quad Adventure",
-    subtitle: "ATV EXPERIENCE",
-    count: "1/3",
+    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Quad Bike Safari",
+    subtitle: "ATV RENTAL • SHARJAH",
+    count: "1/8",
+    description: "Ride through the desert on our premium quad bikes. Perfect for adrenaline seekers!"
   },
   {
     type: "image",
-    src: PolarisPro,
-    title: "Polaris Pro",
-    subtitle: "OFF-ROAD BEAST",
-    count: "1/4",
-  },
-  {
-    type: "image",
-    src: Polaris4Seater,
-    title: "Family Ride",
-    subtitle: "4 SEATER",
+    src: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Sunset Desert Tour",
+    subtitle: "EVENING SAFARI • DUBAI",
     count: "1/6",
+    description: "Witness the magical sunset over the desert dunes. A photographer's paradise!"
   },
   {
     type: "image",
-    src: Polaris1Seater,
-    title: "Solo Drive",
-    subtitle: "SINGLE SEATER",
-    count: "1/2",
+    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Polaris RZR Experience",
+    subtitle: "OFF-ROAD RENTAL • UAE",
+    count: "1/4",
+    description: "Powerful Polaris RZR for the ultimate desert adventure. Book your ride now!"
   },
   {
     type: "image",
-    src: desertCar,
-    title: "Desert Drive",
-    subtitle: "4X4 EXPERIENCE",
+    src: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Can-Am Maverick",
+    subtitle: "LUXURY RIDE • DUBAI",
+    count: "1/7",
+    description: "Luxury meets adventure in our Can-Am Maverick. Premium comfort, extreme performance!"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Dune Bashing",
+    subtitle: "4X4 ADVENTURE • SHARJAH",
+    count: "1/5",
+    description: "Conquer the dunes with our professional 4x4 vehicles. Expert guides included!"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Morning Quad Tour",
+    subtitle: "EARLY BIRD • DUBAI",
     count: "1/3",
+    description: "Start your day with an exhilarating quad bike tour. Cool morning breeze, hot adventure!"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Family Desert Safari",
+    subtitle: "GROUP TOUR • UAE",
+    count: "1/6",
+    description: "Perfect family adventure in the desert. Safe, fun, and memorable for all ages!"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=600&q=80&fit=crop&auto=format",
+    title: "Night Desert Experience",
+    subtitle: "STARGAZING • DUBAI",
+    count: "1/4",
+    description: "Experience the desert under the stars. Night quad biking with BBQ dinner included!"
   },
 ];
 
@@ -108,18 +116,37 @@ const Service = () => {
 
               <div className="story-media">
                 {item.type === "video" ? (
-                  <video autoPlay muted loop playsInline preload="auto">
+                  <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    preload="auto"
+                    loading="lazy"
+                    onError={(e) => {
+                      console.error('Video load error:', item.src);
+                      e.target.style.display = 'none';
+                    }}
+                  >
                     <source src={item.src} type="video/quicktime" />
                     <source src={item.src} type="video/mp4" />
                   </video>
                 ) : (
-                  <img src={item.src} alt={item.title} />
+                  <img 
+                    src={item.src} 
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
                 )}
                 <div className="media-count">{item.count}</div>
               </div>
 
               <p className="story-text">
-                “Unforgettable desert experience. Highly recommended.”
+                {item.description || "Unforgettable desert experience. Highly recommended."}
               </p>
 
               <button className="story-btn">BOOK THIS RIDE</button>

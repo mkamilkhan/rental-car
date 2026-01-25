@@ -100,7 +100,14 @@
 .fleet-hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(26, 25, 25, 0.875);
+  background: 
+    /* White dots texture pattern */
+    radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px;
+  background-position: 0 0, 10px 10px;
+  /* Dark overlay - video thoda nazar aaye */
+  background-color: rgba(0, 0, 0, 0.75);
   z-index: 2;
 }
 

@@ -9,70 +9,30 @@ const CategoriesSlider = ({ categories = [] }) => {
     return <div className="no-categories">No categories available</div>;
   }
 
-  const settings = {
-    dots: true,
-    infinite: categories.length > 5,
-    speed: 600,
-    slidesToShow: 5,
+  const sliderSettings = {
+    slidesToShow: 4, // desktop
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "0px",
+    infinite: true,
+    dots: true,
     arrows: false,
-    focusOnSelect: true,
-    swipeToSlide: true,
-    touchMove: true,
-
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          centerMode: true,
-          infinite: categories.length > 3,
-          centerPadding: "0px",
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: true,
-          centerPadding: "0px",
-          infinite: categories.length > 1,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: true,
-          centerPadding: "0px",
-          infinite: categories.length > 1,
-        }
-      }
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 768, settings: { slidesToShow: 1 } },
     ],
   };
 
   return (
     <div className="categories-slider-wrapper">
-      <Slider {...settings} className="categories-slick-slider">
-        {categories.map((cat, index) => (
-          <div key={index} className="category-slide">
+      <Slider {...sliderSettings} className="categories-slick-slider">
+        {categories.map((cat, idx) => (
+          <div key={idx} className="category-slide">
             <div className="category-card-tour">
               <div className="category-image-wrapper">
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  className="category-image"
-                />
+                <img src={cat.image} alt={cat.title} className="category-image" />
               </div>
-
               <div className="category-content">
-                <h3 className="category-title">{cat.name}</h3>
-                <Link to="/destination" className="category-see-more">
+                <h3 className="category-title">{cat.title}</h3>
+                <Link to={`/category/${cat.id}`} className="category-see-more">
                   See More
                 </Link>
               </div>

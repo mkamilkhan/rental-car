@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 import { useCurrency } from '../context/CurrencyContext';
@@ -7,6 +7,8 @@ import './Home.css';
 import CategoriesSlider from "../components/CategoriesSlider";
 import { ImageWithFallback } from '../components/ui/ImageWithFallback.tsx';
 import { Users, Clock } from 'lucide-react';
+import { FaWhatsapp } from "react-icons/fa6";
+import { FaPhone } from "react-icons/fa6";
 // import CanAmTwo from "../assets/CanAm-maverick XRS-Two-Seater.jpeg";
 import CanAmTurbo from "../assets/CanAm-Maverick-Turbo-RS.jpeg";
 import CanAmSport from "../assets/CanAm-maverick-XRS-Turbo-sports.jpeg";
@@ -26,7 +28,18 @@ import CamelTrekking from '../components/CamelTrekking.jsx';
 const Home = () => {
   const { t, isRTL } = useLanguage();
   const { currency, getCurrencySymbol } = useCurrency();
+  const location = useLocation();
   const [cars, setCars] = useState([]);
+  
+  // Scroll to collection section
+  const scrollToCollection = () => {
+    const collectionSection = document.querySelector('.collection-header') || 
+                              document.querySelector('.buggy-collection-page') ||
+                              document.querySelector('.collection-title');
+    if (collectionSection) {
+      collectionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   // 
@@ -80,6 +93,18 @@ const Home = () => {
   useEffect(() => {
     fetchCars();
   }, []);
+
+  // Scroll to gallery section when route is /gallery
+  useEffect(() => {
+    if (location.pathname === '/gallery' || location.hash === '#/gallery') {
+      setTimeout(() => {
+        const galleryElement = document.querySelector('.gallery-page');
+        if (galleryElement) {
+          galleryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  }, [location]);
 
   // Auto-change hero background every 10 seconds
   useEffect(() => {
@@ -170,35 +195,57 @@ const Home = () => {
 
               <h1>Your Ultimate Desert Adventure Awaits!</h1>
 
-              <p>
+              <p className="hero-tagline">
                 Ride beyond limits with Dubai's most thrilling offroad experiences.
                 Whether you crave the power of a Polaris RZR, the luxury of a
                 Can-Am Maverick R, or the wild spirit of a Yamaha Raptor, we've got
                 the perfect machine for your adrenaline rush.
               </p>
 
-              <p>
-                Explore Dubai's legendary red-sand dunes, feel the wind of the open
-                desert, and create unforgettable memories with our expert-guided
-                tours. From sunrise rides to sunset escapes every moment is pure
-                adventure.
-              </p>
+            
 
               <p className="hero-highlight">
                 Ride. Explore. Conquer the Desert.
               </p>
 
               <div className="btn-hero-parent">
-                <Link to="/destination" className="btn-hero">
-                  Enter Gallery
+<div className='btn-hero-explore'>
+
+                <Link 
+                  to="/destination"
+                  className="btn-explore "
+                >
+                  <span className="btn-icon">🚀</span>
+                  EXPLORE OUR FLEET
                 </Link>
+</div>
+
+                <div className='btn-hero-child'>
+                  <a 
+                    href="tel:+971564455568" 
+                    className="btn-Call"
+                  >
+                    <FaPhone className="btn-icon" />
+                    CALL NOW
+                  </a>
+                  <a 
+  href="https://wa.me/971564455568?text=Hello%20I%20want%20to%20book%20a%20car"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn-Chat"
+>
+  <FaWhatsapp className="btn-icon" />
+  CHAT NOW
+</a>
+
+                </div>
               </div>
             </div>
           </div>
         </div>
 
 
-        <div className="hero-indicators">
+        {/* <div className="hero-indicators">
           {heroVideos.map((_, index) => (
             <span
               key={index}
@@ -206,7 +253,7 @@ const Home = () => {
               onClick={() => setCurrentSlide(index)}
             />
           ))}
-        </div>
+        </div> */}
       </div>
       <div id="choose-adventure" className="tour-categories-section">
         <div className="container">
@@ -235,7 +282,11 @@ const Home = () => {
         <div className="container">
           <div className="section-header">
             <span className="section-label">{t('home.featured')}</span>
-            <h2>{t('home.featuredTitle')}</h2>
+            <div className="collection-header">
+                <h1 className="collection-title">
+                  OFFROAD RENTAL HUB <span className="outline-text">COLLECTION</span>
+                </h1>
+              </div>
             <p>{t('home.featuredDesc')}</p>
           </div>
           {loading ? (
@@ -302,11 +353,7 @@ const Home = () => {
             // </div>
             <div className="buggy-collection-page">
               {/* Header Section */}
-              <div className="collection-header">
-                <h1 className="collection-title">
-                  OFFROAD RENTAL HUB <span className="outline-text">COLLECTION</span>
-                </h1>
-              </div>
+          
 
               {/* Vehicle Cards - Horizontal Layout */}
               <div className="buggy-container">
@@ -374,6 +421,17 @@ const Home = () => {
                       </div>
 
                       <div className="buggy-actions">
+                        <a 
+                          href="https://wa.me/971564455568" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="btn-whatsapp-link"
+                        >
+                          <button className="btn-whatsapp">
+                            <FaWhatsapp className="whatsapp-icon" />
+                            WHATSAPP
+                          </button>
+                        </a>
                         <Link to={`/car/${car._id}`} >
                           <button className="btn-availability">SHOW DETAILS</button>
                         </Link>
@@ -393,7 +451,7 @@ const Home = () => {
       </div>
       <div className="main-container">
         {/* Gallery Section */}
-        <div className="gallery-page">
+        <div id="gallery" className="gallery-page">
           {/* Header Section */}
           <div className="gallery-header">
             <h1 className="gallery-title">

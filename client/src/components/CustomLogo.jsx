@@ -36,8 +36,8 @@ const CustomLogo = ({ size = 'medium' }) => {
         </svg>
       </div>
       <div className="logo-text-wrapper">
-        <span className="logo-main-text">OFFROAD</span>
-        <span className="logo-sub-text">RENTALHUB</span>
+        <span className="logo-main-text">RENTAL CAR</span>
+        <span className="logo-sub-text">DESERT SAFARI</span>
       </div>
     </div>
   );

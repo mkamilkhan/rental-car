@@ -4,11 +4,26 @@ const router = express.Router();
 const Booking = require("../models/Booking");
 const Car = require("../models/Car");
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Validate Stripe key before initializing
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.error("❌ STRIPE_SECRET_KEY is not set in environment variables");
+}
+
+const stripe = process.env.STRIPE_SECRET_KEY 
+  ? new Stripe(process.env.STRIPE_SECRET_KEY)
+  : null;
 
 // Create checkout session
 router.post("/create-checkout-session", async (req, res) => {
   try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      console.error("❌ Stripe is not configured. STRIPE_SECRET_KEY is missing.");
+      return res.status(500).json({ 
+        error: "Payment service is not configured. Please contact support." 
+      });
+    }
+
     const { 
       amount, 
       carId, 
@@ -20,6 +35,7 @@ router.post("/create-checkout-session", async (req, res) => {
       endDate, 
       totalDays, 
       pickupLocation, 
+      duration,
       currency = "aed" 
     } = req.body;
 
@@ -62,7 +78,7 @@ router.post("/create-checkout-session", async (req, res) => {
         endDate,
         totalDays: totalDays || 1,
         pickupLocation: pickupLocation || "normal",
-        duration: req.body.duration || "60min",
+        duration: duration || req.body.duration || "60min",
         totalPrice: amount.toString(),
         paymentMethod: "card"
       },
@@ -72,14 +88,45 @@ router.post("/create-checkout-session", async (req, res) => {
 
     res.json({ url: session.url, sessionId: session.id });
   } catch (err) {
-    console.error("Stripe error:", err);
-    res.status(500).json({ error: err.message });
+    console.error("❌ Stripe error:", err);
+    
+    // Better error messages for common issues
+    let errorMessage = "Payment processing failed. Please try again.";
+    
+    if (err.type === 'StripeInvalidRequestError') {
+      if (err.message.includes('API key')) {
+        errorMessage = "Invalid Stripe API key. Please check server configuration.";
+      } else if (err.message.includes('currency')) {
+        errorMessage = "Invalid currency. Please use a valid currency code.";
+      } else {
+        errorMessage = err.message || "Invalid payment request.";
+      }
+    } else if (err.type === 'StripeAuthenticationError') {
+      errorMessage = "Stripe authentication failed. Please check API key configuration.";
+    } else if (err.type === 'StripeAPIError') {
+      errorMessage = "Stripe API error. Please try again later.";
+    } else if (err.message) {
+      errorMessage = err.message;
+    }
+    
+    res.status(500).json({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 });
 
 // Verify payment and create booking
 router.post("/verify-payment", async (req, res) => {
   try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      console.error("❌ Stripe is not configured. STRIPE_SECRET_KEY is missing.");
+      return res.status(500).json({ 
+        error: "Payment service is not configured. Please contact support." 
+      });
+    }
+
     const { sessionId } = req.body;
 
     if (!sessionId) {
@@ -173,8 +220,26 @@ router.post("/verify-payment", async (req, res) => {
       message: "Booking created successfully" 
     });
   } catch (err) {
-    console.error("Payment verification error:", err);
-    res.status(500).json({ error: err.message });
+    console.error("❌ Payment verification error:", err);
+    
+    let errorMessage = "Payment verification failed. Please contact support.";
+    
+    if (err.type === 'StripeInvalidRequestError') {
+      if (err.message.includes('API key')) {
+        errorMessage = "Invalid Stripe API key. Please check server configuration.";
+      } else {
+        errorMessage = err.message || "Invalid payment session.";
+      }
+    } else if (err.type === 'StripeAuthenticationError') {
+      errorMessage = "Stripe authentication failed. Please check API key configuration.";
+    } else if (err.message) {
+      errorMessage = err.message;
+    }
+    
+    res.status(500).json({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 });
 

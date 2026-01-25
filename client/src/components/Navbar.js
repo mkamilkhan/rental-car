@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { FaGlobe } from 'react-icons/fa';
+import logo99 from '../assets/logo100.png'
 import CustomLogo from './CustomLogo';
 import LanguageCurrencyModal from './LanguageCurrencyModal';
 import './Navbar.css';
@@ -33,9 +34,10 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-wrapper">
           {/* Logo */}
-          <Link to="/" className="navbar-logo" onClick={closeMenu}>
+          {/* <Link to="/" className="navbar-logo" onClick={closeMenu}>
             <CustomLogo size="medium" />
-          </Link>
+          </Link> */}
+          <img src={logo99} className='navbar-logo99 '></img>
 
           {/* Hamburger Menu Button */}
           <button 
@@ -67,7 +69,7 @@ const Navbar = () => {
                 {t('nav.contact')}
               </Link>
               <Link to="/blog" onClick={closeMenu} className="nav-link">
-                {t('nav.blog')}
+                {t('nav.gallery')}
               </Link>
             </div>
 

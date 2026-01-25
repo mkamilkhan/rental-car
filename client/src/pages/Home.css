@@ -139,6 +139,7 @@
   min-height: 56px;
   z-index: 10;
   pointer-events: auto;
+  
 }
 
 .btn-explore::before {
@@ -645,6 +646,7 @@
     width: 100%;
     justify-content: center;
     align-items: center;
+    margin-bottom: 100px;
   }
   
   .btn-Call,

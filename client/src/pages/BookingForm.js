@@ -213,9 +213,14 @@ const BookingForm = () => {
       return;
     }
 
+    // Set endDate to next day for single-day bookings to pass validation
+    const startDateObj = new Date(formData.selectedDate);
+    const endDateObj = new Date(startDateObj);
+    endDateObj.setDate(endDateObj.getDate() + 1);
+
     try {
       setPaymentLoading(true);
-      const res =       await axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/payment/create-checkout-session`,
         {
           amount: totalAmount,
@@ -225,7 +230,7 @@ const BookingForm = () => {
           customerEmail: formData.customerEmail,
           contactNumber: formData.contactNumber,
           startDate: formData.selectedDate,
-          endDate: formData.selectedDate,
+          endDate: endDateObj.toISOString().split('T')[0],
           totalDays,
           pickupLocation: formData.pickupLocation,
           duration: formData.duration,
@@ -253,6 +258,11 @@ const BookingForm = () => {
     try {
       setSubmitting(true);
 
+      // Set endDate to next day for single-day bookings to pass validation
+      const startDateObj = new Date(formData.selectedDate);
+      const endDateObj = new Date(startDateObj);
+      endDateObj.setDate(endDateObj.getDate() + 1);
+
       await axios.post(`${process.env.REACT_APP_API_URL}/api/bookings`, {
         carId: car._id,
         carName: car.name,
@@ -260,7 +270,7 @@ const BookingForm = () => {
         customerEmail: formData.customerEmail,
         contactNumber: formData.contactNumber,
         startDate: formData.selectedDate,
-        endDate: formData.selectedDate,
+        endDate: endDateObj.toISOString().split('T')[0],
         totalDays,
         pickupLocation: formData.pickupLocation,
         duration: formData.duration,

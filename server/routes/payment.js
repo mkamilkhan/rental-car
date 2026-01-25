@@ -51,13 +51,24 @@ router.post("/create-checkout-session", async (req, res) => {
     const successUrl = `${frontendUrl}/booking-success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${frontendUrl}/booking/${carId}`;
 
+    // Normalize currency code (aed -> aed, usd -> usd, etc.)
+    const normalizedCurrency = currency ? currency.toLowerCase().trim() : "aed";
+    
+    // Validate currency is 3 characters
+    if (normalizedCurrency.length !== 3) {
+      console.error("❌ Invalid currency code:", currency);
+      return res.status(400).json({ 
+        error: "Invalid currency code. Please use a valid 3-letter currency code (e.g., AED, USD)." 
+      });
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: currency.toLowerCase(),
+            currency: normalizedCurrency,
             product_data: { 
               name: carName || "Car Rental Booking",
               description: `Booking from ${new Date(startDate).toLocaleDateString()} to ${new Date(endDate).toLocaleDateString()}`
@@ -89,6 +100,10 @@ router.post("/create-checkout-session", async (req, res) => {
     res.json({ url: session.url, sessionId: session.id });
   } catch (err) {
     console.error("❌ Stripe error:", err);
+    console.error("❌ Error type:", err.type);
+    console.error("❌ Error message:", err.message);
+    console.error("❌ STRIPE_SECRET_KEY exists:", !!process.env.STRIPE_SECRET_KEY);
+    console.error("❌ STRIPE_SECRET_KEY starts with:", process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.substring(0, 10) + "..." : "NOT SET");
     
     // Better error messages for common issues
     let errorMessage = "Payment processing failed. Please try again.";
@@ -102,7 +117,11 @@ router.post("/create-checkout-session", async (req, res) => {
         errorMessage = err.message || "Invalid payment request.";
       }
     } else if (err.type === 'StripeAuthenticationError') {
-      errorMessage = "Stripe authentication failed. Please check API key configuration.";
+      errorMessage = "Stripe authentication failed. Please check API key configuration on Render dashboard.";
+      console.error("❌ STRIPE_SECRET_KEY is set but authentication failed. Check if:");
+      console.error("   1. The key is correct (starts with sk_live_ or sk_test_)");
+      console.error("   2. The key is set in Render Environment Variables");
+      console.error("   3. The server was restarted after setting the key");
     } else if (err.type === 'StripeAPIError') {
       errorMessage = "Stripe API error. Please try again later.";
     } else if (err.message) {

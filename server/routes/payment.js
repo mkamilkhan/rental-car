@@ -120,8 +120,10 @@ router.post("/create-checkout-session", async (req, res) => {
       errorMessage = "Stripe authentication failed. Please check API key configuration on Render dashboard.";
       console.error("❌ STRIPE_SECRET_KEY is set but authentication failed. Check if:");
       console.error("   1. The key is correct (starts with sk_live_ or sk_test_)");
-      console.error("   2. The key is set in Render Environment Variables");
+      console.error("   2. The key is set in Render Environment Variables (no extra spaces or quotes)");
       console.error("   3. The server was restarted after setting the key");
+      console.error("   4. Current key value:", process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.substring(0, 20) + "..." : "NOT SET");
+      console.error("   5. Key length:", process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.length : 0);
     } else if (err.type === 'StripeAPIError') {
       errorMessage = "Stripe API error. Please try again later.";
     } else if (err.message) {
@@ -260,6 +262,27 @@ router.post("/verify-payment", async (req, res) => {
       details: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
   }
+});
+
+// Health check endpoint to verify Stripe configuration
+router.get("/health", (req, res) => {
+  const hasKey = !!process.env.STRIPE_SECRET_KEY;
+  const keyType = hasKey 
+    ? (process.env.STRIPE_SECRET_KEY.trim().startsWith('sk_live_') ? 'LIVE' : 'TEST')
+    : 'NOT_SET';
+  const keyLength = hasKey ? process.env.STRIPE_SECRET_KEY.trim().length : 0;
+  const isValidFormat = hasKey && process.env.STRIPE_SECRET_KEY.trim().startsWith('sk_');
+  
+  res.json({
+    stripeConfigured: !!stripe,
+    hasKey,
+    keyType,
+    keyLength,
+    isValidFormat,
+    message: stripe 
+      ? "Stripe is configured correctly" 
+      : "Stripe is not configured. Check STRIPE_SECRET_KEY in environment variables."
+  });
 });
 
 module.exports = router;

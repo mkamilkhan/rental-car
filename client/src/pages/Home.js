@@ -151,7 +151,7 @@ const Home = () => {
   return (
     <div className="home">
 
-      <div className="hero-section">
+      <div className="home-hero-section">
         {heroVideos.map((video, index) => (
           <div
             key={index}

@@ -3,7 +3,7 @@
   margin-top: 0;
 }
 
-.hero-section {
+.home-hero-section {
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -534,7 +534,7 @@
     margin-top: 0;
   }
   
-  .hero-section {
+  .home-hero-section {
     min-height: 100vh; /* Full viewport height on mobile */
     height: 100vh; /* Full viewport height on mobile */
     max-height: 100vh; /* Prevent overflow */
@@ -717,8 +717,8 @@
     margin-top: 0;
   }
   
-  .hero-section {
-    min-height: 50vh;
+  .home-hero-section {
+    min-height: 92vh;
     height: 50vh;
     margin-top: 0;
     padding-top: 0;

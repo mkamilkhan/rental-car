@@ -141,11 +141,11 @@
 =============================== */
 @media (max-width: 768px) {
   .category-slide {
-    padding: 0 16px; /* gap */
+    padding: 0 16px; /* Original gap */
   }
 
   .category-card-tour {
-    width: 100%;
+    width: 100%; /* Full width on mobile */
   }
 
   .category-image-wrapper {
@@ -154,5 +154,14 @@
 
   .categories-slick-slider {
     padding-bottom: 95px;
+  }
+
+  .categories-slick-slider .slick-list {
+    padding: 0 !important; /* Remove extra padding */
+  }
+
+  .categories-slick-slider .slick-track {
+    display: flex !important;
+    align-items: center !important;
   }
 }

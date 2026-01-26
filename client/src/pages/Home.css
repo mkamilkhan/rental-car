@@ -546,6 +546,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Prevent content overflow */
+    width: 100%;
   }
   
   .hero-video {
@@ -570,6 +571,8 @@
     overflow-y: auto; /* Allow scrolling if content exceeds viewport */
     overflow-x: hidden;
     max-height: 100vh; /* Match hero section height */
+    width: 100%;
+    height: 100vh; /* Full viewport height */
     background: 
       /* White dots texture pattern */
       radial-gradient(circle, rgba(255, 255, 255, 0.08) 3px, transparent 3px),
@@ -601,7 +604,7 @@
     max-width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 20px; /* Reduced bottom padding */
+    padding-bottom: 0; /* Remove bottom padding to prevent scroll */
     overflow: visible !important; /* Ensure content is not clipped */
     width: 100%;
     max-height: calc(100vh - 90px); /* Account for navbar and padding */
@@ -639,7 +642,7 @@
   .btn-hero-parent {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Reduced gap */
+    gap: 0; /* No gap since only one button */
     width: 100%;
     margin-top: 0;
     margin-bottom: 0; /* Remove bottom margin */
@@ -660,21 +663,11 @@
     font-size: 13px;
     letter-spacing: 1px;
     gap: 8px;
+    margin-bottom: 0; /* Remove bottom margin to prevent scroll */
   }
   
   .btn-hero-child {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 10px !important; /* Reduced gap */
-    width: 100% !important;
-    justify-content: center !important;
-    align-items: center !important;
-    margin-bottom: 10px !important; /* Reduced margin */
-    margin-top: 8px !important; /* Reduced margin */
-    position: relative !important;
-    z-index: 1003 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important; /* Hide CALL and WhatsApp buttons on mobile */
   }
   
   .btn-Call,

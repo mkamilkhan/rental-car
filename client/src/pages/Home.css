@@ -535,12 +535,13 @@
   }
   
   .hero-section {
-    min-height: 60vh;
-    height: 60vh;
+    min-height: auto; /* Changed from 60vh to auto */
+    height: auto; /* Changed from 60vh to auto */
     margin-top: 0;
     padding-top: 0;
     position: relative;
     z-index: 1;
+    padding-bottom: 40px; /* Add bottom padding for categories section */
   }
   
   .hero-video {
@@ -551,7 +552,7 @@
   
   .hero-overlay {
     z-index: 1001;
-    padding-top: 70px; /* Navbar height to push content down */
+    padding-top: 80px; /* Navbar height (70px) + extra space (10px) */
     margin-top: 0;
     position: absolute;
     top: 0;
@@ -561,6 +562,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    overflow-y: auto; /* Allow scrolling if content is too long */
     background: 
       /* White dots texture pattern */
       radial-gradient(circle, rgba(255, 255, 255, 0.08) 3px, transparent 3px),
@@ -585,13 +587,14 @@
   }
   
   .hero-content {
-    padding-top: 20px; /* Reduced since overlay has padding-top */
+    padding-top: 10px; /* Reduced since overlay has padding-top */
     position: relative;
     z-index: 1002;
     margin-top: 0;
     max-width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 20px; /* Add bottom padding */
   }
   
   .hero-label {
@@ -655,7 +658,7 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin-bottom: 100px;
+    margin-bottom: 30px; /* Reduced from 100px */
   }
   
   .btn-Call,

@@ -46,6 +46,13 @@
     border-bottom: 2px solid #1F2937;
   }
   
+  .footer-logo-img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
   .footer-logo-link {
     display: inline-block;
     margin-bottom: 1.5rem;

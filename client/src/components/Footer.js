@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import CustomLogo from './CustomLogo';
+import logo99 from '../assets/logo100.png';
 import './Footer.css';
 
 const Footer = () => {
@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="footer-top">
           <div className="footer-brand-section">
             <Link to="/" className="footer-logo-link">
-              <CustomLogo size="medium" />
+              <img src={logo99} alt="Offroad Rental Hub" className="footer-logo-img" />
             </Link>
             <p className="footer-description">
               Dubai's ultimate destination for off-road adrenaline and desert exploration. Ride beyond limits with our premium vehicle rentals.

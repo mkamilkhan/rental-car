@@ -551,13 +551,16 @@
   
   .hero-overlay {
     z-index: 1001;
-    padding-top: 0;
+    padding-top: 70px; /* Navbar height to push content down */
     margin-top: 0;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
     background: 
       /* White dots texture pattern */
       radial-gradient(circle, rgba(255, 255, 255, 0.08) 3px, transparent 3px),
@@ -582,21 +585,27 @@
   }
   
   .hero-content {
-    padding-top: 20px;
+    padding-top: 20px; /* Reduced since overlay has padding-top */
     position: relative;
     z-index: 1002;
+    margin-top: 0;
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   
   .hero-label {
-    font-size: 12px;
-    letter-spacing: 3px;
-    margin-bottom: 16px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    display: block;
   }
   
   .hero-content h1 {
-    font-size: 38px;
-    line-height: 1.15;
-    margin-bottom: 20px;
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 18px;
+    margin-top: 0;
   }
 
   .hero-tagline {

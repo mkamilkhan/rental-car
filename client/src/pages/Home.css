@@ -535,13 +535,17 @@
   }
   
   .hero-section {
-    min-height: auto; /* Changed from 60vh to auto */
-    height: auto; /* Changed from 60vh to auto */
+    min-height: 100vh; /* Full viewport height on mobile */
+    height: 100vh; /* Full viewport height on mobile */
+    max-height: 100vh; /* Prevent overflow */
     margin-top: 0;
     padding-top: 0;
     position: relative;
     z-index: 1;
-    padding-bottom: 40px; /* Add bottom padding for categories section */
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent content overflow */
   }
   
   .hero-video {
@@ -552,7 +556,8 @@
   
   .hero-overlay {
     z-index: 1001;
-    padding-top: 80px; /* Navbar height (70px) + extra space (10px) */
+    padding-top: 70px; /* Navbar height */
+    padding-bottom: 20px; /* Reduced bottom padding */
     margin-top: 0;
     position: absolute;
     top: 0;
@@ -560,9 +565,11 @@
     right: 0;
     bottom: 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center; /* Center content vertically */
     justify-content: center;
-    overflow-y: auto; /* Allow scrolling if content is too long */
+    overflow-y: auto; /* Allow scrolling if content exceeds viewport */
+    overflow-x: hidden;
+    max-height: 100vh; /* Match hero section height */
     background: 
       /* White dots texture pattern */
       radial-gradient(circle, rgba(255, 255, 255, 0.08) 3px, transparent 3px),
@@ -587,39 +594,42 @@
   }
   
   .hero-content {
-    padding-top: 10px; /* Reduced since overlay has padding-top */
+    padding-top: 0; /* No top padding since overlay centers content */
     position: relative;
     z-index: 1002;
     margin-top: 0;
     max-width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 20px; /* Add bottom padding */
+    padding-bottom: 20px; /* Reduced bottom padding */
+    overflow: visible !important; /* Ensure content is not clipped */
+    width: 100%;
+    max-height: calc(100vh - 90px); /* Account for navbar and padding */
   }
   
   .hero-label {
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 2px;
-    margin-bottom: 14px;
+    margin-bottom: 10px; /* Reduced margin */
     display: block;
   }
   
   .hero-content h1 {
-    font-size: 36px;
-    line-height: 1.2;
-    margin-bottom: 18px;
+    font-size: 32px; /* Slightly reduced */
+    line-height: 1.15; /* Tighter line height */
+    margin-bottom: 12px; /* Reduced margin */
     margin-top: 0;
   }
 
   .hero-tagline {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 16px;
+    font-size: 14px; /* Slightly reduced */
+    line-height: 1.5; /* Tighter line height */
+    margin-bottom: 12px; /* Reduced margin */
   }
 
   .hero-highlight {
-    font-size: 17px;
-    margin-bottom: 24px;
+    font-size: 16px; /* Slightly reduced */
+    margin-bottom: 16px; /* Reduced margin */
   }
 
   .hero-content p:not(.hero-tagline):not(.hero-highlight) {
@@ -629,9 +639,10 @@
   .btn-hero-parent {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px; /* Reduced gap */
     width: 100%;
     margin-top: 0;
+    margin-bottom: 0; /* Remove bottom margin */
   }
   
   .btn-hero-explore {
@@ -652,28 +663,40 @@
   }
   
   .btn-hero-child {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px; /* Reduced from 100px */
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important; /* Reduced gap */
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 10px !important; /* Reduced margin */
+    margin-top: 8px !important; /* Reduced margin */
+    position: relative !important;
+    z-index: 1003 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   .btn-Call,
   .btn-Chat {
-    flex: 1;
-    min-width: 0;
-    max-width: calc(50% - 6px);
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    padding: 14px 20px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    gap: 6px;
+    flex: 1 !important;
+    min-width: 0 !important;
+    max-width: calc(50% - 6px) !important;
+    display: flex !important;
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 14px 20px !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+    gap: 6px !important;
+    position: relative !important;
+    z-index: 1004 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    border: 1px solid #ffffff !important;
+    color: #ffffff !important;
   }
   
   .btn-icon {

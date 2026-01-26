@@ -92,7 +92,7 @@ const Footer = () => {
                   <path d="M4 4H20C21.1046 4 22 4.89543 22 6V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6C2 4.89543 2.89543 4 4 4Z"/>
                   <path d="M22 6L12 13L2 6"/>
                 </svg>
-                <a href="mailto:malinfo00@tourm.com">malinfo00@tourm.com</a>
+                <a href="mailto:malinfo00@tourm.com">offroadrentalhub@gmail.com</a>
               </li>
             </ul>
           </div>

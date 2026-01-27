@@ -210,12 +210,7 @@
   border-bottom: 1px solid #222;
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 40px;
-  /* background: #030303; */
-}
+/* Container removed - using global from App.css */
 
 .filter-tabs {
   display: flex;

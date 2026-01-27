@@ -1666,9 +1666,7 @@
   padding: 4rem 0;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;}
+/* Container removed - using global from App.css */
 
 .section-header {
   text-align: center;

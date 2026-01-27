@@ -3,22 +3,37 @@ const User = require('../models/User');
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    console.log('\n========== AUTH MIDDLEWARE ==========');
+    console.log('Auth: Checking authorization for:', req.path);
+    
+    // Check both header formats
+    const authHeader = req.header('Authorization') || req.headers.authorization;
+    console.log('Auth: Header received:', authHeader ? authHeader.substring(0, 30) + '...' : 'NOT FOUND');
+    
+    const token = authHeader?.replace('Bearer ', '') || authHeader?.split(' ')[1];
     
     if (!token) {
+      console.log('Auth: ❌ No token found');
       return res.status(401).json({ message: 'No token, authorization denied' });
     }
 
+    console.log('Auth: Token extracted:', token.substring(0, 20) + '...');
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret');
-    const user = await User.findById(decoded.userId).select('-password');
+    console.log('Auth: Token decoded:', { userId: decoded.userId, id: decoded.id });
+    
+    const userId = decoded.userId || decoded.id;
+    const user = await User.findById(userId).select('-password');
     
     if (!user) {
+      console.log('Auth: ❌ User not found with ID:', userId);
       return res.status(401).json({ message: 'Token is not valid' });
     }
 
+    console.log('Auth: ✅ User found:', { id: user._id.toString(), email: user.email, name: user.name });
     req.user = user;
     next();
   } catch (error) {
+    console.error('Auth: ❌ Error:', error.message);
     res.status(401).json({ message: 'Token is not valid' });
   }
 };

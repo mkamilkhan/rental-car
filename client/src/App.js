@@ -97,17 +97,30 @@ import BookingForm from './pages/BookingForm';
 import BookingSuccess from './pages/BookingSuccess';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import AuthCallback from './pages/AuthCallback';
 import MyBookings from './pages/MyBookings';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 function App() {
-  const [showLoading, setShowLoading] = useState(true);
+  // Only show loading screen on first visit, not on every page load
+  const [showLoading, setShowLoading] = useState(() => {
+    // Check if loading screen has been shown before
+    const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
+    return !hasSeenLoading; // Show loading only if not seen in this session
+  });
 
   // Initialize Google Translate on app load
   useEffect(() => {
     initializeGoogleTranslate();
   }, []);
+
+  // Mark loading screen as seen
+  useEffect(() => {
+    if (!showLoading) {
+      sessionStorage.setItem('hasSeenLoading', 'true');
+    }
+  }, [showLoading]);
 
   return (
     <LanguageProvider>
@@ -130,6 +143,7 @@ function App() {
                   <Route path="/car/:id" element={<CarDetails />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
+                  <Route path="/auth/callback" element={<AuthCallback />} />
                   <Route path="/booking/:carId" element={<BookingForm />} />
                   <Route path="/booking-success" element={<BookingSuccess />} />
                   <Route

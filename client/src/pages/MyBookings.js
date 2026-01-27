@@ -15,10 +15,28 @@ const MyBookings = () => {
   const fetchBookings = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      
+      if (!token) {
+        console.error('MyBookings: No token found for fetching bookings');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('MyBookings: Fetching bookings with token:', token.substring(0, 20) + '...');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${apiUrl}/api/bookings/my-bookings`);
+      console.log('MyBookings: Bookings fetched:', response.data);
+      console.log('MyBookings: Number of bookings:', response.data.length);
       setBookings(response.data);
     } catch (error) {
-      console.error('Error fetching bookings:', error);
+      console.error('MyBookings: Error fetching bookings:', error);
+      console.error('MyBookings: Error response:', error.response?.data);
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        console.error('MyBookings: Authentication error, clearing token');
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+      }
     } finally {
       setLoading(false);
     }

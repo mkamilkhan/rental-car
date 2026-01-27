@@ -13,22 +13,48 @@ router.post('/', async (req, res) => {
   try {
     const { carId, startDate, endDate, pickupLocation, contactNumber, customerEmail, customerName, duration } = req.body;
     
-    // If user is logged in (admin), use their info, otherwise require email
+    // Debug: Log all headers
+    console.log('Booking: Request headers:', {
+      authorization: req.headers.authorization ? req.headers.authorization.substring(0, 30) + '...' : 'NOT PRESENT',
+      'content-type': req.headers['content-type']
+    });
+    
+    // If user is logged in, use their info, otherwise require email
     let userEmail, userName, userId;
     
-    if (req.headers.authorization) {
+    // Check both lowercase and original case
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    
+    if (authHeader) {
       try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = authHeader.split(' ')[1];
+        console.log('Booking: Token extracted:', token ? token.substring(0, 20) + '...' : 'NO TOKEN');
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.id);
+        console.log('Booking: Token decoded:', { userId: decoded.userId, id: decoded.id });
+        
+        // Check if decoded has userId or id
+        const userIdFromToken = decoded.userId || decoded.id;
+        console.log('Booking: Looking for user with ID:', userIdFromToken);
+        
+        const user = await User.findById(userIdFromToken);
         if (user) {
           userEmail = user.email;
           userName = user.name;
           userId = user._id;
+          console.log('Booking: ✅ User found from token:', {
+            userId: userId.toString(),
+            email: userEmail,
+            name: userName
+          });
+        } else {
+          console.log('Booking: ❌ User not found with ID:', userIdFromToken);
         }
       } catch (err) {
+        console.error('Booking: ❌ Error getting user from token:', err.message);
         // Token invalid or expired, continue without user
       }
+    } else {
+      console.log('Booking: ⚠️ No Authorization header present');
     }
     
     // Use provided email or logged in user's email
@@ -84,8 +110,29 @@ router.post('/', async (req, res) => {
       totalPrice,
       pickupLocation: pickupLocation || '',
       contactNumber: contactNumber || '',
-      duration: duration || '60min'
+      duration: duration || '60min',
+      status: 'pending', // Default status - admin will confirm
+      paymentMethod: req.body.paymentMethod || 'cash'
     });
+    
+    console.log('✅ Booking created:', {
+      bookingId: booking._id.toString(),
+      userId: booking.user ? booking.user.toString() : '❌ NULL (NO USER ID)',
+      customerEmail: finalEmail,
+      customerName: finalName,
+      status: booking.status,
+      hasUser: !!userId,
+      hasEmail: !!finalEmail,
+      userEmailFromToken: userEmail || 'NOT FOUND',
+      userNameFromToken: userName || 'NOT FOUND'
+    });
+    
+    // If userId is null, warn
+    if (!userId) {
+      console.warn('⚠️ WARNING: Booking created WITHOUT user ID!');
+      console.warn('   This booking will NOT appear in "My Bookings" for logged-in users.');
+      console.warn('   Customer Email:', finalEmail);
+    }
 
     await booking.populate('car');
     if (booking.user) {
@@ -299,11 +346,54 @@ router.post('/', async (req, res) => {
 // Get user's bookings
 router.get('/my-bookings', auth, async (req, res) => {
   try {
-    const bookings = await Booking.find({ user: req.user._id })
+    console.log('\n========== MY BOOKINGS REQUEST ==========');
+    console.log('My Bookings: Route hit!');
+    console.log('My Bookings: Fetching for user:', {
+      userId: req.user._id.toString(),
+      email: req.user.email,
+      name: req.user.name
+    });
+    
+    // Find bookings by user ID OR by customer email (for backward compatibility)
+    const query = {
+      $or: [
+        { user: req.user._id },
+        { customerEmail: req.user.email }
+      ]
+    };
+    
+    console.log('My Bookings: Query:', JSON.stringify(query, null, 2));
+    
+    // Also check all bookings to debug
+    const allBookings = await Booking.find({}).select('user customerEmail').limit(5);
+    console.log('My Bookings: Sample of all bookings in DB:', allBookings.map(b => ({
+      id: b._id.toString().substring(0, 8) + '...',
+      userId: b.user ? b.user.toString() : '❌ NULL',
+      customerEmail: b.customerEmail
+    })));
+    
+    const bookings = await Booking.find(query)
       .populate('car')
       .sort({ createdAt: -1 });
+    
+    console.log('My Bookings: Found', bookings.length, 'bookings');
+    if (bookings.length > 0) {
+      console.log('My Bookings: Bookings details:', bookings.map(b => ({
+        id: b._id.toString().substring(0, 8) + '...',
+        userId: b.user ? b.user.toString() : '❌ NULL',
+        customerEmail: b.customerEmail,
+        emailMatch: b.customerEmail?.toLowerCase() === req.user.email.toLowerCase(),
+        carName: b.car?.name || 'No car'
+      })));
+    } else {
+      console.log('My Bookings: ❌ No bookings found!');
+      console.log('   Searching for userId:', req.user._id.toString());
+      console.log('   Searching for email:', req.user.email);
+    }
+    
     res.json(bookings);
   } catch (error) {
+    console.error('My Bookings: Error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

@@ -167,7 +167,7 @@ console.log(car)
 
               <button
                 className="pricing-book-btn popular-btn"
-                onClick={() => navigate(`/booking/${id}`)}
+                onClick={() => navigate(`/booking/${id}?duration=30min`)}
               >
                 BOOK NOW
               </button>
@@ -185,7 +185,7 @@ console.log(car)
 
               <button
                 className="pricing-book-btn"
-                onClick={() => navigate(`/booking/${id}`)}
+                onClick={() => navigate(`/booking/${id}?duration=60min`)}
               >
                 BOOK NOW
               </button>
@@ -203,7 +203,7 @@ console.log(car)
 
               <button
                 className="pricing-book-btn"
-                onClick={() => navigate(`/booking/${id}`)}
+                onClick={() => navigate(`/booking/${id}?duration=90min`)}
               >
                 BOOK NOW
               </button>
@@ -221,7 +221,7 @@ console.log(car)
 
               <button
                 className="pricing-book-btn"
-                onClick={() => navigate(`/booking/${id}`)}
+                onClick={() => navigate(`/booking/${id}?duration=120min`)}
               >
                 BOOK NOW
               </button>

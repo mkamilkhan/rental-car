@@ -20,7 +20,7 @@
 .categories-swiper {
   position: relative;
   width: 100%;
-  padding-bottom: 90px; /* Space for pagination */
+  padding-bottom: 60px; /* Space for pagination */
   overflow: visible;
 }
 
@@ -124,7 +124,7 @@
 =============================== */
 .categories-swiper .swiper-pagination {
   position: absolute;
-  bottom: 22px !important;
+  bottom: 10px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: auto !important;
@@ -204,11 +204,15 @@
   }
 
   .categories-swiper {
-    padding-bottom: 95px;
+    padding-bottom: 50px;
   }
 
   .category-slide {
     padding: 0 12px !important;
+  }
+
+  .categories-swiper .swiper-pagination {
+    bottom: 8px !important;
   }
 }
 
@@ -231,11 +235,11 @@
   }
 
   .categories-swiper {
-    padding-bottom: 95px;
+    padding-bottom: 50px;
   }
 
   .categories-swiper .swiper-pagination {
-    bottom: 20px !important;
+    bottom: 8px !important;
     gap: 12px;
   }
 

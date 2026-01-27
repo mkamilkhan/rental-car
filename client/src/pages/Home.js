@@ -87,7 +87,7 @@ const Home = () => {
   const heroVideos = [
     'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov',
     'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov',
-    'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', // Using IMG_1631 as fallback until others upload
+    'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_.mov', // Using IMG_1631 as fallback until others upload
   ];
 
   useEffect(() => {

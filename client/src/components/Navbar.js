@@ -6,6 +6,7 @@ import { FaGlobe } from 'react-icons/fa';
 import logo99 from '../assets/logo100.png'
 import CustomLogo from './CustomLogo';
 import LanguageCurrencyModal from './LanguageCurrencyModal';
+import LoginModal from './LoginModal';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -14,11 +15,48 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLangCurrencyModal, setShowLangCurrencyModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/');
     setIsMenuOpen(false);
+  };
+
+  const handleGoogleLogin = () => {
+    // Save current path if not already saved (for redirect after login)
+    // BUT if there's already a saved path (like from BookingForm), keep it!
+    const savedPath = localStorage.getItem('from');
+    console.log('Navbar: handleGoogleLogin - Current saved path:', savedPath);
+    
+    if (!savedPath) {
+      const currentPath = window.location.pathname + window.location.search;
+      console.log('Navbar: No saved path, using current path:', currentPath);
+      
+      if (!currentPath.includes('/login') && !currentPath.includes('/auth/callback')) {
+        localStorage.setItem('from', currentPath);
+        console.log('Navbar: Saved current path to localStorage');
+      } else {
+        // If on login or callback page, default to home
+        localStorage.setItem('from', '/');
+        console.log('Navbar: On login/callback page, defaulting to home');
+      }
+    } else {
+      console.log('Navbar: Keeping existing saved path:', savedPath);
+    }
+    
+    // Verify path is saved
+    const verifyPath = localStorage.getItem('from');
+    console.log('Navbar: Final saved path before redirect:', verifyPath);
+    
+    // Close modal and menu
+    setShowLoginModal(false);
+    setIsMenuOpen(false);
+    
+    // Redirect to Google OAuth
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    console.log('Navbar: Redirecting to Google OAuth:', `${apiUrl}/api/auth/google`);
+    window.location.href = `${apiUrl}/api/auth/google`;
   };
 
   const toggleMenu = () => {
@@ -86,9 +124,21 @@ const Navbar = () => {
                 <FaGlobe className="globe-icon" />
               </button> */}
 
-              {/* User Login/Logout - Removed for public website */}
-              {/* Login only available in admin dashboard at separate URL */}
-              
+              {/* Login Button - Show when user is not logged in */}
+              {!user && (
+                <button 
+                  onClick={() => {
+                    setShowLoginModal(true);
+                    closeMenu();
+                  }}
+                  className="btn-google-login-nav"
+                  title="Login"
+                >
+                  <span>Login</span>
+                </button>
+              )}
+
+              {/* User Dashboard/Logout - Show when user is logged in */}
               {user && user.role !== 'admin' && (
                 <>
                   <Link to="/my-bookings" className="btn-dashboard" onClick={closeMenu}>
@@ -110,6 +160,12 @@ const Navbar = () => {
         isOpen={showLangCurrencyModal}
         onClose={() => setShowLangCurrencyModal(false)}
       /> */}
+      
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onGoogleLogin={handleGoogleLogin}
+      />
     </nav>
   );
 };

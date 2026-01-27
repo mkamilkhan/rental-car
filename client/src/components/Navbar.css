@@ -278,6 +278,40 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
   }
+
+  /* ============================================
+     GOOGLE LOGIN BUTTON
+     ============================================ */
+
+  .btn-google-login-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.3rem;
+    background: #ffffff;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  }
+
+  .btn-google-login-nav:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .google-icon-nav {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
   
   /* ============================================
      RESPONSIVE DESIGN
@@ -299,7 +333,8 @@
     .language-toggle,
     .btn-admin-login,
     .btn-dashboard,
-    .btn-logout {
+    .btn-logout,
+    .btn-google-login-nav {
       padding: 0.6rem 1rem;
       font-size: 0.85rem;
     }
@@ -369,7 +404,8 @@
     .language-toggle,
     .btn-admin-login,
     .btn-dashboard,
-    .btn-logout {
+    .btn-logout,
+    .btn-google-login-nav {
       width: 100%;
       justify-content: center;
       padding: 1rem 1.5rem;

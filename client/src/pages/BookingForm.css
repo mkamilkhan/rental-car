@@ -45,7 +45,199 @@
 
 .booking-form-wrapper {
   width: 100%;
-  max-width: 550px;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Left side - Form */
+.booking-form-new {
+  order: 1;
+}
+
+/* Right side - Details */
+.booking-details-side {
+  order: 2;
+}
+
+@media (max-width: 968px) {
+  .booking-form-wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .booking-form-new {
+    order: 2;
+  }
+
+  .booking-details-side {
+    order: 1;
+    padding: 2rem;
+  }
+
+  .booking-car-image {
+    height: 200px;
+  }
+}
+
+/* Right Side - Login Email & Car Details & Pricing */
+.booking-details-side {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border: 2px solid #1F2937;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Email Section */
+.booking-email-section {
+  position: relative;
+  z-index: 1;
+}
+
+.booking-email-section h3 {
+  color: #FDB43C;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.email-display-box {
+  background: rgba(31, 41, 55, 0.5);
+  border: 2px solid #1F2937;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.email-display-box p {
+  color: #D1D5DB;
+  font-size: 1rem;
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.email-display-box p strong {
+  color: #FDB43C;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.booking-details-side::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.booking-car-details {
+  position: relative;
+  z-index: 1;
+}
+
+.booking-car-image {
+  width: 100%;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.booking-car-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking-car-info h2 {
+  color: #FDB43C;
+  font-size: 1.75rem;
+  font-weight: 900;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.booking-car-brand {
+  color: #9CA3AF;
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+.booking-car-description {
+  color: #D1D5DB;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.booking-pricing-details {
+  position: relative;
+  z-index: 1;
+}
+
+.booking-pricing-details h3 {
+  color: #FDB43C;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pricing-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+  color: #D1D5DB;
+}
+
+.pricing-detail-item:last-child {
+  border-bottom: none;
+}
+
+.pricing-detail-item.total-price {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #FDB43C;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FDB43C;
+}
+
+.pricing-detail-item.total-price span:last-child {
+  font-size: 1.5rem;
+}
+
+.form-email-display {
+  background: rgba(31, 41, 55, 0.5);
+  border: 2px solid #1F2937;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  color: #D1D5DB;
+  position: relative;
+  z-index: 1;
+}
+
+.form-email-display p {
+  margin: 0;
+  color: #FDB43C;
 }
 
 .booking-form-new {

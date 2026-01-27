@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
 import {
@@ -9,6 +9,8 @@ import {
   Mail
 } from "lucide-react";
 import { useCurrency } from '../context/CurrencyContext';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import "./BookingForm.css";
 
 /* ================= SUCCESS MODAL ================= */
@@ -46,8 +48,11 @@ const SuccessModal = ({ open, onClose, bookingDetails }) => {
 /* ================= MAIN COMPONENT ================= */
 const BookingForm = () => {
   const { carId } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const { currency, getCurrencySymbol } = useCurrency();
+  const { user, token, authLoading } = useContext(AuthContext);
+
 
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,30 +61,113 @@ const BookingForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [selectedDuration, setSelectedDuration] = useState("60min"); // Default or from URL
 
+  useEffect(() => {
+    if (authLoading) {
+      console.log("BookingForm: waiting for auth to finish");
+      return;
+    }
+  
+    if (!token) {
+      console.log("BookingForm: no token after auth → login");
+      navigate('/login');
+      return;
+    }
+  
+    console.log("BookingForm: token OK", token.slice(0, 20));
+    // continue booking logic here
+  
+  }, [authLoading, token]);
+  
   const [formData, setFormData] = useState({
     customerName: "",
-    customerEmail: "",
     contactNumber: "",
-    selectedDate: "",
-    adults: 1,
     pickupLocation: "normal",
-    duration: "60min" // Default duration
   });
 
   const paymentVerifiedRef = useRef(false);
 
+  // Get duration from URL params
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const duration = params.get('duration');
+    if (duration) {
+      setSelectedDuration(duration);
+    }
+  }, [location]);
+
+  // Check if user is logged in
+  useEffect(() => {
+    // Wait for auth to finish loading
+    if (authLoading) {
+      return; // Don't do anything while auth is loading
+    }
+    
+    // Check if there's a token from context but user is not set
+    // This might happen if AuthContext hasn't finished fetching user yet
+    if (token && !user) {
+      console.log('BookingForm: Token exists but user not set, waiting for AuthContext to fetch user...');
+      // Don't redirect yet, wait a bit more for AuthContext to fetch user
+      return;
+    }
+    
+    // If user is already logged in, don't redirect - allow them to use the form
+    if (user) {
+      console.log('BookingForm: User is logged in, allowing access to form');
+      return; // User is logged in, no need to redirect
+    }
+    
+    // Check if we're coming from auth callback (has token in URL)
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasToken = urlParams.get('token');
+    
+    // Only redirect if user is NOT logged in AND not coming from callback AND no token from context
+    const hasAnyToken = !!token;
+    
+    if (!user && !hasToken && !hasAnyToken) {
+      // Save full path including query params for redirect after login
+      const fullPath = location.pathname + location.search;
+      console.log('BookingForm: User not logged in and no token. Saving path:', fullPath);
+      
+      // Save to BOTH localStorage AND sessionStorage
+      try {
+        localStorage.setItem('from', fullPath);
+        sessionStorage.setItem('from', fullPath);
+        console.log('BookingForm: Path saved to both storages');
+        
+        // Verify
+        const verifyLocal = localStorage.getItem('from');
+        const verifySession = sessionStorage.getItem('from');
+        console.log('BookingForm: localStorage path:', verifyLocal);
+        console.log('BookingForm: sessionStorage path:', verifySession);
+      } catch (error) {
+        console.error('BookingForm: Error saving path:', error);
+      }
+      
+      navigate('/login', { replace: false });
+    }
+  }, [user, authLoading, navigate, location]);
+
   /* ================= FETCH CAR ================= */
   useEffect(() => {
     const fetchCar = async () => {
+      if (!carId) {
+        console.error('BookingForm: No carId provided');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('BookingForm: Fetching car with ID:', carId);
       try {
         const res = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/cars/${carId}`,
-          { timeout: 10000 } // 10 second timeout
+          { timeout: 10000 }
         );
+        console.log('BookingForm: Car fetched successfully:', res.data);
         setCar(res.data);
       } catch (err) {
-        console.error("Error fetching car:", err);
+        console.error("BookingForm: Error fetching car:", err);
         if (err.code === 'ECONNABORTED' || err.message.includes('timeout')) {
           alert("Request timed out. Please check your internet connection and try again.");
         } else if (err.response?.status === 500) {
@@ -91,6 +179,7 @@ const BookingForm = () => {
         }
       } finally {
         setLoading(false);
+        console.log('BookingForm: Loading set to false');
       }
     };
     if (carId) {
@@ -143,7 +232,7 @@ const BookingForm = () => {
       console.error("Payment verification error:", err);
       alert(err.response?.data?.error || "Failed to verify payment. Please contact support.");
       setPaymentLoading(false);
-      paymentVerifiedRef.current = false; // Reset on error
+      paymentVerifiedRef.current = false;
     }
   }, [car]);
 
@@ -169,7 +258,7 @@ const BookingForm = () => {
     let total = 0;
     
     // Get price based on selected duration
-    switch (formData.duration) {
+    switch (selectedDuration) {
       case "30min":
         total = Number(car.price30min) || 0;
         break;
@@ -190,6 +279,17 @@ const BookingForm = () => {
     return total;
   };
 
+  const getDurationPrice = () => {
+    if (!car) return 0;
+    switch (selectedDuration) {
+      case "30min": return car.price30min || 0;
+      case "60min": return car.price60min || 0;
+      case "90min": return car.price90min || 0;
+      case "120min": return car.price120min || 0;
+      default: return car.price60min || car.price30min || 0;
+    }
+  };
+
   /* ================= FORM SUBMIT ================= */
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -197,7 +297,21 @@ const BookingForm = () => {
       alert("Please select a payment method");
       return;
     }
-    setShowPayment(true);
+    
+    // Check if user is logged in - check both user object and token
+    const hasToken = !!token;
+    const hasUser = !!user?.email;
+    const emailFromStorage = localStorage.getItem('userEmail');
+    
+    // If token exists, proceed (user object will load in background)
+    if (hasToken || hasUser || emailFromStorage) {
+      setShowPayment(true);
+      return;
+    }
+    
+    // No token, no user, no email - need to login
+    alert("Please login to continue");
+    navigate('/login');
   };
 
   /* ================= STRIPE PAYMENT ================= */
@@ -208,14 +322,14 @@ const BookingForm = () => {
       return;
     }
 
-    if (!formData.customerName || !formData.customerEmail || !formData.selectedDate) {
+    if (!formData.customerName || !user?.email) {
       alert("Please fill in all required fields");
       return;
     }
 
-    // Set endDate to next day for single-day bookings to pass validation
-    const startDateObj = new Date(formData.selectedDate);
-    const endDateObj = new Date(startDateObj);
+    // Set endDate to next day for single-day bookings
+    const today = new Date();
+    const endDateObj = new Date(today);
     endDateObj.setDate(endDateObj.getDate() + 1);
 
     try {
@@ -227,14 +341,14 @@ const BookingForm = () => {
           carId: car._id,
           carName: car.name,
           customerName: formData.customerName,
-          customerEmail: formData.customerEmail,
+          customerEmail: user?.email || localStorage.getItem('userEmail') || '', // From logged in user
           contactNumber: formData.contactNumber,
-          startDate: formData.selectedDate,
+          startDate: today.toISOString().split('T')[0],
           endDate: endDateObj.toISOString().split('T')[0],
           totalDays,
           pickupLocation: formData.pickupLocation,
-          duration: formData.duration,
-          adults: formData.adults,
+          duration: selectedDuration,
+          adults: 1, // Default
           currency: currency
         }
       );
@@ -252,32 +366,34 @@ const BookingForm = () => {
     }
   };
 
-
   /* ================= CASH BOOKING ================= */
   const confirmCashBooking = async () => {
     try {
       setSubmitting(true);
 
-      // Set endDate to next day for single-day bookings to pass validation
-      const startDateObj = new Date(formData.selectedDate);
-      const endDateObj = new Date(startDateObj);
+      const today = new Date();
+      const endDateObj = new Date(today);
       endDateObj.setDate(endDateObj.getDate() + 1);
 
+      // Get token for authorization
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
       await axios.post(`${process.env.REACT_APP_API_URL}/api/bookings`, {
         carId: car._id,
         carName: car.name,
         customerName: formData.customerName,
-        customerEmail: formData.customerEmail,
+        customerEmail: user?.email || localStorage.getItem('userEmail') || '', // From logged in user
         contactNumber: formData.contactNumber,
-        startDate: formData.selectedDate,
+        startDate: today.toISOString().split('T')[0],
         endDate: endDateObj.toISOString().split('T')[0],
         totalDays,
         pickupLocation: formData.pickupLocation,
-        duration: formData.duration,
-        adults: formData.adults,
-        totalPrice: calculateTotal(),
-        paymentMethod: "cash"
-      });
+        duration: selectedDuration,
+        paymentMethod: formData.paymentMethod || 'cash',
+        adults: 1, // Default
+        totalPrice: calculateTotal()
+      }, { headers });
 
       // Email non-blocking
       emailjs.send(
@@ -286,7 +402,7 @@ const BookingForm = () => {
         {
           vehicle_name: car.name,
           customer_name: formData.customerName,
-          customer_email: formData.customerEmail,
+          customer_email: user?.email || localStorage.getItem('userEmail') || '',
           total_price: calculateTotal(),
           payment_method: "Cash"
         },
@@ -308,38 +424,74 @@ const BookingForm = () => {
     setPaymentMethod("");
     setFormData({
       customerName: "",
-      customerEmail: "",
       contactNumber: "",
-      selectedDate: "",
-      adults: 1,
       pickupLocation: "normal",
-      duration: "60min"
     });
     navigate("/");
   };
 
   /* ================= UI ================= */
-  if (loading) {
+  // Debug logs - using token from context
+  console.log('BookingForm Render:', {
+    authLoading,
+    loading,
+    user: user ? 'logged in' : 'not logged in',
+    car: car ? 'loaded' : 'not loaded',
+    carId,
+    hasToken: !!token,
+    tokenPreview: token ? token.substring(0, 20) + '...' : 'no token'
+  });
+
+  // Show loading while auth or car data is loading
+  if (authLoading || loading) {
+    console.log('BookingForm: Showing loading screen');
     return (
       <div className="bg-gradient-main min-h-screen flex items-center justify-center">
         <p className="loading text-white text-xl">Loading…</p>
       </div>
     );
   }
+
+  // Show login message only if auth is done loading and user is not logged in AND no token
+  // If token exists, allow form to show (user will load in background)
+  if (!authLoading && !user && !token) {
+    console.log('BookingForm: User not logged in and no token, showing login message');
+    return (
+      <div className="bg-gradient-main min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-white text-xl mb-4">Please login to continue</p>
+          <Link to="/login" className="btn-booking-submit">Login</Link>
+        </div>
+      </div>
+    );
+  }
   
-  if (!car) {
+  // If token exists but user not loaded yet, show form anyway (user will load in background)
+  // This allows users to start filling the form while user data loads
+  if (token && !user && !authLoading) {
+    console.log('BookingForm: Token exists, showing form while user loads in background...');
+    // Continue to show form - user will be available soon
+  }
+  
+  // Show error if car is not found (but only after loading is complete)
+  if (!loading && !car) {
+    console.log('BookingForm: Car not found');
     return (
       <div className="bg-gradient-main min-h-screen flex items-center justify-center">
         <p className="loading text-white text-xl">Car not found</p>
       </div>
     );
   }
+  
+  // If user is logged in and car is loaded, show the booking form
+  console.log('BookingForm: Rendering booking form');
 
   return (
-    <div className="booking-form-page" style={{ backgroundImage: `url(${car.image})` }}>
+    <div className="booking-form-page">
       <div className="booking-form-overlay"></div>
       <div className="booking-form-container">
         <div className="booking-form-wrapper">
+          {/* Left Side - Form */}
           <form onSubmit={handleSubmit} className="booking-form-new">
             <h2 className="booking-form-title">Booking Details</h2>
             
@@ -356,18 +508,6 @@ const BookingForm = () => {
 
             <div className="form-group-new">
               <input 
-                name="customerEmail" 
-                type="email" 
-                placeholder="Enter your email" 
-                required 
-                value={formData.customerEmail} 
-                onChange={handleChange} 
-                className="form-input-new"
-              />
-            </div>
-
-            <div className="form-group-new">
-              <input 
                 name="contactNumber" 
                 placeholder="Contact Number" 
                 required 
@@ -375,47 +515,6 @@ const BookingForm = () => {
                 onChange={handleChange} 
                 className="form-input-new"
               />
-            </div>
-
-            <div className="form-group-new">
-              <input 
-                name="selectedDate" 
-                type="date" 
-                required 
-                value={formData.selectedDate} 
-                onChange={handleChange} 
-                className="form-input-new"
-                min={new Date().toISOString().split('T')[0]}
-              />
-            </div>
-
-            <div className="form-group-new">
-              <input 
-                name="adults" 
-                type="number" 
-                min="1"
-                placeholder="Adults" 
-                required 
-                value={formData.adults} 
-                onChange={handleChange} 
-                className="form-input-new"
-              />
-            </div>
-
-            <div className="form-group-new">
-              <select 
-                name="duration" 
-                value={formData.duration} 
-                onChange={handleChange} 
-                className="form-input-new"
-                required
-              >
-                <option value="">Select Duration</option>
-                {car.price30min != null && <option value="30min">30 Minutes - {car.price30min} {getCurrencySymbol(currency)}</option>}
-                {car.price60min != null && <option value="60min">60 Minutes - {car.price60min} {getCurrencySymbol(currency)}</option>}
-                {car.price90min != null && <option value="90min">90 Minutes - {car.price90min || 0} {getCurrencySymbol(currency)}</option>}
-                {car.price120min != null && <option value="120min">120 Minutes - {car.price120min || 0} {getCurrencySymbol(currency)}</option>}
-              </select>
             </div>
 
             <div className="form-group-new">
@@ -443,28 +542,6 @@ const BookingForm = () => {
               </select>
             </div>
 
-            <div className="total-price-display">
-              <div className="price-row">
-                <span>Duration:</span>
-                <span>
-                  {formData.duration === "30min" && car.price30min && `${car.price30min} ${getCurrencySymbol(currency)}`}
-                  {formData.duration === "60min" && car.price60min && `${car.price60min} ${getCurrencySymbol(currency)}`}
-                  {formData.duration === "90min" && car.price90min && `${car.price90min} ${getCurrencySymbol(currency)}`}
-                  {formData.duration === "120min" && car.price120min && `${car.price120min} ${getCurrencySymbol(currency)}`}
-                </span>
-              </div>
-              {formData.pickupLocation === "private" && (
-                <div className="price-row">
-                  <span>Private 4x4:</span>
-                  <span>+300 {getCurrencySymbol(currency)}</span>
-                </div>
-              )}
-              <div className="price-row total">
-                <span>Total:</span>
-                <span>{calculateTotal()} {getCurrencySymbol(currency)}</span>
-              </div>
-            </div>
-
             <button 
               type="submit" 
               className="btn-booking-submit"
@@ -474,11 +551,60 @@ const BookingForm = () => {
             </button>
           </form>
 
+          {/* Right Side - Login Email & Car Details */}
+          <div className="booking-details-side">
+            {/* Login Email Section */}
+            <div className="booking-email-section">
+              <h3>Account Information</h3>
+              <div className="email-display-box">
+                <p><strong>Email:</strong> {user?.email || 'Loading...'}</p>
+                <p><strong>Name:</strong> {user?.name || 'Loading...'}</p>
+              </div>
+            </div>
+
+            {/* Car Details Section */}
+            <div className="booking-car-details">
+              <div className="booking-car-image">
+                <img src={car.image} alt={car.name} />
+              </div>
+              <div className="booking-car-info">
+                <h2>{car.name}</h2>
+                <p className="booking-car-brand">{car.brand} {car.model}</p>
+                {car.description && (
+                  <p className="booking-car-description">{car.description}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Pricing Details Section */}
+            <div className="booking-pricing-details">
+              <h3>Pricing Details</h3>
+              <div className="pricing-detail-item">
+                <span>Duration:</span>
+                <span>{selectedDuration}</span>
+              </div>
+              <div className="pricing-detail-item">
+                <span>Base Price:</span>
+                <span>{getDurationPrice()} {getCurrencySymbol(currency)}</span>
+              </div>
+              {formData.pickupLocation === "private" && (
+                <div className="pricing-detail-item">
+                  <span>Private 4x4:</span>
+                  <span>+300 {getCurrencySymbol(currency)}</span>
+                </div>
+              )}
+              <div className="pricing-detail-item total-price">
+                <span>Total:</span>
+                <span>{calculateTotal()} {getCurrencySymbol(currency)}</span>
+              </div>
+            </div>
+          </div>
+
           {showPayment && paymentMethod === "card" && (
             <div className="payment-modal-overlay">
               <div className="payment-modal">
                 <h3>Confirm Payment</h3>
-                <p className="payment-amount">Total Amount: {calculateTotal()} {car.currency || "AED"}</p>
+                <p className="payment-amount">Total Amount: {calculateTotal()} {getCurrencySymbol(currency)}</p>
                 <div className="payment-modal-buttons">
                   <button 
                     className="btn-pay-now" 
@@ -502,7 +628,7 @@ const BookingForm = () => {
             <div className="payment-modal-overlay">
               <div className="payment-modal">
                 <h3>Confirm Booking</h3>
-                <p className="payment-amount">Total Amount: {calculateTotal()} {car.currency || "AED"}</p>
+                <p className="payment-amount">Total Amount: {calculateTotal()} {getCurrencySymbol(currency)}</p>
                 <div className="payment-modal-buttons">
                   <button 
                     className="btn-pay-now" 
@@ -529,7 +655,7 @@ const BookingForm = () => {
         onClose={closeSuccess}
         bookingDetails={{
           carName: car.name,
-          customerEmail: formData.customerEmail,
+          customerEmail: user?.email || '',
           totalPrice: calculateTotal(),
           currency: currency
         }}

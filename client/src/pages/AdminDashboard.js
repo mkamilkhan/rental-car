@@ -1103,7 +1103,7 @@ const AdminDashboard = () => {
       const bookingsArray = Array.isArray(response.data) 
         ? response.data 
         : (response.data?.data || []);
-      
+  
       console.log('Fetched bookings:', bookingsArray.length, bookingsArray);
       
       setBookings(bookingsArray);
@@ -1179,7 +1179,7 @@ const AdminDashboard = () => {
       }
   
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      
+  
       if (editingCar) {
         // Update existing car
         await axios.put(
@@ -1376,7 +1376,7 @@ const AdminDashboard = () => {
               <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
                 <path d="M9 22V12H15V22"/>
-              </svg>
+                </svg>
               Dashboard
             </a>
           </li>
@@ -1387,7 +1387,7 @@ const AdminDashboard = () => {
             >
               <svg className="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15"/>
-              </svg>
+            </svg>
               Messages
             </a>
           </li>
@@ -1499,11 +1499,11 @@ const AdminDashboard = () => {
               <div className="stat-card-top">
                 <div className="stat-card-label">Total Vehicles</div>
                 <div className="stat-card-value">{stats.totalCars}</div>
-              </div>
+                </div>
               <div className="stat-card-top">
                 <div className="stat-card-label">Available Cars</div>
                 <div className="stat-card-value">{stats.availableCars}</div>
-              </div>
+                </div>
               <div className="stat-card-top">
                 <div className="stat-card-label">Total Bookings</div>
                 <div className="stat-card-value">{stats.totalBookings}</div>
@@ -1511,8 +1511,8 @@ const AdminDashboard = () => {
               <div className="stat-card-top">
                 <div className="stat-card-label">Revenue (AED)</div>
                 <div className="stat-card-value">{stats.totalRevenue.toLocaleString()}</div>
-              </div>
-            </div>
+                </div>
+                </div>
 
             {/* Main Content Grid - Graph Left, Account Right */}
             <div className="dashboard-content-grid">
@@ -1525,9 +1525,9 @@ const AdminDashboard = () => {
                       <div key={index} className="chart-bar" style={{ height: `${(item.value / maxChartValue) * 100}%` }}>
                         <span className="chart-bar-value">{item.value}</span>
                         <span className="chart-bar-label">{item.date}</span>
-                      </div>
+              </div>
                     ))}
-                  </div>
+                </div>
                 </div>
               </div>
 
@@ -1542,15 +1542,15 @@ const AdminDashboard = () => {
                   <div className="account-stat-item">
                     <span className="account-stat-label">Total Vehicles</span>
                     <span className="account-stat-value">{stats.totalCars}</span>
-                  </div>
+                </div>
                   <div className="account-stat-item">
                     <span className="account-stat-label">Available Cars</span>
                     <span className="account-stat-value">{stats.availableCars}</span>
-                  </div>
+              </div>
                   <div className="account-stat-item">
                     <span className="account-stat-label">Total Bookings</span>
                     <span className="account-stat-value">{stats.totalBookings}</span>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -1562,39 +1562,39 @@ const AdminDashboard = () => {
                 <div className="statistics-header">
                   <span className="statistics-label">Available Cars</span>
                   <span className="statistics-percentage">{stats.totalCars > 0 ? Math.round((stats.availableCars / stats.totalCars) * 100) : 0}%</span>
-                </div>
+                        </div>
                 <div className="statistics-progress-bar">
                   <div className="statistics-progress-fill" style={{ width: `${stats.totalCars > 0 ? (stats.availableCars / stats.totalCars) * 100 : 0}%` }}></div>
-                </div>
-              </div>
+                      </div>
+                    </div>
               <div className="statistics-item">
                 <div className="statistics-header">
                   <span className="statistics-label">Booked Cars</span>
                   <span className="statistics-percentage">{stats.totalCars > 0 ? Math.round((stats.bookedCars / stats.totalCars) * 100) : 0}%</span>
-                </div>
+                        </div>
                 <div className="statistics-progress-bar">
                   <div className="statistics-progress-fill" style={{ width: `${stats.totalCars > 0 ? (stats.bookedCars / stats.totalCars) * 100 : 0}%` }}></div>
-                </div>
-              </div>
+                      </div>
+                    </div>
               <div className="statistics-item">
                 <div className="statistics-header">
                   <span className="statistics-label">Confirmed Bookings</span>
                   <span className="statistics-percentage">{stats.totalBookings > 0 ? Math.round((stats.confirmedBookings / stats.totalBookings) * 100) : 0}%</span>
-                </div>
+                        </div>
                 <div className="statistics-progress-bar">
                   <div className="statistics-progress-fill" style={{ width: `${stats.totalBookings > 0 ? (stats.confirmedBookings / stats.totalBookings) * 100 : 0}%` }}></div>
-                </div>
-              </div>
+                      </div>
+                    </div>
               <div className="statistics-item">
                 <div className="statistics-header">
                   <span className="statistics-label">Pending Bookings</span>
                   <span className="statistics-percentage">{stats.totalBookings > 0 ? Math.round((stats.pendingBookings / stats.totalBookings) * 100) : 0}%</span>
-                </div>
+                        </div>
                 <div className="statistics-progress-bar">
                   <div className="statistics-progress-fill" style={{ width: `${stats.totalBookings > 0 ? (stats.pendingBookings / stats.totalBookings) * 100 : 0}%` }}></div>
+                      </div>
                 </div>
               </div>
-            </div>
 
             {/* Recent Bookings */}
             <div className="recent-section">
@@ -1608,19 +1608,19 @@ const AdminDashboard = () => {
                         <span>{booking.customerName || 'Guest'}</span>
                         <span>{new Date(booking.createdAt).toLocaleDateString()}</span>
                         <span>{booking.totalPrice} {booking.car?.currency || 'AED'}</span>
-                      </div>
+                  </div>
                     </div>
                     <div className="recent-item-actions">
                       {getStatusBadge(booking.status)}
                     </div>
-                  </div>
+                    </div>
                 ))}
                 {bookings.length === 0 && (
                   <div className="recent-item">
                     <div className="recent-item-info">
                       <div className="recent-item-title">No bookings yet</div>
-                    </div>
                   </div>
+                </div>
                 )}
               </div>
             </div>
@@ -1634,7 +1634,7 @@ const AdminDashboard = () => {
             {loading ? (
               <p>Loading...</p>
             ) : bookings.length === 0 ? (
-              <p>No bookings found.</p>
+                    <p>No bookings found.</p>
             ) : (
               <table className="bookings-table">
                 <thead>
@@ -1869,7 +1869,7 @@ const AdminDashboard = () => {
                           <option value="USD">USD</option>
                           <option value="EUR">EUR</option>
                         </select>
-                      </div>
+                    </div>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                       <div>
@@ -1914,13 +1914,13 @@ const AdminDashboard = () => {
                     <div style={{ marginBottom: '1rem' }}>
                       <label style={{ color: '#9CA3AF', display: 'block', marginBottom: '0.5rem' }}>Vehicle Image *</label>
                       <input
-                        type="file"
-                        name="image"
-                        accept="image/*"
-                        onChange={handleCarFormChange}
-                        required={!editingCar}
+  type="file"
+  name="image"
+  accept="image/*"
+  onChange={handleCarFormChange}
+  required={!editingCar}
                         style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #1F2937', background: '#111111', color: '#ffffff' }}
-                      />
+/>
                       {imagePreview && (
                         <div style={{ marginTop: '10px' }}>
                           <img src={imagePreview} alt="preview" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />

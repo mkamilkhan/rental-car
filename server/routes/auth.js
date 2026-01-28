@@ -8,10 +8,55 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // Initialize Passport Google Strategy
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  // Smart callback URL detection - ALWAYS use Render URL if not localhost
+  const getCallbackURL = () => {
+    // Priority 1: Use environment variable if set
+    if (process.env.GOOGLE_CALLBACK_URL) {
+      console.log('Google OAuth: Using GOOGLE_CALLBACK_URL env var');
+      return process.env.GOOGLE_CALLBACK_URL;
+    }
+    
+    // Priority 2: Construct from API URL if available
+    if (process.env.REACT_APP_API_URL || process.env.API_URL) {
+      const apiUrl = process.env.REACT_APP_API_URL || process.env.API_URL;
+      const callback = `${apiUrl}/api/auth/google/callback`;
+      console.log('Google OAuth: Constructed from API URL:', callback);
+      return callback;
+    }
+    
+    // Priority 3: Check if running on Render
+    // Render ALWAYS sets PORT environment variable (even if NODE_ENV is not set)
+    const isRender = !!process.env.PORT;
+    const isProduction = process.env.NODE_ENV === 'production';
+    
+    // If PORT is set, we're definitely on Render (or similar platform)
+    // NEVER use localhost if PORT is set
+    if (isRender) {
+      const renderUrl = 'https://offroad-rental-server.onrender.com/api/auth/google/callback';
+      console.log('Google OAuth: Detected Render (PORT env var exists), using:', renderUrl);
+      return renderUrl;
+    }
+    
+    // Also check production mode
+    if (isProduction) {
+      const renderUrl = 'https://offroad-rental-server.onrender.com/api/auth/google/callback';
+      console.log('Google OAuth: Detected production mode, using:', renderUrl);
+      return renderUrl;
+    }
+    
+    // Priority 4: Fallback to localhost ONLY if PORT is NOT set (true local development)
+    const localhostUrl = 'http://localhost:5000/api/auth/google/callback';
+    console.log('Google OAuth: Using localhost (development mode - no PORT env var)');
+    return localhostUrl;
+  };
+  
+  const callbackURL = getCallbackURL();
+  console.log('Google OAuth: Final callback URL:', callbackURL);
+  
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/google/callback`,
+    callbackURL: callbackURL,
     // Mobile-friendly OAuth settings
     accessType: 'offline',
     prompt: 'select_account' // Force account selection instead of email input
@@ -175,9 +220,50 @@ router.get('/google/callback',
         { expiresIn: '7d' }
       );
       
-      // Redirect to frontend with token
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3001';
-      res.redirect(`${frontendUrl}/auth/callback?token=${token}&email=${encodeURIComponent(req.user.email)}&name=${encodeURIComponent(req.user.name)}`);
+      // Smart frontend URL detection for mobile
+      const getFrontendUrl = () => {
+        // Priority 1: Use environment variable if set
+        if (process.env.FRONTEND_URL) {
+          return process.env.FRONTEND_URL;
+        }
+        
+        // Priority 2: Production - use Render client URL
+        if (process.env.NODE_ENV === 'production') {
+          return 'https://offroad-rental-client.onrender.com';
+        }
+        
+        // Priority 3: Fallback to localhost for development
+        return 'http://localhost:3001';
+      };
+      
+      const frontendUrl = getFrontendUrl();
+      console.log('Google OAuth: Redirecting to frontend:', frontendUrl);
+      
+      // HashRouter uses # for routes, so we need to add # before /auth/callback
+      // Format: https://domain.com/#/auth/callback?token=...
+      // Note: res.redirect() strips # from URL, so we need to use window.location or send HTML with script
+      const tokenParam = encodeURIComponent(token);
+      const emailParam = encodeURIComponent(req.user.email);
+      const nameParam = encodeURIComponent(req.user.name);
+      
+      // Use HTML redirect with JavaScript to preserve # in URL
+      const redirectHtml = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Redirecting...</title>
+          </head>
+          <body>
+            <script>
+              window.location.href = '${frontendUrl}/#/auth/callback?token=${tokenParam}&email=${emailParam}&name=${nameParam}';
+            </script>
+            <p>Redirecting...</p>
+          </body>
+        </html>
+      `;
+      
+      console.log('Google OAuth: Redirecting to HashRouter route:', `${frontendUrl}/#/auth/callback?token=...`);
+      res.send(redirectHtml);
     } catch (error) {
       res.redirect('/login?error=authentication_failed');
     }

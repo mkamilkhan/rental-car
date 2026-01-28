@@ -54,7 +54,39 @@ const Navbar = () => {
     setIsMenuOpen(false);
     
     // Redirect to Google OAuth
-    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    // Smart URL detection for mobile and desktop
+    const getApiUrl = () => {
+      // Priority 1: Use environment variable if set (build-time)
+      if (process.env.REACT_APP_API_URL) {
+        console.log('Navbar: Using REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+        return process.env.REACT_APP_API_URL;
+      }
+      
+      // Priority 2: If on localhost (development), use localhost
+      const hostname = window.location.hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        console.log('Navbar: Using localhost for development');
+        return 'http://localhost:5000';
+      }
+      
+      // Priority 3: If on Render client domain, construct server URL
+      // Render client: offroad-rental-client.onrender.com
+      // Render server: offroad-rental-server.onrender.com
+      if (hostname.includes('onrender.com')) {
+        // Extract subdomain and construct server URL
+        const serverUrl = 'https://offroad-rental-server.onrender.com';
+        console.log('Navbar: Detected Render domain, using server URL:', serverUrl);
+        return serverUrl;
+      }
+      
+      // Priority 4: Fallback to known Render server URL
+      const fallbackUrl = 'https://offroad-rental-server.onrender.com';
+      console.log('Navbar: Using fallback server URL:', fallbackUrl);
+      return fallbackUrl;
+    };
+    
+    const apiUrl = getApiUrl();
+    console.log('Navbar: Final API URL:', apiUrl);
     console.log('Navbar: Redirecting to Google OAuth:', `${apiUrl}/api/auth/google`);
     window.location.href = `${apiUrl}/api/auth/google`;
   };

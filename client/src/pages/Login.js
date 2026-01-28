@@ -47,7 +47,30 @@ const Login = () => {
     }
     // If savedPath exists, DO NOT overwrite it - keep the booking form path
     
-    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    // Smart URL detection for mobile and desktop
+    const getApiUrl = () => {
+      // Priority 1: Use environment variable if set
+      if (process.env.REACT_APP_API_URL) {
+        return process.env.REACT_APP_API_URL;
+      }
+      
+      // Priority 2: If on localhost (development)
+      const hostname = window.location.hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:5000';
+      }
+      
+      // Priority 3: If on Render domain, use Render server URL
+      if (hostname.includes('onrender.com')) {
+        return 'https://offroad-rental-server.onrender.com';
+      }
+      
+      // Priority 4: Fallback
+      return 'https://offroad-rental-server.onrender.com';
+    };
+    
+    const apiUrl = getApiUrl();
+    console.log('Login: Using API URL:', apiUrl);
     window.location.href = `${apiUrl}/api/auth/google`;
   };
 

@@ -11,7 +11,10 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/google/callback`
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/google/callback`,
+    // Mobile-friendly OAuth settings
+    accessType: 'offline',
+    prompt: 'select_account' // Force account selection instead of email input
   }, async (accessToken, refreshToken, profile, done) => {
     try {
       // Check if user exists with this Google ID
@@ -155,7 +158,11 @@ router.get('/me', require('../middleware/auth').auth, async (req, res) => {
 
 // Google OAuth Routes
 router.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { 
+    scope: ['profile', 'email'],
+    prompt: 'select_account', // Force account selection on mobile
+    accessType: 'offline'
+  })
 );
 
 router.get('/google/callback',

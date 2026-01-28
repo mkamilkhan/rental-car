@@ -35,7 +35,7 @@ https://offroad-rental-server.onrender.com
 
 ```env
 REACT_APP_API_URL=https://offroad-rental-server.onrender.com
-REACT_APP_STRIPE_PUBLIC_KEY=pk_live_51SrZXHH1c9BxRJ0Mf21IyYxZuOy6d8QzOEcoz5Uc0dSTJOAZJxcYuMGn7zxO079ozqqMTXeGkmQbzJvzKN0OJc31008SwWaesl
+REACT_APP_STRIPE_PUBLIC_KEY=pk_live_your_stripe_public_key_here
 ```
 
 ### Server (Node.js) - Render Environment Variables:
@@ -48,7 +48,7 @@ GOOGLE_CLIENT_SECRET=your-client-secret
 GOOGLE_CALLBACK_URL=https://offroad-rental-server.onrender.com/api/auth/google/callback
 FRONTEND_URL=https://offroad-rental-client.onrender.com
 SESSION_SECRET=your-session-secret
-STRIPE_SECRET_KEY=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
+STRIPE_SECRET_KEY=sk_live_your_stripe_secret_key_here
 CLOUDINARY_CLOUD_NAME=your-cloudinary-name
 CLOUDINARY_API_KEY=your-cloudinary-key
 CLOUDINARY_API_SECRET=your-cloudinary-secret

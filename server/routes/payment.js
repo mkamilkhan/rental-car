@@ -48,7 +48,10 @@ router.post("/create-checkout-session", async (req, res) => {
     }
 
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
-    const successUrl = `${frontendUrl}/booking-success?session_id={CHECKOUT_SESSION_ID}`;
+    // Use returnUrl from request if provided, otherwise use default
+    const successUrl = req.body.returnUrl 
+      ? req.body.returnUrl.replace('{CHECKOUT_SESSION_ID}', '{CHECKOUT_SESSION_ID}')
+      : `${frontendUrl}/booking-success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${frontendUrl}/booking/${carId}`;
 
     // Normalize currency code (aed -> aed, usd -> usd, etc.)
@@ -217,6 +220,134 @@ router.post("/verify-payment", async (req, res) => {
       status: "confirmed",
       paymentInfo: {
         sessionId,
+        paymentIntentId: session.payment_intent,
+        amountPaid: parseFloat(totalPrice),
+        currency: session.currency
+      }
+    });
+
+    await booking.populate('car');
+    
+    console.log('✅ Card payment booking created:', {
+      bookingId: booking._id,
+      carId: booking.car?._id,
+      carName: booking.car?.name,
+      customerEmail: booking.customerEmail,
+      paymentMethod: booking.paymentMethod,
+      status: booking.status,
+      totalPrice: booking.totalPrice
+    });
+
+    res.json({ 
+      success: true, 
+      booking,
+      message: "Booking created successfully" 
+    });
+  } catch (err) {
+    console.error("❌ Payment verification error:", err);
+    
+    let errorMessage = "Payment verification failed. Please contact support.";
+    
+    if (err.type === 'StripeInvalidRequestError') {
+      if (err.message.includes('API key')) {
+        errorMessage = "Invalid Stripe API key. Please check server configuration.";
+      } else {
+        errorMessage = err.message || "Invalid payment session.";
+      }
+    } else if (err.type === 'StripeAuthenticationError') {
+      errorMessage = "Stripe authentication failed. Please check API key configuration.";
+    } else if (err.message) {
+      errorMessage = err.message;
+    }
+    
+    res.status(500).json({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  }
+});
+
+// Verify payment session (GET endpoint for easier access)
+router.get("/verify-session", async (req, res) => {
+  try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      console.error("❌ Stripe is not configured. STRIPE_SECRET_KEY is missing.");
+      return res.status(500).json({ 
+        error: "Payment service is not configured. Please contact support." 
+      });
+    }
+
+    const { session_id } = req.query;
+
+    if (!session_id) {
+      return res.status(400).json({ error: "Session ID is required" });
+    }
+
+    // Retrieve the session from Stripe
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+
+    if (session.payment_status !== "paid") {
+      return res.status(400).json({ error: "Payment not completed" });
+    }
+
+    // Check if booking already exists
+    const existingBooking = await Booking.findOne({ 
+      "paymentInfo.sessionId": session_id 
+    });
+
+    if (existingBooking) {
+      await existingBooking.populate('car');
+      return res.json({ 
+        success: true, 
+        booking: existingBooking,
+        message: "Booking already exists" 
+      });
+    }
+
+    // Extract booking details from metadata
+    const {
+      carId,
+      carName,
+      customerName,
+      customerEmail,
+      contactNumber,
+      startDate,
+      endDate,
+      totalDays,
+      pickupLocation,
+      duration,
+      totalPrice,
+      paymentMethod
+    } = session.metadata;
+
+    // Verify car exists
+    const car = await Car.findById(carId);
+    if (!car) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    // Calculate total days if not provided
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const calculatedDays = totalDays ? parseInt(totalDays) : Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)));
+
+    // Create booking
+    const booking = await Booking.create({
+      car: carId,
+      customerName: customerName || "",
+      customerEmail,
+      contactNumber: contactNumber || "",
+      startDate: start,
+      endDate: end,
+      totalDays: calculatedDays,
+      pickupLocation: pickupLocation || "normal",
+      duration: duration || "60min",
+      totalPrice: parseFloat(totalPrice),
+      paymentMethod: paymentMethod || "card",
+      status: "confirmed",
+      paymentInfo: {
+        sessionId: session_id,
         paymentIntentId: session.payment_intent,
         amountPaid: parseFloat(totalPrice),
         currency: session.currency

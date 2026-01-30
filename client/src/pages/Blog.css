@@ -2,9 +2,10 @@
    GLOBAL
 ========================= */
 .blog-page {
-  background: #111111;
+  background: #1A1A1A;
   min-height: 100vh;
   position: relative;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
 }
 
 /* Container removed - using global from App.css */

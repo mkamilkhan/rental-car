@@ -985,6 +985,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [bookings, setBookings] = useState([]);
   const [cars, setCars] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCarForm, setShowCarForm] = useState(false);
   const [editingCar, setEditingCar] = useState(null);
@@ -1023,10 +1024,27 @@ const AdminDashboard = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [carToDelete, setCarToDelete] = useState(null);
+  const [showBlogForm, setShowBlogForm] = useState(false);
+  const [editingBlog, setEditingBlog] = useState(null);
+  const [blogToDelete, setBlogToDelete] = useState(null);
+  const [showBlogDeleteModal, setShowBlogDeleteModal] = useState(false);
+  const [blogFormData, setBlogFormData] = useState({
+    title: '',
+    shortDescription: '',
+    content: '',
+    category: 'General',
+    tags: '',
+    status: 'published',
+    isFeatured: false,
+    imageFile: null,
+  });
+  const [blogImagePreview, setBlogImagePreview] = useState(null);
+  const [blogSubmitting, setBlogSubmitting] = useState(false);
     
   useEffect(() => {
     fetchBookings();
     fetchCars();
+    fetchBlogs();
   }, []);
 
   useEffect(() => {
@@ -1034,6 +1052,8 @@ const AdminDashboard = () => {
       fetchBookings();
     } else if (activeTab === 'cars') {
       fetchCars();
+    } else if (activeTab === 'blogs') {
+      fetchBlogs();
     }
   }, [activeTab]);
 
@@ -1140,6 +1160,22 @@ const AdminDashboard = () => {
       setCars([]); // Set empty array on error
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchBlogs = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${apiUrl}/api/admin/blogs`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
+      setBlogs(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+      setBlogs([]);
     }
   };
 
@@ -1438,6 +1474,203 @@ const AdminDashboard = () => {
     return <span className={`status-badge ${statusInfo.class}`}>{statusInfo.text}</span>;
   };
 
+  const handleBlogFormChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+
+    if (type === 'file') {
+      const file = files[0];
+      if (!file) return;
+      setBlogFormData(prev => ({
+        ...prev,
+        imageFile: file,
+      }));
+      setBlogImagePreview(URL.createObjectURL(file));
+    } else {
+      setBlogFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
+  };
+
+  const handleBlogSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Prevent double submission
+    if (blogSubmitting) return;
+    
+    try {
+      // Frontend validation - Only title and image required
+      if (!blogFormData.title || blogFormData.title.trim().length === 0) {
+        setErrorMessage('Please enter a blog title');
+        setShowErrorModal(true);
+        setTimeout(() => setShowErrorModal(false), 4000);
+        return;
+      }
+
+      // Validate title length
+      if (blogFormData.title.trim().length < 3) {
+        setErrorMessage('Title must be at least 3 characters long');
+        setShowErrorModal(true);
+        setTimeout(() => setShowErrorModal(false), 4000);
+        return;
+      }
+
+      // Validate image for new blog
+      if (!editingBlog && !blogFormData.imageFile) {
+        setErrorMessage('Please upload a cover image for the blog');
+        setShowErrorModal(true);
+        setTimeout(() => setShowErrorModal(false), 4000);
+        return;
+      }
+
+      // Set loading state
+      setBlogSubmitting(true);
+
+      const formData = new FormData();
+      formData.append('title', blogFormData.title);
+      formData.append('shortDescription', blogFormData.shortDescription);
+      formData.append('content', blogFormData.content);
+      formData.append('category', blogFormData.category || 'General');
+      formData.append('tags', blogFormData.tags || '');
+      formData.append('status', blogFormData.status || 'published');
+      formData.append('isFeatured', blogFormData.isFeatured ? 'true' : 'false');
+
+      if (blogFormData.imageFile instanceof File) {
+        formData.append('image', blogFormData.imageFile);
+      }
+
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('token');
+
+      const axiosConfig = {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      };
+
+      let response;
+      if (editingBlog) {
+        response = await axios.put(
+          `${apiUrl}/api/admin/blogs/${editingBlog._id}`,
+          formData,
+          axiosConfig
+        );
+      } else {
+        response = await axios.post(
+          `${apiUrl}/api/admin/blogs`,
+          formData,
+          axiosConfig
+        );
+      }
+
+      console.log('Blog saved:', response.data);
+      setSuccessMessage(editingBlog ? 'Blog updated successfully!' : 'Blog created successfully!');
+      setShowSuccessModal(true);
+      setTimeout(() => setShowSuccessModal(false), 4000);
+
+      setShowBlogForm(false);
+      setEditingBlog(null);
+      setBlogFormData({
+        title: '',
+        shortDescription: '',
+        content: '',
+        category: 'General',
+        tags: '',
+        status: 'published',
+        isFeatured: false,
+        imageFile: null,
+      });
+      setBlogImagePreview(null);
+      fetchBlogs();
+    } catch (error) {
+      console.error('Error saving blog:', error);
+      console.error('Error response:', error.response);
+      
+      // Better error message handling
+      let errorMsg = 'Failed to save blog';
+      
+      try {
+        if (error.response?.data) {
+          const responseData = error.response.data;
+          
+          // Handle string error
+          if (typeof responseData.error === 'string') {
+            errorMsg = responseData.error;
+          } 
+          // Handle error object
+          else if (responseData.error && typeof responseData.error === 'object') {
+            errorMsg = JSON.stringify(responseData.error);
+          }
+          // Handle message
+          else if (responseData.message) {
+            errorMsg = responseData.message;
+            if (responseData.error) {
+              errorMsg += ': ' + (typeof responseData.error === 'string' ? responseData.error : JSON.stringify(responseData.error));
+            }
+          }
+        } else if (error.message) {
+          errorMsg = error.message;
+        }
+      } catch (parseError) {
+        console.error('Error parsing error response:', parseError);
+        errorMsg = 'An unexpected error occurred. Please try again.';
+      }
+      
+      setErrorMessage(errorMsg);
+      setShowErrorModal(true);
+      setTimeout(() => setShowErrorModal(false), 5000);
+    } finally {
+      // Always reset loading state
+      setBlogSubmitting(false);
+    }
+  };
+
+  const handleEditBlog = (blog) => {
+    setEditingBlog(blog);
+    setShowBlogForm(true);
+    setBlogFormData({
+      title: blog.title || '',
+      shortDescription: blog.shortDescription || '',
+      content: blog.content || '',
+      category: blog.category || 'General',
+      tags: Array.isArray(blog.tags) ? blog.tags.join(', ') : (blog.tags || ''),
+      status: blog.status || 'published',
+      isFeatured: !!blog.isFeatured,
+      imageFile: null,
+    });
+    setBlogImagePreview(blog.mainImage || null);
+  };
+
+  const handleDeleteBlogClick = (blog) => {
+    setBlogToDelete(blog);
+    setShowBlogDeleteModal(true);
+  };
+
+  const confirmDeleteBlog = async () => {
+    if (!blogToDelete) return;
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('token');
+      await axios.delete(`${apiUrl}/api/admin/blogs/${blogToDelete._id}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
+      setShowBlogDeleteModal(false);
+      setBlogToDelete(null);
+      setSuccessMessage('Blog deleted successfully!');
+      setShowSuccessModal(true);
+      setTimeout(() => setShowSuccessModal(false), 4000);
+      fetchBlogs();
+    } catch (error) {
+      console.error('Error deleting blog:', error);
+      setErrorMessage(error.response?.data?.message || 'Failed to delete blog');
+      setShowErrorModal(true);
+      setTimeout(() => setShowErrorModal(false), 4000);
+    }
+  };
+
   // Generate chart data for last 7 days
   const getChartData = () => {
     const last7Days = [];
@@ -1574,6 +1807,12 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab('cars')}
           >
             Cars
+          </button>
+          <button
+            className={activeTab === 'blogs' ? 'active' : ''}
+            onClick={() => setActiveTab('blogs')}
+          >
+            Blogs
           </button>
         </div>
 
@@ -2289,6 +2528,648 @@ const AdminDashboard = () => {
             )}
           </div>
         )}
+
+        {activeTab === 'blogs' && (
+          <div className="bookings-section">
+            <h2 className="dashboard-title">Blogs Management</h2>
+
+            <button
+              onClick={() => {
+                setShowBlogForm(true);
+                setEditingBlog(null);
+                setBlogFormData({
+                  title: '',
+                  shortDescription: '',
+                  content: '',
+                  category: 'General',
+                  tags: '',
+                  status: 'published',
+                  isFeatured: false,
+                  imageFile: null,
+                });
+                setBlogImagePreview(null);
+              }}
+              className="btn btn-primary"
+              style={{ marginBottom: '1.5rem' }}
+            >
+              + Add New Blog
+            </button>
+
+            {showBlogForm && (
+              <div className="car-form-modal" style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0,0,0,0.9)',
+                backdropFilter: 'blur(6px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 2000,
+                padding: '1rem'
+              }}>
+                <div className="car-form-content" style={{
+                  background: '#1A1A1A',
+                  padding: '1.5rem',
+                  borderRadius: '12px',
+                  maxWidth: '700px',
+                  width: '100%',
+                  maxHeight: '90vh',
+                  overflowY: 'auto',
+                  border: '1px solid #1F2937',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8)',
+                  position: 'relative'
+                }}
+                onScroll={(e) => {
+                  // Prevent body scroll when modal is open
+                  e.stopPropagation();
+                }}
+                >
+                  {/* Header */}
+                  <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    marginBottom: '1.25rem',
+                    paddingBottom: '1rem',
+                    borderBottom: '1px solid #1F2937'
+                  }}>
+                    <h3 style={{ 
+                      color: '#E9B949', 
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
+                      margin: 0
+                    }}>
+                      {editingBlog ? 'Edit Blog' : 'Create Blog'}
+                    </h3>
+                    <button
+                      onClick={() => {
+                        setShowBlogForm(false);
+                        setEditingBlog(null);
+                        setBlogImagePreview(null);
+                      }}
+                      style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: '#9CA3AF',
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.25rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.background = '#1F2937';
+                        e.target.style.color = '#E9B949';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.background = 'transparent';
+                        e.target.style.color = '#9CA3AF';
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                  {/* Loading Overlay */}
+                  {blogSubmitting && (
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0, 0, 0, 0.8)',
+                      backdropFilter: 'blur(4px)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10,
+                      borderRadius: '12px'
+                    }}>
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        border: '4px solid #1F2937',
+                        borderTop: '4px solid #E9B949',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite',
+                        marginBottom: '1rem'
+                      }}></div>
+                      <p style={{
+                        color: '#E9B949',
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        margin: 0
+                      }}>
+                        {editingBlog ? 'Updating blog...' : 'Creating blog...'}
+                      </p>
+                      <style>{`
+                        @keyframes spin {
+                          0% { transform: rotate(0deg); }
+                          100% { transform: rotate(360deg); }
+                        }
+                      `}</style>
+                    </div>
+                  )}
+                  
+                  <form onSubmit={handleBlogSubmit} style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    gap: '0.875rem',
+                    position: 'relative',
+                    opacity: blogSubmitting ? 0.5 : 1,
+                    pointerEvents: blogSubmitting ? 'none' : 'auto',
+                    transition: 'opacity 0.3s ease'
+                  }}>
+                    {/* Title */}
+                    <div>
+                      <label style={{ 
+                        color: '#E9B949', 
+                        display: 'block',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600
+                      }}>
+                        Title <span style={{ color: '#ef4444' }}>*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        value={blogFormData.title}
+                        onChange={handleBlogFormChange}
+                        required
+                        placeholder="Blog title..."
+                        style={{ 
+                          width: '100%', 
+                          padding: '0.75rem', 
+                          borderRadius: '8px', 
+                          border: '1px solid #1F2937', 
+                          background: '#111111', 
+                          color: '#ffffff',
+                          fontSize: '0.9rem',
+                          transition: 'all 0.2s ease',
+                          boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#E9B949';
+                          e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#1F2937';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+
+                    {/* Short Description */}
+                    <div>
+                      <label style={{ 
+                        color: '#E9B949', 
+                        display: 'block',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600
+                      }}>
+                        Short Description
+                      </label>
+                      <textarea
+                        name="shortDescription"
+                        value={blogFormData.shortDescription}
+                        onChange={handleBlogFormChange}
+                        rows={2}
+                        placeholder="Brief description (optional)..."
+                        style={{ 
+                          width: '100%', 
+                          padding: '0.75rem', 
+                          borderRadius: '8px', 
+                          border: '1px solid #1F2937', 
+                          background: '#111111', 
+                          color: '#ffffff',
+                          fontSize: '0.9rem',
+                          resize: 'vertical',
+                          fontFamily: 'inherit',
+                          transition: 'all 0.2s ease',
+                          boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#E9B949';
+                          e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#1F2937';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div>
+                      <label style={{ 
+                        color: '#E9B949', 
+                        display: 'block',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600
+                      }}>
+                        Content
+                      </label>
+                      <textarea
+                        name="content"
+                        value={blogFormData.content}
+                        onChange={handleBlogFormChange}
+                        rows={6}
+                        placeholder="Blog content (optional)..."
+                        style={{ 
+                          width: '100%', 
+                          padding: '0.75rem', 
+                          borderRadius: '8px', 
+                          border: '1px solid #1F2937', 
+                          background: '#111111', 
+                          color: '#ffffff',
+                          fontSize: '0.9rem',
+                          resize: 'vertical',
+                          fontFamily: 'inherit',
+                          transition: 'all 0.2s ease',
+                          boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#E9B949';
+                          e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#1F2937';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+
+                    {/* Category and Status Row */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem' }}>
+                      <div>
+                        <label style={{ 
+                          color: '#E9B949', 
+                          display: 'block',
+                          marginBottom: '0.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: 600
+                        }}>
+                          Category
+                        </label>
+                        <input
+                          type="text"
+                          name="category"
+                          value={blogFormData.category}
+                          onChange={handleBlogFormChange}
+                          placeholder="Category..."
+                          style={{ 
+                            width: '100%', 
+                            padding: '0.75rem', 
+                            borderRadius: '8px', 
+                            border: '1px solid #1F2937', 
+                            background: '#111111', 
+                            color: '#ffffff',
+                            fontSize: '0.9rem',
+                            transition: 'all 0.2s ease',
+                            boxSizing: 'border-box'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = '#E9B949';
+                            e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = '#1F2937';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ 
+                          color: '#E9B949', 
+                          display: 'block',
+                          marginBottom: '0.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: 600
+                        }}>
+                          Status
+                        </label>
+                        <select
+                          name="status"
+                          value={blogFormData.status}
+                          onChange={handleBlogFormChange}
+                          style={{ 
+                            width: '100%', 
+                            padding: '0.75rem', 
+                            borderRadius: '8px', 
+                            border: '1px solid #1F2937', 
+                            background: '#111111', 
+                            color: '#ffffff',
+                            fontSize: '0.9rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            boxSizing: 'border-box'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = '#E9B949';
+                            e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = '#1F2937';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                        >
+                          <option value="published">Published</option>
+                          <option value="draft">Draft</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div>
+                      <label style={{ 
+                        color: '#E9B949', 
+                        display: 'block',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600
+                      }}>
+                        Tags
+                      </label>
+                      <input
+                        type="text"
+                        name="tags"
+                        value={blogFormData.tags}
+                        onChange={handleBlogFormChange}
+                        placeholder="tags, comma, separated"
+                        style={{ 
+                          width: '100%', 
+                          padding: '0.75rem', 
+                          borderRadius: '8px', 
+                          border: '1px solid #1F2937', 
+                          background: '#111111', 
+                          color: '#ffffff',
+                          fontSize: '0.9rem',
+                          transition: 'all 0.2s ease',
+                          boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#E9B949';
+                          e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#1F2937';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+
+                    {/* Cover Image */}
+                    <div>
+                      <label style={{ 
+                        color: '#E9B949', 
+                        display: 'block',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600
+                      }}>
+                        Cover Image {!editingBlog && <span style={{ color: '#ef4444' }}>*</span>}
+                      </label>
+                      <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleBlogFormChange}
+                        required={!editingBlog}
+                        style={{ 
+                          width: '100%', 
+                          padding: '0.75rem', 
+                          borderRadius: '8px', 
+                          border: '1px solid #1F2937', 
+                          background: '#111111', 
+                          color: '#ffffff',
+                          fontSize: '0.85rem',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          boxSizing: 'border-box'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = '#E9B949';
+                          e.target.style.boxShadow = '0 0 0 2px rgba(233, 185, 73, 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = '#1F2937';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                      {blogImagePreview && (
+                        <div style={{ 
+                          marginTop: '0.75rem', 
+                          borderRadius: '8px', 
+                          overflow: 'hidden', 
+                          border: '1px solid #E9B949'
+                        }}>
+                          <img
+                            src={blogImagePreview}
+                            alt="Blog preview"
+                            style={{ 
+                              width: '100%', 
+                              maxHeight: '200px', 
+                              objectFit: 'cover',
+                              display: 'block'
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Featured Checkbox */}
+                    <div style={{ 
+                      padding: '0.75rem',
+                      background: '#111111',
+                      borderRadius: '8px',
+                      border: '1px solid #1F2937'
+                    }}>
+                      <label style={{ 
+                        color: '#ffffff', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '0.75rem', 
+                        cursor: 'pointer',
+                        fontSize: '0.9rem',
+                        fontWeight: 500,
+                        margin: 0
+                      }}>
+                        <input
+                          type="checkbox"
+                          name="isFeatured"
+                          checked={blogFormData.isFeatured}
+                          onChange={handleBlogFormChange}
+                          style={{ 
+                            width: '18px', 
+                            height: '18px', 
+                            cursor: 'pointer',
+                            accentColor: '#E9B949'
+                          }}
+                        />
+                        <span>⭐ Featured</span>
+                      </label>
+                    </div>
+
+                    {/* Form Actions */}
+                    <div style={{ 
+                      display: 'flex', 
+                      gap: '0.75rem', 
+                      marginTop: '1rem',
+                      paddingTop: '1rem',
+                      borderTop: '1px solid #1F2937'
+                    }}>
+                      <button
+                        type="button"
+                        disabled={blogSubmitting}
+                        onClick={() => {
+                          if (!blogSubmitting) {
+                            setShowBlogForm(false);
+                            setEditingBlog(null);
+                            setBlogImagePreview(null);
+                          }
+                        }}
+                        style={{
+                          flex: 1,
+                          padding: '0.75rem 1.25rem',
+                          borderRadius: '8px',
+                          border: '1px solid #374151',
+                          background: '#1F2937',
+                          color: '#ffffff',
+                          fontSize: '0.9rem',
+                          fontWeight: 600,
+                          cursor: blogSubmitting ? 'not-allowed' : 'pointer',
+                          transition: 'all 0.2s ease',
+                          opacity: blogSubmitting ? 0.5 : 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!blogSubmitting) {
+                            e.target.style.background = '#374151';
+                            e.target.style.borderColor = '#E9B949';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!blogSubmitting) {
+                            e.target.style.background = '#1F2937';
+                            e.target.style.borderColor = '#374151';
+                          }
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <button 
+                        type="submit"
+                        disabled={blogSubmitting}
+                        style={{
+                          flex: 1,
+                          padding: '0.75rem 1.25rem',
+                          borderRadius: '8px',
+                          border: 'none',
+                          background: blogSubmitting 
+                            ? 'linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%)'
+                            : 'linear-gradient(135deg, #E9B949 0%, #f59e0c 100%)',
+                          color: '#000000',
+                          fontSize: '0.9rem',
+                          fontWeight: 700,
+                          cursor: blogSubmitting ? 'not-allowed' : 'pointer',
+                          transition: 'all 0.2s ease',
+                          boxShadow: '0 4px 12px rgba(233, 185, 73, 0.3)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.5rem',
+                          opacity: blogSubmitting ? 0.7 : 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!blogSubmitting) {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 6px 16px rgba(233, 185, 73, 0.4)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!blogSubmitting) {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 12px rgba(233, 185, 73, 0.3)';
+                          }
+                        }}
+                      >
+                        {blogSubmitting ? (
+                          <>
+                            <div style={{
+                              width: '16px',
+                              height: '16px',
+                              border: '2px solid #000000',
+                              borderTop: '2px solid transparent',
+                              borderRadius: '50%',
+                              animation: 'spin 0.8s linear infinite'
+                            }}></div>
+                            <span>{editingBlog ? 'Updating...' : 'Creating...'}</span>
+                          </>
+                        ) : (
+                          <span>{editingBlog ? 'Update' : 'Create'}</span>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {blogs.length === 0 ? (
+              <p>No blogs found.</p>
+            ) : (
+              <table className="bookings-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Featured</th>
+                    <th>Published</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {blogs.map((blog) => (
+                    <tr key={blog._id}>
+                      <td>{blog.title}</td>
+                      <td>{blog.category || 'General'}</td>
+                      <td>{blog.status === 'published' ? 'Published' : 'Draft'}</td>
+                      <td>{blog.isFeatured ? 'Yes' : 'No'}</td>
+                      <td>{blog.publishDate ? new Date(blog.publishDate).toLocaleDateString() : '-'}</td>
+                      <td>
+                        <button
+                          className="btn-table btn-edit"
+                          type="button"
+                          onClick={() => handleEditBlog(blog)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn-table btn-delete"
+                          type="button"
+                          onClick={() => handleDeleteBlogClick(blog)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Success Modal */}
@@ -2503,7 +3384,7 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Car Confirmation Modal */}
       {showDeleteModal && (
         <div 
           className="delete-modal-overlay"
@@ -2616,6 +3497,149 @@ const AdminDashboard = () => {
               </button>
               <button
                 onClick={confirmDeleteCar}
+                style={{
+                  background: '#E9B949',
+                  color: '#000000',
+                  border: 'none',
+                  padding: '0.875rem 2rem',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  flex: 1
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#f59e0c';
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 8px 20px rgba(233, 185, 73, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = '#E9B949';
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Blog Confirmation Modal */}
+      {showBlogDeleteModal && blogToDelete && (
+        <div 
+          className="delete-modal-overlay"
+          onClick={() => {
+            setShowBlogDeleteModal(false);
+            setBlogToDelete(null);
+          }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            animation: 'fadeIn 0.3s ease'
+          }}
+        >
+          <div 
+            className="delete-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)',
+              padding: '2.5rem',
+              borderRadius: '16px',
+              maxWidth: '450px',
+              width: '90%',
+              border: '2px solid #E9B949',
+              boxShadow: '0 20px 60px rgba(233, 185, 73, 0.3)',
+              textAlign: 'center',
+              animation: 'slideUp 0.3s ease',
+              position: 'relative'
+            }}
+          >
+            <div style={{
+              width: '80px',
+              height: '80px',
+              margin: '0 auto 1.5rem',
+              background: 'linear-gradient(135deg, #E9B949 0%, #f59e0c 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 24px rgba(233, 185, 73, 0.4)'
+            }}>
+              <svg 
+                width="40" 
+                height="40" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#000000" 
+                strokeWidth="3"
+                style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}
+              >
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </div>
+            <h3 style={{
+              color: '#E9B949',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              marginBottom: '1rem',
+              fontFamily: 'Impact, Arial Black, Arial, sans-serif',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
+            }}>
+              Delete Blog?
+            </h3>
+            <p style={{
+              color: '#9CA3AF',
+              fontSize: '1rem',
+              marginBottom: '2rem',
+              lineHeight: '1.6'
+            }}>
+              Are you sure you want to delete <strong style={{ color: '#E9B949' }}>{blogToDelete?.title}</strong>? This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button
+                onClick={() => {
+                  setShowBlogDeleteModal(false);
+                  setBlogToDelete(null);
+                }}
+                style={{
+                  background: '#1F2937',
+                  color: '#ffffff',
+                  border: '1px solid #374151',
+                  padding: '0.875rem 2rem',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  flex: 1
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#374151';
+                  e.target.style.borderColor = '#4B5563';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = '#1F2937';
+                  e.target.style.borderColor = '#374151';
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteBlog}
                 style={{
                   background: '#E9B949',
                   color: '#000000',

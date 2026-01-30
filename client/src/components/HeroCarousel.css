@@ -22,41 +22,7 @@
   z-index: 2;
 }
 
-.hero-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  opacity: 0.85;
-}
 
-.hero-overlay {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  position: relative;
-  z-index: 3;
-  background: 
-    /* White dots texture pattern */
-    radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px, 40px 40px;
-  background-position: 0 0, 10px 10px;
-  /* Dark overlay - video thoda nazar aaye */
-  background-color: rgba(0, 0, 0, 0.75);
-}
-
-.hero-content {
-  color: white;
-  text-align: center;
-  width: 100%;
-}
 
 .hero-label {
   font-size: 18px;
@@ -64,6 +30,7 @@
   opacity: 0.9;
   display: block;
   margin-bottom: 10px;
+  
 }
 
 .hero-content h1 {
@@ -114,3 +81,222 @@
 
 
 
+/* =========================
+   HERO BASE
+========================= */
+
+.home-hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+
+.hero-content {
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+.hero-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+  background: 
+    /* White dots texture pattern */
+    radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px;
+  background-position: 0 0, 10px 10px;
+  /* Dark overlay - video thoda nazar aaye */
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+
+.hero-layout {
+  width: 100%;
+}
+
+
+
+/* =========================
+   TEXT
+========================= */
+
+.hero-label {
+  font-size: 18px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  text-align: start;
+  margin-bottom: 18px;
+}
+
+.hero-content h1 {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: start;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.gold-text {
+  color: #FDB43C;
+}
+
+
+
+.home-hero-tagline {
+  font-size: 22px;
+  font-style: italic;
+  color: #d1d1d1;
+  text-align: start;
+  width: 60%;
+  margin-bottom: 34px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-hero-parent {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-explore {
+  background: #FDB43C;
+  color: #000;
+  padding: 15px 36px;
+  font-weight: 900;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.btn-hero-child {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-Call,
+.btn-Chat {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 15px 28px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* =========================
+   REVIEWS
+========================= */
+
+.hero-reviews {
+  display: flex;
+  gap: 22px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.review-item {
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.review-item span {
+  display: block;
+  color: #FDB43C;
+  margin-top: 4px;
+}
+
+.review-item.muted {
+  color: #9CA3AF;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .hero-overlay {
+    align-items: flex-start;
+    padding-top: 90px;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.95),
+        rgba(0,0,0,0.75)
+      );
+  }
+
+  .hero-content {
+    margin-left: 0;
+    padding: 0 16px;
+    max-width: 100%;
+  }
+
+  .hero-content h1 {
+    font-size: 34px;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+  }
+
+  .home-hero-tagline {
+    font-size: 22px;
+    width: 100%;
+  }
+
+  .btn-hero-parent {
+    flex-direction: column;
+  }
+
+  .btn-explore,
+  .btn-Call,
+  .btn-Chat {
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-hero-child {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-reviews {
+    margin-top: 24px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero-content h1 {
+    font-size: 42px;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+  }
+}

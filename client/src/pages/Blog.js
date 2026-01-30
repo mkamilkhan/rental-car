@@ -1,89 +1,87 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import HeroCarousel from "../components/HeroCarousel";
 import "./Blog.css";
 
 const Blog = () => {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Top 7 Thrilling Desert Adventures in Dubai",
-      author: "Soor Subedaar",
-      date: "05 May, 2025",
-      category: "Desert Safari",
-      image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Discover Dubai's top desert adventures including dune bashing, quad biking, camel riding and more. Experience the thrill of off-road vehicles racing through golden dunes under the Arabian sun."
-    },
-    {
-      id: 2,
-      title: "Quad Biking in Dubai: An ATV Adventure in the Dunes",
-      author: "Soor Subedaar",
-      date: "22 May, 2025",
-      category: "Dubai Desert",
-      image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Experience quad biking in Dubai with best locations, safety tips and booking guide. Master the art of dune riding with our expert guides and premium ATV fleet."
-    },
-    {
-      id: 3,
-      title: "Polaris RZR: The Ultimate Desert Machine",
-      author: "Soor Subedaar",
-      date: "15 June, 2025",
-      category: "Vehicle Reviews",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Explore why the Polaris RZR is the top choice for desert adventures. Power, performance, and precision in one incredible off-road vehicle."
-    },
-    {
-      id: 4,
-      title: "Can-Am Maverick: Luxury Meets Adventure",
-      author: "Soor Subedaar",
-      date: "28 June, 2025",
-      category: "Vehicle Reviews",
-      image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Discover the Can-Am Maverick's superior engineering and comfort features. Perfect for those who want adventure without compromising on luxury."
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const response = await axios.get(`${apiUrl}/api/blogs`);
+      // Filter only published blogs
+      const publishedBlogs = response.data.filter(blog => blog.status === 'published');
+      setBlogPosts(publishedBlogs);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+      // No fallback - show empty state if API fails
+      setBlogPosts([]);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  if (loading) {
+    return (
+      <div className="blog-page">
+        <HeroCarousel title="BLOGS" subtitle="Home → Blogs" />
+        <div className="container" style={{ padding: '4rem 0', textAlign: 'center', color: '#ffffff' }}>
+          <p>Loading blogs...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="blog-page">
-      <HeroCarousel title="Gallery" subtitle="Home → Gallery" />
+      <HeroCarousel title="BLOGS" subtitle="Home → Blogs" />
 
       <div className="blog-wrapper container">
         
         {/* LEFT SIDE */}
         <div className="blog-left">
-          {blogPosts.map((post) => (
-            <article key={post.id} className="blog-post">
-              <img 
-                src={post.image} 
-                alt={post.title}
-                loading="lazy"
-                decoding="async"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextElementSibling?.classList.add('image-error');
-                }}
-              />
-              
-              <div className="blog-post-content">
-                <div className="post-meta">
-                  <span>👤 By {post.author}</span>
-                  <span>📅 {post.date}</span>
-                  <span>🏷 {post.category}</span>
+          {blogPosts.length === 0 ? (
+            <div style={{ padding: '2rem', textAlign: 'center', color: '#ffffff' }}>
+              <p>No blogs available yet. Check back soon!</p>
+            </div>
+          ) : (
+            blogPosts.map((post) => (
+              <article key={post._id || post.id} className="blog-post">
+                <img 
+                  src={post.mainImage || post.image} 
+                  alt={post.title}
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling?.classList.add('image-error');
+                  }}
+                />
+                
+                <div className="blog-post-content">
+                  <div className="post-meta">
+                    <span>👤 By {post.authorName || post.author || 'Admin'}</span>
+                    <span>📅 {new Date(post.publishDate || post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    <span>🏷 {post.category || 'General'}</span>
+                  </div>
+
+                  <h2>{post.title}</h2>
+                  <p>{post.shortDescription || post.excerpt || post.content?.substring(0, 150) + '...'}</p>
+
+                  <Link className="read-more" to={`/blog/${post.slug || post.id}`}>
+                    READ MORE
+                  </Link>
                 </div>
-
-                <h2>{post.title}</h2>
-                <p>{post.excerpt}</p>
-
-                <Link className="read-more" to="#">
-                  READ MORE
-                </Link>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))
+          )}
         </div>
 
         {/* RIGHT SIDEBAR */}

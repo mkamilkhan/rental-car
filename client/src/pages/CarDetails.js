@@ -7,7 +7,7 @@ import './CarDetails.css';
 const CarDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currency, getCurrencySymbol } = useCurrency();
+  const { currency, getCurrencySymbol, formatPrice } = useCurrency();
   const pricingRef = useRef(null);
 
   const [car, setCar] = useState(null);
@@ -160,8 +160,7 @@ console.log(car)
               <div className="popular-badge">MOST POPULAR</div>
               <h3 className="pricing-duration">30 MINUTES</h3>
               <div className="pricing-amount">
-                {/* {getCurrencySymbol(currency)} */}
-                 {car.price30min} AED
+                {formatPrice(car.price30min)}
               </div>
               <p className="pricing-per">Per Vehicle</p>
 
@@ -178,8 +177,7 @@ console.log(car)
             <div className="pricing-card">
               <h3 className="pricing-duration">60 MINUTES</h3>
               <div className="pricing-amount">
-                {/* {getCurrencySymbol(currency)}  */}
-                {car.price60min} AED
+                {formatPrice(car.price60min)}
               </div>
               <p className="pricing-per">Per Vehicle</p>
 
@@ -196,8 +194,7 @@ console.log(car)
             <div className="pricing-card">
               <h3 className="pricing-duration">90 MINUTES</h3>
               <div className="pricing-amount">
-                {/* {getCurrencySymbol(currency)} */}
-                 {car.price90min} AED
+                {formatPrice(car.price90min)}
               </div>
               <p className="pricing-per">Per Vehicle</p>
 
@@ -215,7 +212,7 @@ console.log(car)
               <h3 className="pricing-duration">120 MINUTES</h3>
               <div className="pricing-amount">
                 {/* {getCurrencySymbol(currency)} */}
-                 {car.price120min} AED
+                {formatPrice(car.price120min)}
               </div>
               <p className="pricing-per">Per Vehicle</p>
 

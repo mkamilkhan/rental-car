@@ -52,7 +52,11 @@ const CategoriesSlider = ({ categories = [] }) => {
                 <img src={cat.image} alt={cat.name} className="category-image" />
               </div>
               <div className="category-content">
-                <h3 className="category-title">{cat.name}</h3>
+              <h3 className="category-title">
+  {cat.name}
+  {cat.cc && <span className="category-cc"> {cat.cc}cc</span>}
+</h3>
+
                 <Link to={`/category/${cat.id}`} className="category-see-more">
                   See More
                 </Link>

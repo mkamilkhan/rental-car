@@ -63,10 +63,9 @@
    CARD
 =============================== */
 .category-card-tour {
-  background: #fff;
-  border-radius: 20px;
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.054);
   width: 100% !important;
   height: 100%;
   display: flex;
@@ -103,20 +102,20 @@
 }
 
 .category-title {
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 600;
   margin: 0 0 0.5rem 0;
 }
 
 .category-see-more {
-  color: #f6b53b;
+  color: #fcfcfc;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .category-see-more:hover {
-  color: #d4a02a;
+  color: #db7d02;
 }
 
 /* ===============================
@@ -253,3 +252,54 @@
     height: 16px !important;
   }
 }
+/* ===============================
+   DESKTOP STAGGERED LAYOUT
+   Cards 2,3,4 up | 1 & 5 down
+=============================== */
+/* ===============================
+   DYNAMIC STAGGERED SLIDES
+   2–4 visible slides UP (Swiper based)
+@media (min-width: 1200px) {
+
+  /* Default: saare slides neeche */
+  @media (min-width: 1200px) {
+
+    /* Default: saare slides neeche + slightly smaller */
+    .categories-swiper .swiper-slide {
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      transform: translateY(40px) scale(0.95); /* DOWN + smaller */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+  
+    /* Active slide (2nd visible) → UP + normal size */
+    .categories-swiper .swiper-slide-active {
+      transform: translateY(0) scale(1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+  
+    /* 3rd card → DOWN + slightly smaller */
+    .categories-swiper .swiper-slide-active + .swiper-slide {
+      transform: translateY(40px) scale(0.95);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+  
+    /* 4th card → UP + normal size */
+    .categories-swiper .swiper-slide-active
+      + .swiper-slide
+      + .swiper-slide {
+      transform: translateY(0) scale(1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+  
+    /* 5th card → DOWN + slightly smaller */
+    .categories-swiper .swiper-slide-active
+      + .swiper-slide
+      + .swiper-slide
+      + .swiper-slide {
+      transform: translateY(40px) scale(0.95);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+  
+    /* Removed hover effect completely */
+  }
+  

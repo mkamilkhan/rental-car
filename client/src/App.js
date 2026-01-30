@@ -91,6 +91,7 @@ import Destination from './pages/Destination';
 import Service from './pages/Service';
 import Activities from './pages/Activities';
 import Blog from './pages/Blog';
+import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import CarDetails from './pages/CarDetails';
 import BookingForm from './pages/BookingForm';
@@ -139,6 +140,7 @@ function App() {
                   <Route path="/service" element={<Service />} />
                   <Route path="/activities" element={<Activities />} />
                   <Route path="/blog" element={<Blog />} />
+                  <Route path="/gallery" element={<Gallery />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/car/:id" element={<CarDetails />} />
                   <Route path="/login" element={<Login />} />

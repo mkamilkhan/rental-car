@@ -740,3 +740,64 @@ body {
 .notifications-list::-webkit-scrollbar-thumb:hover {
   background: var(--text-desc);
 }
+
+/* ===================================
+   Blog Form Responsive Styles
+   =================================== */
+@media (max-width: 768px) {
+  .car-form-content {
+    padding: 1rem !important;
+    max-width: 95% !important;
+    max-height: 95vh !important;
+    border-radius: 8px !important;
+  }
+  
+  .car-form-content form > div {
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .car-form-content input,
+  .car-form-content textarea,
+  .car-form-content select {
+    font-size: 0.85rem !important;
+    padding: 0.65rem !important;
+  }
+  
+  .car-form-content label {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+  
+  .car-form-content textarea[rows="6"] {
+    min-height: 120px !important;
+  }
+  
+  .car-form-content textarea[rows="2"] {
+    min-height: 60px !important;
+  }
+  
+  .car-form-content h3 {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-form-content {
+    padding: 0.875rem !important;
+    max-width: 98% !important;
+  }
+  
+  .car-form-content h3 {
+    font-size: 1rem !important;
+  }
+  
+  .car-form-content form > div[style*="grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+  
+  .car-form-content button {
+    font-size: 0.85rem !important;
+    padding: 0.65rem 1rem !important;
+  }
+}

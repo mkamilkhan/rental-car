@@ -50,7 +50,7 @@ const BookingForm = () => {
   const { carId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { currency, getCurrencySymbol } = useCurrency();
+  const { currency, getCurrencySymbol, formatPrice, convertPrice } = useCurrency();
   const { user, token, authLoading } = useContext(AuthContext);
 
 
@@ -585,17 +585,17 @@ const BookingForm = () => {
               </div>
               <div className="pricing-detail-item">
                 <span>Base Price:</span>
-                <span>{getDurationPrice()} {getCurrencySymbol(currency)}</span>
+                <span>{formatPrice(getDurationPrice())}</span>
               </div>
               {formData.pickupLocation === "private" && (
                 <div className="pricing-detail-item">
                   <span>Private 4x4:</span>
-                  <span>+300 {getCurrencySymbol(currency)}</span>
+                  <span>+{formatPrice(300)}</span>
                 </div>
               )}
               <div className="pricing-detail-item total-price">
                 <span>Total:</span>
-                <span>{calculateTotal()} {getCurrencySymbol(currency)}</span>
+                <span>{formatPrice(calculateTotal())}</span>
               </div>
             </div>
           </div>
@@ -604,14 +604,14 @@ const BookingForm = () => {
             <div className="payment-modal-overlay">
               <div className="payment-modal">
                 <h3>Confirm Payment</h3>
-                <p className="payment-amount">Total Amount: {calculateTotal()} {getCurrencySymbol(currency)}</p>
+                <p className="payment-amount">Total Amount: {formatPrice(calculateTotal())}</p>
                 <div className="payment-modal-buttons">
                   <button 
                     className="btn-pay-now" 
                     onClick={handleStripePayment} 
                     disabled={paymentLoading}
                   >
-                    {paymentLoading ? "Processing…" : `Pay ${calculateTotal()} ${getCurrencySymbol(currency)}`}
+                    {paymentLoading ? "Processing…" : `Pay ${formatPrice(calculateTotal())}`}
                   </button>
                   <button 
                     className="btn-cancel-payment" 
@@ -628,7 +628,7 @@ const BookingForm = () => {
             <div className="payment-modal-overlay">
               <div className="payment-modal">
                 <h3>Confirm Booking</h3>
-                <p className="payment-amount">Total Amount: {calculateTotal()} {getCurrencySymbol(currency)}</p>
+                <p className="payment-amount">Total Amount: {formatPrice(calculateTotal())}</p>
                 <div className="payment-modal-buttons">
                   <button 
                     className="btn-pay-now" 

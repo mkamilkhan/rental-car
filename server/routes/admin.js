@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Car = require('../models/Car');
 const Booking = require('../models/Booking');
+const Blog = require('../models/Blog');
 const { adminAuth } = require('../middleware/auth');
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -291,6 +292,204 @@ router.delete('/cars/:id', adminAuth, async (req, res) => {
     res.json({ message: 'Car deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+/* ================= BLOGS (ADMIN) ================= */
+
+// Get all blogs (including drafts)
+router.get('/blogs', adminAuth, async (req, res) => {
+  try {
+    const blogs = await Blog.find({})
+      .sort({ publishDate: -1, createdAt: -1 });
+    res.json(blogs);
+  } catch (error) {
+    console.error('Admin blogs error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Create blog
+router.post('/blogs', adminAuth, upload.single('image'), async (req, res) => {
+  try {
+    console.log('📝 Creating blog - Body:', req.body);
+    console.log('📝 Creating blog - File:', req.file ? 'File received' : 'No file');
+    
+    const {
+      title,
+      shortDescription,
+      content,
+      category,
+      tags,
+      status,
+      isFeatured,
+      authorName,
+    } = req.body;
+
+    // Only title is required
+    if (!title || title.trim().length === 0) {
+      return res.status(400).json({ message: 'Title is required' });
+    }
+
+    // Validate title length
+    if (title.trim().length < 3) {
+      return res.status(400).json({ message: 'Title must be at least 3 characters long' });
+    }
+
+    // Handle image upload
+    let mainImage = '';
+    if (req.file) {
+      mainImage = req.file.path || req.file.secure_url || '';
+      console.log('📸 Image uploaded:', mainImage);
+    } else if (req.body.mainImage) {
+      mainImage = req.body.mainImage;
+    }
+
+    // Validate image for new blog
+    if (!mainImage) {
+      return res.status(400).json({ message: 'Cover image is required for new blogs' });
+    }
+
+    const blog = await Blog.create({
+      title: title.trim(),
+      shortDescription: shortDescription ? shortDescription.trim() : '',
+      content: content ? content.trim() : '',
+      mainImage,
+      category: category ? category.trim() : 'General',
+      tags: typeof tags === 'string'
+        ? tags.split(',').map(t => t.trim()).filter(Boolean)
+        : Array.isArray(tags) ? tags : [],
+      status: status === 'draft' ? 'draft' : 'published',
+      isFeatured: isFeatured === 'true' || isFeatured === true,
+      authorName: authorName || 'Admin',
+      publishDate: req.body.publishDate || Date.now(),
+    });
+
+    console.log('✅ Blog created successfully:', blog._id);
+    res.status(201).json(blog);
+  } catch (error) {
+    console.error('❌ Error creating blog:', error);
+    console.error('❌ Error details:', {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => err.message).join(', ');
+      return res.status(400).json({ 
+        message: 'Blog validation failed', 
+        error: validationErrors 
+      });
+    }
+    
+    // Handle Cloudinary errors
+    if (error.message && error.message.includes('cloudinary')) {
+      return res.status(500).json({ 
+        message: 'Image upload failed. Please check Cloudinary configuration.', 
+        error: error.message 
+      });
+    }
+    
+    // Handle duplicate slug errors
+    if (error.code === 11000) {
+      return res.status(400).json({ 
+        message: 'A blog with this title already exists. Please use a different title.', 
+        error: 'Duplicate title' 
+      });
+    }
+    
+    res.status(500).json({ 
+      message: 'Failed to create blog', 
+      error: error.message || 'Unknown error occurred' 
+    });
+  }
+});
+
+// Update blog
+router.put('/blogs/:id', adminAuth, upload.single('image'), async (req, res) => {
+  try {
+    const {
+      title,
+      shortDescription,
+      content,
+      category,
+      tags,
+      status,
+      isFeatured,
+      authorName,
+    } = req.body;
+
+    const updateData = {};
+
+    if (title !== undefined) updateData.title = title;
+    if (shortDescription !== undefined) updateData.shortDescription = shortDescription;
+    if (content !== undefined) updateData.content = content;
+    if (category !== undefined) updateData.category = category;
+    if (authorName !== undefined) updateData.authorName = authorName;
+    if (status !== undefined) {
+      updateData.status = status === 'draft' ? 'draft' : 'published';
+    }
+    if (isFeatured !== undefined) {
+      updateData.isFeatured = isFeatured === 'true' || isFeatured === true;
+    }
+    if (tags !== undefined) {
+      updateData.tags = typeof tags === 'string'
+        ? tags.split(',').map(t => t.trim()).filter(Boolean)
+        : Array.isArray(tags) ? tags : [];
+    }
+    if (req.body.publishDate) {
+      updateData.publishDate = req.body.publishDate;
+    }
+
+    if (req.file) {
+      updateData.mainImage = req.file.path || req.file.secure_url;
+    } else if (req.body.mainImage !== undefined) {
+      updateData.mainImage = req.body.mainImage;
+    }
+
+    const blog = await Blog.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+
+    res.json(blog);
+  } catch (error) {
+    console.error('Error updating blog:', error);
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => err.message).join(', ');
+      return res.status(400).json({ 
+        message: 'Blog validation failed', 
+        error: validationErrors 
+      });
+    }
+    
+    res.status(500).json({ 
+      message: 'Failed to update blog', 
+      error: error.message 
+    });
+  }
+});
+
+// Delete blog
+router.delete('/blogs/:id', adminAuth, async (req, res) => {
+  try {
+    const blog = await Blog.findByIdAndDelete(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+    res.json({ message: 'Blog deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting blog:', error);
+    res.status(500).json({ message: 'Failed to delete blog', error: error.message });
   }
 });
 

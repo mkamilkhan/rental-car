@@ -16,7 +16,8 @@
   .navbar-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1rem;
+    overflow: hidden;
   }
   
   .navbar-wrapper {
@@ -24,7 +25,8 @@
     justify-content: space-between;
     align-items: center;
     min-height: 85px;
-    gap: 2rem;
+    gap: 1.5rem;
+    overflow: hidden;
   }
   
   /* ============================================
@@ -89,29 +91,32 @@
   .navbar-menu {
     display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
     flex: 1;
     justify-content: flex-end;
-    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    min-width: 0;
+    overflow: hidden;
   }
   
   .navbar-links {
     display: flex;
     align-items: center;
     gap: 2rem;
-    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .nav-link {
     color: #e2e8f0;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     letter-spacing: 0.5px;
     position: relative;
     padding: 0.5rem 0;
     transition: all 0.3s ease;
     font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    text-transform: uppercase;
   }
   
   .nav-link::after {
@@ -140,13 +145,22 @@
   .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     flex-wrap: nowrap;
+    flex-shrink: 0;
+    min-width: 0;
   }
   
   .btn-icon {
     font-size: 1.1rem;
     line-height: 1;
+  }
+
+  .btn-icon-feather {
+    flex-shrink: 0;
+    stroke-width: 2.5;
+    width: 16px;
+    height: 16px;
   }
   
   .language-currency-btn {
@@ -221,7 +235,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
-    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .btn-admin-login:hover {
@@ -235,48 +249,56 @@
   .btn-dashboard {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.65rem 1.3rem;
-    background: linear-gradient(135deg, #fc8b1a, #fc8b1a);
+    gap: 0.4rem;
+    padding: 0.55rem 0.85rem;
+    background: linear-gradient(135deg, #FDB43C, #F59E0C);
     border: none;
     border-radius: 8px;
-    color: #ffffff;
+    color: #000000;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 4px 12px rgba(253, 180, 60, 0.3);
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
   }
   
   .btn-dashboard:hover {
-    background: linear-gradient(135deg, #fc8b1a, #fc8b1a);
+    background: linear-gradient(135deg, #F59E0C, #FDB43C);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+    box-shadow: 0 6px 20px rgba(253, 180, 60, 0.5);
+    color: #000000;
   }
   
   .btn-logout {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.65rem 1.3rem;
+    gap: 0.4rem;
+    padding: 0.55rem 0.85rem;
     background: transparent;
-    border: 2px solid #fc8b1a;
+    border: 2px solid #FDB43C;
     border-radius: 8px;
-    color: #ef4444;
-    font-weight: 600;
-    font-size: 0.9rem;
+    color: #FDB43C;
+    font-weight: 700;
+    font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
   }
   
   .btn-logout:hover {
-    background: #fc8b1a;
-    color: #ffffff;
+    background: #FDB43C;
+    color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 4px 12px rgba(253, 180, 60, 0.4);
+    border-color: #FDB43C;
   }
 
   /* ============================================
@@ -286,25 +308,29 @@
   .btn-google-login-nav {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.65rem 1.3rem;
-    background: #ffffff;
-    border: 2px solid #e5e7eb;
+    gap: 0.4rem;
+    padding: 0.55rem 0.85rem;
+    background: linear-gradient(135deg, #FDB43C, #F59E0C);
+    border: 2px solid #FDB43C;
     border-radius: 8px;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 0.9rem;
+    color: #000000;
+    font-weight: 700;
+    font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
     font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 12px rgba(253, 180, 60, 0.3);
+    flex-shrink: 0;
   }
 
   .btn-google-login-nav:hover {
-    background: #f9fafb;
-    border-color: #d1d5db;
+    background: linear-gradient(135deg, #F59E0C, #FDB43C);
+    border-color: #FDB43C;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 20px rgba(253, 180, 60, 0.5);
+    color: #000000;
   }
 
   .google-icon-nav {
@@ -317,13 +343,125 @@
      RESPONSIVE DESIGN
      ============================================ */
   
+  @media (max-width: 1216px) {
+    .hamburger {
+      display: flex;
+      width: 26px;
+      height: 21px;
+    }
+
+    .hamburger span {
+      height: 3px;
+    }
+
+    .navbar-menu {
+      position: fixed;
+      top: 85px;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #202021 0%, #202021 100%);
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .navbar-menu.active {
+      max-height: calc(100vh - 85px);
+      padding: 1.5rem 1rem;
+      overflow-y: auto;
+    }
+
+    .navbar-links {
+      flex-direction: column;
+      width: 100%;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .nav-link {
+      padding: 0.875rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-link::after {
+      display: none;
+    }
+
+    .navbar-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.875rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .language-toggle,
+    .btn-admin-login,
+    .btn-dashboard,
+    .btn-logout,
+    .btn-google-login-nav {
+      width: 100%;
+      justify-content: center;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+    }
+
+    .btn-icon-feather {
+      width: 18px;
+      height: 18px;
+    }
+
+    .language-selector-wrapper,
+    .currency-selector-wrapper {
+      width: 100%;
+    }
+
+    .language-selector-btn,
+    .currency-selector-btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+  
   @media (max-width: 1024px) {
+    .navbar-container {
+      padding: 0 1.5rem;
+    }
+
+    .navbar-wrapper {
+      min-height: 75px;
+      gap: 1.5rem;
+    }
+
+    .navbar-logo99 {
+      width: 110px;
+      height: 80px;
+    }
+
     .navbar-links {
       gap: 1.5rem;
     }
     
     .nav-link {
       font-size: 0.9rem;
+      letter-spacing: 0.2px;
     }
   
     .navbar-actions {
@@ -338,27 +476,47 @@
       padding: 0.6rem 1rem;
       font-size: 0.85rem;
     }
+
+    .language-selector-btn,
+    .currency-selector-btn {
+      padding: 7px 10px;
+      font-size: 11px;
+      min-width: 100px;
+    }
   }
   
   @media (max-width: 768px) {
     .navbar-container {
-      padding: 0 1.5rem;
+      padding: 0 1rem;
     }
   
     .navbar-wrapper {
-      min-height: 70px;
+      min-height: 65px;
+      gap: 1rem;
+    }
+
+    .navbar-logo99 {
+      width: 75px;
+      height: 55px;
+      object-fit: contain;
     }
   
     .hamburger {
       display: flex;
+      width: 24px;
+      height: 20px;
+    }
+
+    .hamburger span {
+      height: 2.5px;
     }
   
     .navbar-menu {
       position: fixed;
-      top: 70px;
+      top: 65px;
       left: 0;
       right: 0;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      background: linear-gradient(135deg, #202021 0%, #202021 100%);
       flex-direction: column;
       gap: 0;
       padding: 0;
@@ -369,9 +527,9 @@
     }
   
     .navbar-menu.active {
-      max-height: calc(100vh - 70px);
+      max-height: calc(100vh - 65px);
       overflow-y: auto;
-      padding: 2rem 1.5rem;
+      padding: 1.5rem 1rem;
     }
   
     .navbar-links {
@@ -382,9 +540,11 @@
     }
   
     .nav-link {
-      padding: 1rem 0;
+      padding: 0.875rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
     }
   
     .nav-link::after {
@@ -394,9 +554,9 @@
     .navbar-actions {
       flex-direction: column;
       width: 100%;
-      gap: 1rem;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
+      gap: 0.875rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       flex-wrap: wrap;
     }
@@ -408,37 +568,102 @@
     .btn-google-login-nav {
       width: 100%;
       justify-content: center;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
     }
   
     .btn-icon {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-icon-feather {
+      width: 18px;
+      height: 18px;
+    }
+
+    .language-selector-wrapper,
+    .currency-selector-wrapper {
+      width: 100%;
+    }
+
+    .language-selector-btn,
+    .currency-selector-btn {
+      width: 100%;
+      justify-content: space-between;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.95rem;
+      min-width: auto;
+      height: auto;
+    }
+
+    .language-dropdown,
+    .currency-dropdown {
+      width: 100%;
+      right: 0;
+      left: 0;
+      min-width: auto;
     }
   }
   
   @media (max-width: 480px) {
     .navbar-container {
-      padding: 0 1rem;
+      padding: 0 0.875rem;
     }
   
     .navbar-wrapper {
-      min-height: 65px;
+      min-height: 60px;
+      gap: 0.75rem;
     }
 
-    /* Make logo smaller on mobile */
     .navbar-logo99 {
-      width: 80px;
-      height: 60px;
-    }
-  }
-
-  /* Mobile logo size for tablets too */
-  @media (max-width: 768px) {
-    .navbar-logo99 {
-      width: 75px;
-      height: 55px;
+      width: 65px;
+      height: 50px;
       object-fit: contain;
+    }
+
+    .hamburger {
+      width: 22px;
+      height: 18px;
+    }
+
+    .hamburger span {
+      height: 2px;
+    }
+
+    .navbar-menu {
+      top: 60px;
+    }
+
+    .navbar-menu.active {
+      max-height: calc(100vh - 60px);
+      padding: 1.25rem 0.875rem;
+    }
+
+    .nav-link {
+      padding: 0.75rem 0;
+      font-size: 0.9rem;
+    }
+
+    .language-toggle,
+    .btn-admin-login,
+    .btn-dashboard,
+    .btn-logout,
+    .btn-google-login-nav {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .language-selector-btn,
+    .currency-selector-btn {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .language-option,
+    .currency-option {
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
     }
   }
   
@@ -487,3 +712,478 @@
   .navbar-menu.active {
     animation: slideDown 0.3s ease;
   }
+
+/* ============================================
+   LANGUAGE SELECTOR DROPDOWN
+   ============================================ */
+
+.language-selector-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.language-selector-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 40px;
+  font-family: 'Arial', sans-serif;
+  min-width: 120px;
+  justify-content: space-between;
+}
+
+.language-selector-btn:hover {
+  background-color: rgba(253, 180, 60, 0.1);
+  border-color: #FDB43C;
+  color: #FDB43C;
+}
+
+.language-selector-btn .language-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.language-selector-btn svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.language-selector-wrapper:hover .language-selector-btn svg,
+.language-dropdown.active ~ .language-selector-btn svg {
+  transform: rotate(180deg);
+}
+
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: #1F2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  min-width: 200px;
+  overflow: hidden;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  border-bottom: 1px solid #374151;
+}
+
+.language-option:last-child {
+  border-bottom: none;
+}
+
+.language-option:hover {
+  background: #374151;
+  color: #FDB43C;
+}
+
+.language-option.active {
+  background: rgba(253, 180, 60, 0.1);
+  color: #FDB43C;
+  font-weight: 600;
+}
+
+.language-option span:first-child {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Language Dropdown Currency Section */
+.language-dropdown-divider {
+  height: 1px;
+  background: #374151;
+  margin: 0.5rem 0;
+  border: none;
+}
+
+.language-dropdown-currency-header {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #FDB43C;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(253, 180, 60, 0.1);
+  border-bottom: 1px solid #374151;
+}
+
+/* Mobile responsive for language selector */
+@media (max-width: 768px) {
+  .language-selector-wrapper {
+    width: 100%;
+  }
+
+  .language-selector-btn {
+    width: 100%;
+    min-width: auto;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
+    justify-content: space-between;
+  }
+
+  .language-selector-btn span {
+    display: inline;
+  }
+
+  .language-dropdown {
+    right: 0;
+    left: 0;
+    width: 100%;
+    min-width: auto;
+  }
+
+  .language-option {
+    font-size: 0.9rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .language-selector-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .language-option {
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* ============================================
+   CURRENCY SELECTOR DROPDOWN
+   ============================================ */
+
+.currency-selector-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-selector-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 40px;
+  font-family: 'Arial', sans-serif;
+  min-width: 100px;
+  justify-content: space-between;
+}
+
+.currency-selector-btn:hover {
+  background-color: rgba(253, 180, 60, 0.1);
+  border-color: #FDB43C;
+  color: #FDB43C;
+}
+
+.currency-selector-btn .currency-symbol {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FDB43C;
+}
+
+.currency-selector-btn svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.currency-selector-wrapper:hover .currency-selector-btn svg {
+  transform: rotate(180deg);
+}
+
+.currency-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: #1F2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  min-width: 180px;
+  overflow: hidden;
+  animation: slideDown 0.2s ease-out;
+}
+
+.currency-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  border-bottom: 1px solid #374151;
+}
+
+.currency-option:last-child {
+  border-bottom: none;
+}
+
+.currency-option:hover {
+  background: #374151;
+  color: #FDB43C;
+}
+
+.currency-option.active {
+  background: rgba(253, 180, 60, 0.1);
+  color: #FDB43C;
+  font-weight: 600;
+}
+
+.currency-option span:first-child {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Mobile responsive for currency selector */
+@media (max-width: 768px) {
+  .currency-selector-wrapper {
+    width: 100%;
+  }
+
+  .currency-selector-btn {
+    width: 100%;
+    min-width: auto;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
+    justify-content: space-between;
+  }
+
+  .currency-selector-btn span:last-child {
+    display: inline;
+  }
+
+  .currency-dropdown {
+    right: 0;
+    left: 0;
+    width: 100%;
+    min-width: auto;
+  }
+
+  .currency-option {
+    font-size: 0.9rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .currency-selector-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .currency-option {
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* ============================================
+   GOOGLE TRANSLATE IN NAVBAR (Hidden but functional)
+   ============================================ */
+
+#google_translate_element_navbar {
+  position: absolute !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 200px !important;
+  height: 50px !important;
+  overflow: visible !important;
+  visibility: visible !important;
+}
+
+/* Ensure Google Translate dropdown is accessible */
+.goog-te-banner-frame,
+.goog-te-menu-frame {
+  z-index: 10000 !important;
+}
+
+.goog-te-combo {
+  position: absolute !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Make sure translate works even when hidden */
+.goog-te-banner,
+.goog-te-menu-frame {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.navbar-translate-wrapper {
+  display: flex !important;
+  align-items: center;
+  height: 40px;
+  min-width: 120px;
+  visibility: visible !important;
+  position: relative;
+}
+
+#google_translate_element_navbar {
+  display: flex !important;
+  align-items: center;
+  visibility: visible !important;
+  min-width: 120px;
+  z-index: 10;
+  position: relative;
+}
+
+/* Fallback language button */
+.language-btn-fallback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 40px;
+  font-family: 'Arial', sans-serif;
+}
+
+.language-btn-fallback:hover {
+  background-color: rgba(253, 180, 60, 0.1);
+  border-color: #FDB43C;
+  color: #FDB43C;
+}
+
+.language-btn-fallback .language-icon {
+  font-size: 16px;
+}
+
+/* Fallback button positioning */
+.language-btn-fallback {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hide fallback when Google Translate loads */
+#google_translate_element_navbar .goog-te-gadget ~ .language-btn-fallback,
+.navbar-translate-wrapper:has(#google_translate_element_navbar .goog-te-gadget) .language-btn-fallback {
+  display: none !important;
+}
+
+/* Show fallback by default */
+.language-btn-fallback {
+  display: flex !important;
+}
+
+/* Style Google Translate button in navbar */
+#google_translate_element_navbar .goog-te-gadget {
+  color: #ffffff !important;
+  font-family: 'Arial', sans-serif !important;
+  font-size: 12px !important;
+  margin: 0 !important;
+}
+
+#google_translate_element_navbar .goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  min-width: 100px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#google_translate_element_navbar .goog-te-gadget-simple:hover {
+  background-color: rgba(253, 180, 60, 0.1) !important;
+  border-color: #FDB43C !important;
+}
+
+#google_translate_element_navbar .goog-te-gadget-icon {
+  display: none !important;
+}
+
+/* Language selector dropdown */
+#google_translate_element_navbar .goog-te-menu-value {
+  color: #ffffff !important;
+}
+
+#google_translate_element_navbar .goog-te-menu-value span {
+  color: #FDB43C !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .navbar-translate-wrapper {
+    width: 100%;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+
+  #google_translate_element_navbar .goog-te-gadget-simple {
+    width: 100%;
+    max-width: 200px;
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+}

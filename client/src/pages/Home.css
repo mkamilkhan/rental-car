@@ -178,7 +178,7 @@
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   width: 100%;
 }
@@ -775,7 +775,7 @@
   }
 
   .hero-content p:not(.hero-tagline):not(.hero-highlight) {
-    font-size: 13px;
+    font-size: 22px;
   }
   
   .hero-indicators {
@@ -2698,7 +2698,7 @@ body {
   gap: 1.25rem;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Vehicle Name */
@@ -2804,6 +2804,9 @@ body {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
 }
 
 .buggy-actions a {
@@ -2865,16 +2868,15 @@ body {
 }
 
 .btn-whatsapp {
-  width: 90%;
-  margin-left: 12px;
+  width: 100%;
   padding: 1rem 2rem;
   font-size: 0.875rem;
   font-weight: 900;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  background: transparent;        /* transparent background */
-  color: #ffffff;                  /* white text */
-  border: 1px solid #e1e1e1;       /* yellow border (stroke) */
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #e1e1e1;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Impact', 'Arial Black', Arial, sans-serif;
@@ -2882,6 +2884,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  border-radius: 8px;
 }
 
 
@@ -2895,6 +2898,140 @@ body {
 
 .whatsapp-icon {
   font-size: 1.2rem;
+}
+
+/* ============================================
+   WHATSAPP PAYMENT WRAPPER & DROPDOWN
+   ============================================ */
+
+.whatsapp-payment-wrapper {
+  position: relative;
+  flex: 0 0 40%;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 10;
+}
+
+.payment-options-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border: 2px solid #FDB43C;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(253, 180, 60, 0.3);
+  z-index: 9999;
+  overflow: visible;
+  min-width: 200px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.payment-option-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  color: #ffffff;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(253, 180, 60, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: left;
+}
+
+.payment-option-item:last-child {
+  border-bottom: none;
+}
+
+.payment-option-item:hover {
+  background: rgba(253, 180, 60, 0.15);
+  color: #FDB43C;
+  transform: translateX(5px);
+}
+
+.payment-option-item .option-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #FDB43C;
+  transition: all 0.3s ease;
+}
+
+.payment-option-item:hover .option-icon {
+  color: #FDB43C;
+  transform: scale(1.1);
+}
+
+.payment-option-item span {
+  flex: 1;
+}
+
+/* Responsive for WhatsApp Payment Dropdown */
+@media (max-width: 768px) {
+  .whatsapp-payment-wrapper {
+    flex: 0 0 70%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .payment-options-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-width: auto;
+  }
+
+  .payment-option-item {
+    padding: 0.875rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .payment-option-item .option-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-options-dropdown {
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 15px rgba(253, 180, 60, 0.2);
+  }
+
+  .payment-option-item {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .payment-option-item .option-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* ============================================
@@ -4158,3 +4295,101 @@ body {
   .monster-card:nth-child(4) { animation-delay: 0.4s; }
   .monster-card:nth-child(5) { animation-delay: 0.5s; }
   .monster-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* ============================================
+   HERO REVIEWS SECTION
+   ============================================ */
+
+.hero-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.reviews-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ffffff;
+  /* font-size: 0.9rem; */
+  font-weight: 600;
+}
+
+.review-item strong {
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.review-item.muted {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.review-icon-google,
+.review-icon-facebook {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-reviews {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .reviews-row {
+    gap: 1.5rem;
+  }
+
+  .review-item {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .review-icon-google,
+  .review-icon-facebook {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ============================================
+   SCROLL ANIMATIONS (ONLY - NO DESIGN CHANGES)
+   ============================================ */
+
+/* Apply scroll animations to cards and sections */
+.buggy-card-horizontal,
+.buggy-container,
+.featured-section,
+.tour-categories-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.buggy-card-horizontal.animate,
+.buggy-container.animate,
+.featured-section.animate,
+.tour-categories-section.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger animation for cards */
+.buggy-card-horizontal:nth-child(1) { transition-delay: 0.1s; }
+.buggy-card-horizontal:nth-child(2) { transition-delay: 0.2s; }
+.buggy-card-horizontal:nth-child(3) { transition-delay: 0.3s; }
+.buggy-card-horizontal:nth-child(4) { transition-delay: 0.4s; }
+.buggy-card-horizontal:nth-child(5) { transition-delay: 0.5s; }
+.buggy-card-horizontal:nth-child(6) { transition-delay: 0.6s; }

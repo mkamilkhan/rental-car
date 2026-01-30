@@ -75,6 +75,7 @@ const carRoutes = require("./routes/cars");
 const bookingRoutes = require("./routes/bookings");
 const adminRoutes = require("./routes/admin");
 const contactRoutes = require("./routes/contact");
+const blogRoutes = require("./routes/blogs");
 
 const app = express();
 
@@ -113,6 +114,7 @@ app.use("/api/cars", carRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/blogs", blogRoutes);
 
 /* =======================
    SERVE FRONTEND (REACT) - Only in development

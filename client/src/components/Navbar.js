@@ -92,7 +92,6 @@ const Navbar = () => {
     };
     
     const apiUrl = getApiUrl();
-    console.log('Navbar: Final API URL:', apiUrl);
     console.log('Navbar: Redirecting to Google OAuth:', `${apiUrl}/api/auth/google`);
     window.location.href = `${apiUrl}/api/auth/google`;
   };

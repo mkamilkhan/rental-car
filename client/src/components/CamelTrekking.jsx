@@ -1,13 +1,14 @@
 import React from "react";
+import { FaWhatsapp } from "react-icons/fa6";
 import "./CamelTrekking.css";
 
+const CAMEL_WHATSAPP_NUMBER = "971564455568";
+const CAMEL_WHATSAPP_DISPLAY = "+971 56 445 5568";
+const CAMEL_WHATSAPP_MESSAGE = "Hi, I want to book Camel Trekking";
+
 export default function CamelTrekking() {
- 
-  const handleWhatsappBooking = () => {
-    const phone = "971522296899";
-    const message = encodeURIComponent("Hi, I want to book Camel Trekking");
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-  };
+  const whatsappUrl = `https://wa.me/${CAMEL_WHATSAPP_NUMBER}?text=${encodeURIComponent(CAMEL_WHATSAPP_MESSAGE)}`;
+
   return (
     <section className="camel-section">
       <div className="camel-wrapper">
@@ -21,7 +22,6 @@ export default function CamelTrekking() {
           <div className="image-overlay" />
           <div className="time-tags">
             <span>CAMEL TREKKING</span>
-           
           </div>
         </div>
 
@@ -57,11 +57,16 @@ export default function CamelTrekking() {
             </div>
           </div>
 
-          <div className="actions">
-            
-            <button className="whatsapp" onClick={handleWhatsappBooking}>
-              WHATSAPP BOOKING
-            </button>
+          <div className="camel-actions">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="camel-whatsapp-link"
+            >
+              <FaWhatsapp className="camel-whatsapp-icon" />
+              <span>{CAMEL_WHATSAPP_DISPLAY}</span>
+            </a>
           </div>
         </div>
 

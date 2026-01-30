@@ -9,7 +9,7 @@
 
 .camel-section {
   background: var(--bg-dark);
-  padding: 80px 60px;
+  padding: 80px 10px;
   color: var(--text-white);
   font-family: "Poppins", sans-serif;
 }
@@ -23,7 +23,6 @@
 
 .camel-image {
   position: relative;
-  padding: 20px;
   border-radius: 12px;
   width: 50%;
 }
@@ -131,24 +130,38 @@
   border: 1px solid #2a2a2a;
 }
 
-.actions {
+/* Camel actions – WhatsApp sirf number link */
+.camel-actions {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   margin-top: 40px;
+  flex-wrap: wrap;
 }
 
-.actions button {
-  padding: 14px 28px;
+.camel-whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 24px;
   background: transparent;
   border: 1px solid var(--gold);
   color: var(--gold);
-  font-weight: 600;
-  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  font-family: "Impact", "Arial Black", Arial, sans-serif;
 }
 
-.actions .whatsapp {
+.camel-whatsapp-link:hover {
   background: var(--gold);
   color: #000;
+}
+
+.camel-whatsapp-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {

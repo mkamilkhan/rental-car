@@ -1,186 +1,119 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import '../components/VideoCardSlider.css';
-// import desertVideo1 from '../assets/IMG_21481.MOV';
-// import desertVideo2 from '../assets/IMG_28415.MOV';
-// import desertVideo3 from '../assets/IMG_36304.MOV';
-// import desertVideo4 from '../assets/IMG_36962.MOV';
-// import desertVideo5 from '../assets/IMG_37343.MOV';
+import './VideoCardSlider.css';
+
+const MOBILE_BREAKPOINT = 768;
 
 const storiesData = [
-  { id: 1, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', username: 'john_doe', caption: 'Desert adventure!' },
-  { id: 2, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov', username: 'jane_doe', caption: 'Fun ride!' },
-  { id: 3, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'Bike ride!' },
-  { id: 4, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769170577/rental-car/videos/IMG_1631.mov', username: 'alex_smith', caption: 'More desert fun!' },
-  { id: 5, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4/v1769173190/rental-car/videos/IMG_28415.mov', username: 'alex_smith', caption: 'Another ride!' },
+  { id: 1, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4,vc_h264,br_2000k/v1769170577/rental-car/videos/IMG_1631.mov', username: 'desert_king', caption: 'Desert adventure!' },
+  { id: 2, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4,vc_h264,br_2000k/v1769173190/rental-car/videos/IMG_28415.mov', username: 'dune_rider', caption: 'Fun ride!' },
+  { id: 3, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4,vc_h264,br_2000k/v1769170577/rental-car/videos/IMG_21841.mov', username: 'bike_nomad', caption: 'Bike ride!' },
+  { id: 4, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4,vc_h264,br_2000k/v1769170577/rental-car/videos/IMG_36304.mov', username: 'sand_master', caption: 'Dune bashing!' },
+  { id: 5, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4,vc_h264,br_2000k/v1769173190/rental-car/videos/IMG_36962.mov', username: 'safari_guy', caption: 'Desert safari!' },
+  { id: 6, videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/f_mp4,vc_h264,br_2000k/v1769173190/rental-car/videos/IMG_37343.mov', username: 'offroad_x', caption: 'Another ride!' },
 ];
 
-
 export const VideoCardSlider = () => {
-  const sliderRef = useRef(null);
   const videoRefs = useRef([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT
+  );
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 5,        // <-- 5 cards per row
-    slidesToScroll: 1,
-    arrows: false,          // no arrows
-    autoplay: true,
-    autoplaySpeed: 5000,    // 5 seconds
-    beforeChange: (current, next) => {
-      const currentVideo = videoRefs.current[current];
-      if (currentVideo) {
-        currentVideo.pause();
-        currentVideo.currentTime = 0;
-      }
-      setCurrentSlide(next);
-    },
-    afterChange: (current) => {
-      // Pause all videos first
-      videoRefs.current.forEach((vid) => {
-        if (vid) vid.pause();
-      });
-      // Play current video
-      const video = videoRefs.current[current];
-      if (video) {
-        video.currentTime = 0;
-        video.play().catch((err) => {
-          console.log('Video play prevented on slide change:', err);
-        });
-      }
-    },
-    responsive: [
-      { breakpoint: 1440, settings: { slidesToShow: 4 } }, // smaller desktop
-      { breakpoint: 1280, settings: { slidesToShow: 3 } },
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { 
-        breakpoint: 768, 
-        settings: { 
-          slidesToShow: 1, 
-          slidesToScroll: 1,
-          centerMode: true, 
-          centerPadding: '0px',
-          infinite: true
-        } 
-      },
-      { 
-        breakpoint: 640, 
-        settings: { 
-          slidesToShow: 1, 
-          slidesToScroll: 1,
-          centerMode: true, 
-          centerPadding: '0px',
-          infinite: true
-        } 
-      },
-      { 
-        breakpoint: 480, 
-        settings: { 
-          slidesToShow: 1, 
-          slidesToScroll: 1,
-          centerMode: true, 
-          centerPadding: '0px',
-          infinite: true
-        } 
-      },
-    ],
-  };
+  const slidesToShow = isMobile ? 1 : 5;
 
   useEffect(() => {
-    // Mobile browsers require user interaction for autoplay
-    const playVideos = () => {
-      const firstVideo = videoRefs.current[0];
-      if (firstVideo) {
-        firstVideo.play().catch((err) => {
-          console.log('Autoplay prevented, will play on user interaction');
-        });
-      }
-    };
-    
-    // Try to play immediately
-    playVideos();
-    
-    // Also try after a small delay (for mobile)
-    const timeout = setTimeout(playVideos, 500);
-    
-    return () => clearTimeout(timeout);
+    const onResize = () =>
+      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  const handleVideoEnded = (index) => {
-    const video = videoRefs.current[index];
-    if (video) {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    }
-  };
+  const totalSlides = Math.max(1, storiesData.length - slidesToShow + 1);
+  const cardWidth = 100 / slidesToShow;
+  const offset = -currentIndex * cardWidth;
+
+  // 🔥 PLAY ONLY CURRENT VIDEO
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+
+      if (i === currentIndex) {
+        video.muted = true;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  }, [currentIndex]);
+
+  // Desktop autoplay
+  useEffect(() => {
+    if (isMobile) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((i) => (i + 1 >= totalSlides ? 0 : i + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isMobile, totalSlides]);
+
+  const goTo = (i) =>
+    setCurrentIndex(Math.max(0, Math.min(i, totalSlides - 1)));
 
   return (
     <div className="video-card-slider-container">
-      <Slider ref={sliderRef} {...settings}>
-        {storiesData.map((story, index) => (
-          <div key={story.id} className="slider-item">
-            <div className="video-card">
-              <div className="video-wrapper">
-                <video
-                  ref={(el) => { if (el) videoRefs.current[index] = el; }}
-                  className="video-element"
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  webkit-playsinline="true"
-                  x5-playsinline="true"
-                  onEnded={() => handleVideoEnded(index)}
-                  onError={(e) => {
-                    console.error('Video load error:', story.videoUrl);
-                    // Don't hide, just show black background
-                  }}
-                  onLoadedData={() => {
-                    const video = videoRefs.current[index];
-                    if (video) {
-                      video.play().catch((err) => {
-                        console.log('Video autoplay prevented:', err);
-                        // On mobile, videos might need user interaction
-                      });
-                    }
-                  }}
-                  onCanPlay={() => {
-                    const video = videoRefs.current[index];
-                    if (video && index === currentSlide) {
-                      video.play().catch(() => {});
-                    }
-                  }}
-                  onClick={(e) => {
-                    // Allow user to tap to play on mobile
-                    const video = e.target;
-                    if (video.paused) {
-                      video.play().catch(() => {});
-                    } else {
-                      video.pause();
-                    }
-                  }}
-                >
-                  <source src={story.videoUrl} type="video/mp4" />
-                  <source src={story.videoUrl} type="video/quicktime" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
+      <div className="video-slider-viewport">
+        <button
+          className="video-slider-btn prev"
+          onClick={() => goTo(currentIndex - 1)}
+        >
+          ‹
+        </button>
 
-              <div className="card-overlay">
-                <div className="user-info">
-                  <span className="username">@{story.username}</span>
+        <div className="video-slider-track-wrap">
+          <div
+            className="video-slider-track"
+            style={{
+              width: `${(storiesData.length * 100) / slidesToShow}%`,
+              transform: `translateX(${offset}%)`,
+            }}
+          >
+            {storiesData.map((story, index) => (
+              <div
+                key={story.id}
+                className="video-slider-card-wrap"
+                style={{ width: `${cardWidth}%` }}
+              >
+                <div className="video-card">
+                  <div className="video-wrapper">
+                    <video
+                      ref={(el) => (videoRefs.current[index] = el)}
+                      src={`${story.videoUrl}?v=${story.id}`}
+                      muted
+                      playsInline
+                      loop={!isMobile}
+                      preload={index === currentIndex ? 'auto' : 'metadata'}
+                      poster="https://res.cloudinary.com/dkjjrna9o/video/upload/so_0/f_jpg/v1769170577/rental-car/videos/IMG_1631.jpg"
+                      className="video-element"
+                    />
+                  </div>
+
+                  <div className="card-overlay">
+                    <span className="username">@{story.username}</span>
+                    <p className="caption">{story.caption}</p>
+                  </div>
                 </div>
-                <p className="caption">{story.caption}</p>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </Slider>
+        </div>
+
+        <button
+          className="video-slider-btn next"
+          onClick={() => goTo(currentIndex + 1)}
+        >
+          ›
+        </button>
+      </div>
     </div>
   );
 };

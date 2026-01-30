@@ -43,14 +43,20 @@ const AuthCallback = () => {
     // Get saved path for redirect
     const from = localStorage.getItem("from") || sessionStorage.getItem("from");
     
-    // Determine redirect path
+    // Determine redirect path – never send Google login to Admin Login page
     let redirectPath = "/";
     if (from && from.includes("/booking/")) {
       redirectPath = from;
       console.log("Redirecting to booking form:", redirectPath);
     } else if (from && from !== "/login" && from !== "/") {
-      redirectPath = from;
-      console.log("Redirecting to saved path:", redirectPath);
+      // Don't redirect to /admin after Google login – go home or My Bookings
+      if (from === "/admin" || from.startsWith("/admin")) {
+        redirectPath = "/my-bookings";
+        console.log("Redirecting to My Bookings (not Admin):", redirectPath);
+      } else {
+        redirectPath = from;
+        console.log("Redirecting to saved path:", redirectPath);
+      }
     }
 
     // Remove from storage

@@ -220,20 +220,14 @@ router.get('/google/callback',
         { expiresIn: '7d' }
       );
       
-      // Smart frontend URL detection for mobile
+      // Local: always 3000 (ignore FRONTEND_URL). Production: Render URL only.
       const getFrontendUrl = () => {
-        // Priority 1: Use environment variable if set
-        if (process.env.FRONTEND_URL) {
-          return process.env.FRONTEND_URL;
-        }
-        
-        // Priority 2: Production - use Render client URL
-        if (process.env.NODE_ENV === 'production') {
+        const isProduction = process.env.NODE_ENV === 'production';
+        const isLocalServer = !process.env.PORT || process.env.PORT === '5000';
+        if (isProduction && !isLocalServer) {
           return 'https://offroad-rental-client.onrender.com';
         }
-        
-        // Priority 3: Fallback to localhost for development
-        return 'http://localhost:3001';
+        return 'http://localhost:3000';
       };
       
       const frontendUrl = getFrontendUrl();

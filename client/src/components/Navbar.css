@@ -17,7 +17,7 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
-    overflow: hidden;
+    overflow: visible;
   }
   
   .navbar-wrapper {
@@ -26,7 +26,7 @@
     align-items: center;
     min-height: 85px;
     gap: 1.5rem;
-    overflow: hidden;
+    overflow: visible;
   }
   
   /* ============================================
@@ -96,7 +96,7 @@
     justify-content: flex-end;
     font-family: 'Arial', 'Helvetica', sans-serif;
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
   }
   
   .navbar-links {
@@ -149,6 +149,9 @@
     flex-wrap: nowrap;
     flex-shrink: 0;
     min-width: 0;
+    overflow: visible;
+    position: relative;
+    z-index: 1002;
   }
   
   .btn-icon {
@@ -721,6 +724,8 @@
   position: relative;
   display: flex;
   align-items: center;
+  z-index: 1002;
+  pointer-events: auto;
 }
 
 .language-selector-btn {
@@ -740,6 +745,7 @@
   font-family: 'Arial', sans-serif;
   min-width: 120px;
   justify-content: space-between;
+  pointer-events: auto;
 }
 
 .language-selector-btn:hover {
@@ -771,10 +777,11 @@
   border: 1px solid #374151;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 10002;
   min-width: 200px;
   overflow: hidden;
   animation: slideDown 0.2s ease-out;
+  pointer-events: auto;
 }
 
 @keyframes slideDown {
@@ -895,6 +902,8 @@
   position: relative;
   display: flex;
   align-items: center;
+  z-index: 1002;
+  pointer-events: auto;
 }
 
 .currency-selector-btn {
@@ -914,6 +923,7 @@
   font-family: 'Arial', sans-serif;
   min-width: 100px;
   justify-content: space-between;
+  pointer-events: auto;
 }
 
 .currency-selector-btn:hover {
@@ -945,10 +955,11 @@
   border: 1px solid #374151;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 10002;
   min-width: 180px;
   overflow: hidden;
   animation: slideDown 0.2s ease-out;
+  pointer-events: auto;
 }
 
 .currency-option {

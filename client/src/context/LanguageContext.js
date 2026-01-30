@@ -23,9 +23,9 @@ const detectBrowserLanguage = () => {
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(() => {
-    // Get saved language from localStorage or detect from browser
+    // Get saved language from localStorage; default is always English
     const savedLang = localStorage.getItem('language');
-    return savedLang || detectBrowserLanguage();
+    return savedLang || 'en';
   });
 
   useEffect(() => {

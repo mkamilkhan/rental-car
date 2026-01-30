@@ -802,14 +802,15 @@ const Home = () => {
                       className={selectedDuration === '120min' ? 'active' : ''}
                       onClick={() => setSelectedDuration('120min')}
                     >
-                      120 Min - {selectedCar.price120min} AED
+                      120 Min - {formatPrice(selectedCar.price120min)}
                     </button>
                   )}
                 </div>
               </div>
 
               <div className="payment-total">
-                <p>Total Amount: <strong>{getCarPrice(selectedCar, selectedDuration)} AED</strong></p>
+                <p className="payment-total-label">Total Amount</p>
+                <p className="payment-total-value">{formatPrice(getCarPrice(selectedCar, selectedDuration))}</p>
               </div>
 
               <button
@@ -825,7 +826,9 @@ const Home = () => {
       )}
 
       <CamelTrekking />
-      <VideoCardSlider />
+      <section className="video-stories-section" aria-label="Video stories">
+        <VideoCardSlider />
+      </section>
       {/* Text Content Section */}
       <div className="content-section">
         <div className="content-container">

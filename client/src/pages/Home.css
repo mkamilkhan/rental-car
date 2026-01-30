@@ -4442,6 +4442,13 @@ body {
    SCROLL ANIMATIONS (ONLY - NO DESIGN CHANGES)
    ============================================ */
 
+/* Video stories section – always visible, no scroll-animate */
+.video-stories-section {
+  opacity: 1 !important;
+  transform: none;
+  min-height: 1px;
+}
+
 /* Apply scroll animations to cards and sections - Cards visible by default */
 .buggy-card-horizontal,
 .buggy-container,
@@ -4476,3 +4483,199 @@ body {
 .buggy-card-horizontal:nth-child(4) { transition-delay: 0.4s; }
 .buggy-card-horizontal:nth-child(5) { transition-delay: 0.5s; }
 .buggy-card-horizontal:nth-child(6) { transition-delay: 0.6s; }
+
+/* ============================================
+   PAY WITH CARD MODAL (Home page)
+   ============================================ */
+
+.payment-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.payment-modal-content {
+  background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid #262523;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(253, 180, 60, 0.15);
+  position: relative;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.payment-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  z-index: 2;
+}
+
+.payment-modal-close:hover {
+  background: rgba(253, 180, 60, 0.2);
+  color: #FDB43C;
+}
+
+.payment-modal-header {
+  padding: 1.75rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(253, 180, 60, 0.2);
+}
+
+.payment-modal-header h2 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 0.35rem 0;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.payment-modal-header p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.payment-modal-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.payment-duration-selector label {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.duration-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.duration-buttons button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  text-decoration: none;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+  letter-spacing: 0.3px;
+}
+
+.duration-buttons button:hover {
+  background: rgba(253, 180, 60, 0.1);
+  border-color: rgba(253, 180, 60, 0.4);
+  color: #FDB43C;
+}
+
+.duration-buttons button.active {
+  background: rgba(253, 180, 60, 0.15);
+  border-color: #FDB43C;
+  color: #FDB43C;
+  box-shadow: 0 0 0 1px rgba(253, 180, 60, 0.3);
+}
+
+.payment-total {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: rgba(253, 180, 60, 0.08);
+  border: 1px solid rgba(253, 180, 60, 0.25);
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.payment-total-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payment-total-value {
+  color: #FDB43C;
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.payment-proceed-btn {
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 1rem 1.5rem;
+  background: #FDB43C;
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Impact', 'Arial Black', Arial, sans-serif;
+}
+
+.payment-proceed-btn:hover:not(:disabled) {
+  background: #f5a623;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(253, 180, 60, 0.4);
+}
+
+.payment-proceed-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

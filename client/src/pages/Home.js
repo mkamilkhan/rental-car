@@ -646,8 +646,11 @@ const Home = () => {
                         </p>
                       </div>
 
-                      <div className="buggy-actions">
-                        <div className="whatsapp-payment-wrapper">
+                      <Link to={`/car/${car._id}`} >
+                          <button className="btn-availability">SHOW DETAILS</button>
+                        </Link>
+                      <div className={`buggy-actions ${showPaymentOptions[car._id] ? 'dropdown-open' : ''}`}>
+                        <div className={`whatsapp-payment-wrapper ${showPaymentOptions[car._id] ? 'dropdown-active' : ''}`}>
                           <button 
                             className="btn-whatsapp"
                             onClick={() => setShowPaymentOptions(prev => ({ ...prev, [car._id]: !prev[car._id] }))}
@@ -683,9 +686,7 @@ const Home = () => {
                             </div>
                           )}
                         </div>
-                        <Link to={`/car/${car._id}`} >
-                          <button className="btn-availability">SHOW DETAILS</button>
-                        </Link>
+                     
                       </div>
                     </div>
                   </div>

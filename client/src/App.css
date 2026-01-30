@@ -40,7 +40,7 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 12px;
+    padding: 0 0px;
     max-width: 100%;
   }
 }

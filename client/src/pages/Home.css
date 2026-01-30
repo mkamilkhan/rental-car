@@ -2699,6 +2699,11 @@ body {
   width: 100%;
   box-sizing: border-box;
   overflow: visible;
+  transition: padding-bottom 0.3s ease;
+}
+
+.buggy-details-section:has(.dropdown-open) {
+  padding-bottom: 6rem;
 }
 
 /* Vehicle Name */
@@ -2797,32 +2802,76 @@ body {
    ACTION BUTTONS
    ============================================ */
 
+/* Mobile first: column (stacked buttons) */
 .buggy-actions {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
   margin-top: 1.5rem;
   justify-content: center;
+  align-items: stretch;
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  z-index: 10;
   overflow: visible;
+  transition: margin-bottom 0.3s ease;
 }
 
-.buggy-actions a {
+.buggy-actions.dropdown-open {
+  margin-bottom: 5rem;
+}
+
+.buggy-actions a,
+.buggy-actions-link {
   text-decoration: none;
   box-sizing: border-box;
   min-width: 0;
+  width: 100%;
 }
 
-.buggy-actions a:first-child {
-  flex: 0 0 70%;
-  max-width: 70%;
+.buggy-actions .whatsapp-payment-wrapper {
+  width: 100%;
 }
 
-.buggy-actions a:last-child {
-  flex: 0 0 30%;
-  max-width: 30%;
+/* Large screen only: row, both buttons same width, less gap - scoped so it wins */
+@media (min-width: 769px) {
+  .buggy-card-horizontal .buggy-actions,
+  .buggy-details-section .buggy-actions {
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+  }
+
+  .buggy-card-horizontal .buggy-actions a,
+  .buggy-card-horizontal .buggy-actions-link,
+  .buggy-details-section .buggy-actions a,
+  .buggy-details-section .buggy-actions-link {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+  }
+
+  .buggy-card-horizontal .buggy-actions .whatsapp-payment-wrapper,
+  .buggy-details-section .buggy-actions .whatsapp-payment-wrapper {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+  }
+
+  .buggy-card-horizontal .buggy-actions .btn-whatsapp,
+  .buggy-details-section .buggy-actions .btn-whatsapp {
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+    letter-spacing: 1.5px;
+  }
+
+  .buggy-card-horizontal .buggy-actions .whatsapp-icon,
+  .buggy-details-section .buggy-actions .whatsapp-icon {
+    font-size: 1.2rem;
+  }
 }
 
 .btn-availability,
@@ -2912,21 +2961,21 @@ body {
   flex-direction: column;
   align-items: stretch;
   z-index: 10;
+  width: 100%;
 }
 
 .payment-options-dropdown {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: calc(100% + 0.75rem);
   left: 0;
   right: 0;
   background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-  border: 2px solid #FDB43C;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(253, 180, 60, 0.3);
-  z-index: 9999;
-  overflow: visible;
-  min-width: 200px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 24px rgba(253, 180, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  overflow: hidden;
+  min-width: 220px;
   animation: slideDown 0.3s ease-out;
+  backdrop-filter: blur(10px);
 }
 
 @keyframes slideDown {
@@ -2943,22 +2992,39 @@ body {
 .payment-option-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
+  gap: 0.875rem;
+  padding: 1.125rem 1.5rem;
   color: #ffffff;
   text-decoration: none;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(253, 180, 60, 0.2);
+  border-bottom: 1px solid rgba(253, 180, 60, 0.15);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   font-family: 'Impact', 'Arial Black', Arial, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   width: 100%;
   text-align: left;
+  position: relative;
+}
+
+.payment-option-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #FDB43C;
+  transform: scaleY(0);
+  transition: transform 0.25s ease;
+}
+
+.payment-option-item:hover::before {
+  transform: scaleY(1);
 }
 
 .payment-option-item:last-child {
@@ -2966,22 +3032,23 @@ body {
 }
 
 .payment-option-item:hover {
-  background: rgba(253, 180, 60, 0.15);
+  background: linear-gradient(90deg, rgba(253, 180, 60, 0.12) 0%, rgba(253, 180, 60, 0.05) 100%);
   color: #FDB43C;
-  transform: translateX(5px);
+  transform: translateX(4px);
+  padding-left: 1.75rem;
 }
 
 .payment-option-item .option-icon {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
   color: #FDB43C;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .payment-option-item:hover .option-icon {
-  color: #FDB43C;
-  transform: scale(1.1);
+  color: #FFD700;
+  transform: scale(1.15) rotate(5deg);
 }
 
 .payment-option-item span {
@@ -3018,7 +3085,7 @@ body {
 
 @media (max-width: 480px) {
   .payment-options-dropdown {
-    border-radius: 8px;
+    border-radius: 2px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 15px rgba(253, 180, 60, 0.2);
   }
 
@@ -3108,7 +3175,7 @@ body {
   }
 
   .buggy-container {
-    padding: 0 1rem;
+    padding: 0 0.5rem;
     gap: 3rem;
   }
 
@@ -3131,6 +3198,11 @@ body {
 
   .buggy-details-section {
     padding: 1rem 0;
+    transition: padding-bottom 0.3s ease;
+  }
+
+  .buggy-details-section:has(.dropdown-open) {
+    padding-bottom: 5rem;
   }
 
   .buggy-name {
@@ -3158,25 +3230,29 @@ body {
     gap: 1.5rem;
   }
 
-  .buggy-actions {
-    flex-direction: row;
-    gap: 0.75rem;
+  .buggy-card-horizontal .buggy-actions,
+  .buggy-details-section .buggy-actions {
+    flex-direction: column;
+    gap: 0.4rem;
     width: 100%;
     padding: 0;
+    transition: margin-bottom 0.3s ease;
+  }
+
+  .buggy-actions.dropdown-open {
+    margin-bottom: 4rem;
   }
   
-  .buggy-actions a {
+  .buggy-actions a,
+  .buggy-actions .buggy-actions-link {
     min-width: 0;
+    width: 100%;
   }
-  
-  .buggy-actions a:first-child {
-    flex: 0 0 70%;
-    max-width: 70%;
-  }
-  
-  .buggy-actions a:last-child {
-    flex: 0 0 30%;
-    max-width: 30%;
+
+  .whatsapp-payment-wrapper {
+    flex: 1;
+    max-width: 100%;
+    width: 100%;
   }
 
   .btn-availability,
@@ -3201,7 +3277,7 @@ body {
   }
 
   .buggy-container {
-    padding: 0 0.75rem;
+    padding: 0 0.5rem;
     gap: 2.5rem;
   }
 
@@ -3211,12 +3287,10 @@ body {
     border-bottom: 2px solid #FDB43C;
   }
 
-  .buggy-image-wrapper img {
-    max-height: 220px;
-  }
+  
 
   .buggy-details-section {
-    padding: 12px;
+    padding: 8px;
     gap: 1rem;
   }
 
@@ -3254,25 +3328,27 @@ body {
   }
 
   .buggy-actions {
-    gap: 0.75rem;
-    flex-direction: row;
+    gap: 0.4rem;
+    flex-direction: column;
     width: 100%;
     padding: 0;
+    transition: margin-bottom 0.3s ease;
+  }
+
+  .buggy-actions.dropdown-open {
+    margin-bottom: 3.5rem;
   }
   
-  .buggy-actions a {
-    flex: 1;
+  .buggy-actions a,
+  .buggy-actions .buggy-actions-link {
     min-width: 0;
+    width: 100%;
   }
-  
-  .buggy-actions a:first-child {
-    flex: 0 0 70%;
-    max-width: 70%;
-  }
-  
-  .buggy-actions a:last-child {
-    flex: 0 0 30%;
-    max-width: 30%;
+
+  .whatsapp-payment-wrapper {
+    flex: 1;
+    max-width: 100%;
+    width: 100%;
   }
   
   .btn-availability,
@@ -3311,24 +3387,22 @@ body {
     font-size: 1.3rem;
   }
 
-  .buggy-image-wrapper img {
-    max-height: 200px;
-  }
+ 
   
   .buggy-actions {
-    gap: 0.5rem;
-    flex-direction: row;
+    gap: 0.4rem;
+    flex-direction: column;
     width: 100%;
+    transition: margin-bottom 0.3s ease;
+  }
+
+  .buggy-actions.dropdown-open {
+    margin-bottom: 3rem;
   }
   
-  .buggy-actions a:first-child {
-    flex: 0 0 70%;
-    max-width: 70%;
-  }
-  
-  .buggy-actions a:last-child {
-    flex: 0 0 30%;
-    max-width: 30%;
+  .buggy-actions a,
+  .buggy-actions .buggy-actions-link {
+    width: 100%;
   }
   
   .btn-availability,
@@ -4368,20 +4442,29 @@ body {
    SCROLL ANIMATIONS (ONLY - NO DESIGN CHANGES)
    ============================================ */
 
-/* Apply scroll animations to cards and sections */
+/* Apply scroll animations to cards and sections - Cards visible by default */
 .buggy-card-horizontal,
 .buggy-container,
 .featured-section,
 .tour-categories-section {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.buggy-card-horizontal.animate,
-.buggy-container.animate,
-.featured-section.animate,
-.tour-categories-section.animate {
+/* Only apply animation if element has scroll-animate class */
+.buggy-card-horizontal.scroll-animate:not(.animate),
+.buggy-container.scroll-animate:not(.animate),
+.featured-section.scroll-animate:not(.animate),
+.tour-categories-section.scroll-animate:not(.animate) {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.buggy-card-horizontal.scroll-animate.animate,
+.buggy-container.scroll-animate.animate,
+.featured-section.scroll-animate.animate,
+.tour-categories-section.scroll-animate.animate {
   opacity: 1;
   transform: translateY(0);
 }

@@ -137,25 +137,25 @@ const storiesData = [
   },
   { 
     id: 3, 
-    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_21841.mov', 
+    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', 
     username: 'bike_nomad', 
     caption: 'Bike ride!' 
   },
   { 
     id: 4, 
-    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_36304.mov', 
+    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769170577/rental-car/videos/IMG_1631.mov', 
     username: 'sand_master', 
     caption: 'Dune bashing!' 
   },
   { 
     id: 5, 
-    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_36962.mov', 
+    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_1631.mov', 
     username: 'safari_guy', 
     caption: 'Desert safari!' 
   },
   { 
     id: 6, 
-    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_37343.mov', 
+    videoUrl: 'https://res.cloudinary.com/dkjjrna9o/video/upload/v1769173190/rental-car/videos/IMG_1631.mov', 
     username: 'offroad_x', 
     caption: 'Another ride!' 
   },

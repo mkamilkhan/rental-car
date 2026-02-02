@@ -62,6 +62,9 @@ export const AuthProvider = ({ children }) => {
         
         // Fetch user from server
         await fetchUser();
+      } else {
+        setToken(null);
+        setUser(null);
       }
 
       setAuthLoading(false);

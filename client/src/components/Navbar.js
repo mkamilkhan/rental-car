@@ -641,7 +641,7 @@ const Navbar = () => {
                 <FaGlobe className="globe-icon" />
               </button> */}
 
-              {/* Login Button - Show when user is not logged in */}
+              {/* Login Button - show when no user (so it's visible as soon as page loads if not logged in) */}
               {!user && (
                 <button 
                   onClick={() => {
@@ -656,7 +656,7 @@ const Navbar = () => {
                 </button>
               )}
 
-              {/* User Dashboard/Logout - Show when user is logged in */}
+              {/* User Dashboard/Logout - show when user is logged in (not admin) */}
               {user && user.role !== 'admin' && (
                 <>
                   <Link to="/my-bookings" className="btn-dashboard" onClick={closeMenu}>

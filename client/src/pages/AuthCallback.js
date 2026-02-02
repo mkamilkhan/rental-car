@@ -65,13 +65,9 @@ const AuthCallback = () => {
       sessionStorage.removeItem("from");
     }
 
-    // Clean URL
-    window.history.replaceState({}, document.title, window.location.pathname);
-
-    // Redirect after short delay
-    setTimeout(() => {
-      navigate(redirectPath, { replace: true });
-    }, 500);
+    // Force browser to leave /auth/callback – token is already in localStorage
+    const cleanUrl = window.location.origin + "#" + (redirectPath.startsWith("/") ? redirectPath : "/" + redirectPath);
+    window.location.replace(cleanUrl);
   }, [searchParams, navigate, login]);
 
   return (

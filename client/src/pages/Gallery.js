@@ -1,165 +1,212 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import HeroCarousel from "../components/HeroCarousel";
-import "./Blog.css";
+import React, { useState } from "react";
+// import HeroCarousel from "./HeroCarousel";
+import { Play } from "lucide-react";
+import "./Gallery.css";
 
 const Gallery = () => {
-  // Original gallery data that was in Blog.js before
-  const galleryPosts = [
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [filter, setFilter] = useState("all");
+
+  // Gallery items with images and videos
+  const galleryItems = [
     {
       id: 1,
-      title: "Top 7 Thrilling Desert Adventures in Dubai",
-      author: "Soor Subedaar",
-      date: "05 May, 2025",
-      category: "Desert Safari",
-      image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Discover Dubai's top desert adventures including dune bashing, quad biking, camel riding and more. Experience the thrill of off-road vehicles racing through golden dunes under the Arabian sun."
+      type: "image",
+      category: "vehicles",
+      image: "https://images.unsplash.com/photo-1677933483348-e98d4bd7c371?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNlcnQlMjBzYWZhcmklMjBkdWJhaSUyMGR1bmUlMjBidWdneXxlbnwxfHx8fDE3NzAwMjA4MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Dune Buggy Adventure"
     },
     {
       id: 2,
-      title: "Quad Biking in Dubai: An ATV Adventure in the Dunes",
-      author: "Soor Subedaar",
-      date: "22 May, 2025",
-      category: "Dubai Desert",
-      image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Experience quad biking in Dubai with best locations, safety tips and booking guide. Master the art of dune riding with our expert guides and premium ATV fleet."
+      type: "image",
+      category: "vehicles",
+      image: "https://images.unsplash.com/photo-1703060565984-cca98b1fa2be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxdWFkJTIwYmlraW5nJTIwZGVzZXJ0JTIwc2FuZHxlbnwxfHx8fDE3NzAwMjA4MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Quad Biking Experience"
     },
     {
       id: 3,
-      title: "Polaris RZR: The Ultimate Desert Machine",
-      author: "Soor Subedaar",
-      date: "15 June, 2025",
-      category: "Vehicle Reviews",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Explore why the Polaris RZR is the top choice for desert adventures. Power, performance, and precision in one incredible off-road vehicle."
+      type: "video",
+      category: "safari",
+      image: "https://images.unsplash.com/photo-1762198455051-2a971714e291?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdHYlMjBkZXNlcnQlMjBzdW5zZXQlMjBkdWJhaXxlbnwxfHx8fDE3NzAwMjA4MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "ATV Desert Sunset",
+      videoUrl: "#"
     },
     {
       id: 4,
-      title: "Can-Am Maverick: Luxury Meets Adventure",
-      author: "Soor Subedaar",
-      date: "28 June, 2025",
-      category: "Vehicle Reviews",
-      image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=500&q=75&fit=crop&auto=format",
-      excerpt:
-        "Discover the Can-Am Maverick's superior engineering and comfort features. Perfect for those who want adventure without compromising on luxury."
+      type: "image",
+      category: "safari",
+      image: "https://images.unsplash.com/photo-1760529697940-45dfa4f1cd84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNlcnQlMjBzYWZhcmklMjBhZHZlbnR1cmUlMjBjYW1lbHxlbnwxfHx8fDE3NzAwMjA4MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Camel Safari Experience"
+    },
+    {
+      id: 5,
+      type: "image",
+      category: "desert",
+      image: "https://images.unsplash.com/photo-1690942566357-90489170ebd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzYW5kJTIwZHVuZXMlMjBnb2xkZW4lMjBkZXNlcnR8ZW58MXx8fHwxNzcwMDIwODM1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Golden Sand Dunes"
+    },
+    {
+      id: 6,
+      type: "image",
+      category: "vehicles",
+      image: "https://images.unsplash.com/photo-1764053000942-9ea3764c8b91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvZmZyb2FkJTIwdmVoaWNsZSUyMGRlc2VydCUyMHJhY2luZ3xlbnwxfHx8fDE3NzAwMjA4MzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Offroad Desert Racing"
+    },
+    {
+      id: 7,
+      type: "video",
+      category: "safari",
+      image: "https://images.unsplash.com/photo-1708143901533-cbec951a2042?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkdWJhaSUyMGRlc2VydCUyMG5pZ2h0JTIwc2FmYXJpfGVufDF8fHx8MTc3MDAyMDgzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Desert Night Safari",
+      videoUrl: "#"
+    },
+    {
+      id: 8,
+      type: "image",
+      category: "vehicles",
+      image: "https://images.unsplash.com/flagged/photo-1566353820556-a53008aa8392?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXJ0JTIwYmlrZSUyMGRlc2VydCUyMGp1bXB8ZW58MXx8fHwxNzcwMDIwODM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Dirt Bike Desert Jump"
+    },
+    {
+      id: 9,
+      type: "image",
+      category: "safari",
+      image: "https://images.unsplash.com/photo-1769093173089-ef6cd962527b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNlcnQlMjBjYW1wJTIwZmlyZSUyMHRyYWRpdGlvbmFsfGVufDF8fHx8MTc3MDAyMDgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "Traditional Desert Camp"
+    },
+    {
+      id: 10,
+      type: "video",
+      category: "vehicles",
+      image: "https://images.unsplash.com/photo-1761860466845-b81cdd7bd476?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHw0eDQlMjBkZXNlcnQlMjBleHBlZGl0aW9ufGVufDF8fHx8MTc3MDAyMDgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "4x4 Desert Expedition",
+      videoUrl: "#"
+    },
+    {
+      id: 11,
+      type: "image",
+      category: "desert",
+      image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1080&h=720&fit=crop&auto=format",
+      title: "Desert Landscape"
+    },
+    {
+      id: 12,
+      type: "image",
+      category: "vehicles",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1080&h=720&fit=crop&auto=format",
+      title: "Polaris RZR Action"
     }
   ];
 
+  // Filter items
+  const filteredItems = filter === "all" 
+    ? galleryItems 
+    : galleryItems.filter(item => 
+        filter === "videos" ? item.type === "video" : item.category === filter
+      );
+
   return (
-    <div className="blog-page">
-      <HeroCarousel title="GALLERY" subtitle="Home → Gallery" />
+    <div className="gallery-page">
+      {/* <HeroCarousel title="GALLERY" subtitle="Home → Gallery" / */}
 
-      <div className="blog-wrapper container">
-        
-        {/* LEFT SIDE */}
-        <div className="blog-left">
-          {galleryPosts.map((post) => (
-            <article key={post.id} className="blog-post">
-              <img 
-                src={post.image} 
-                alt={post.title}
-                loading="lazy"
-                decoding="async"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextElementSibling?.classList.add('image-error');
-                }}
-              />
-              
-              <div className="blog-post-content">
-                <div className="post-meta">
-                  <span>👤 By {post.author}</span>
-                  <span>📅 {post.date}</span>
-                  <span>🏷 {post.category}</span>
+      <div className="gallery-container">
+        {/* Filter Buttons */}
+        <div className="gallery-filters">
+          <button 
+            className={filter === "all" ? "active" : ""}
+            onClick={() => setFilter("all")}
+          >
+            All
+          </button>
+          <button 
+            className={filter === "vehicles" ? "active" : ""}
+            onClick={() => setFilter("vehicles")}
+          >
+            Vehicles
+          </button>
+          <button 
+            className={filter === "safari" ? "active" : ""}
+            onClick={() => setFilter("safari")}
+          >
+            Safari
+          </button>
+          <button 
+            className={filter === "desert" ? "active" : ""}
+            onClick={() => setFilter("desert")}
+          >
+            Desert
+          </button>
+          <button 
+            className={filter === "videos" ? "active" : ""}
+            onClick={() => setFilter("videos")}
+          >
+            Videos
+          </button>
+        </div>
+
+        {/* Gallery Grid */}
+        <div className="gallery-grid">
+          {filteredItems.map((item) => (
+            <div 
+              key={item.id} 
+              className="gallery-item"
+              onClick={() => setSelectedItem(item)}
+            >
+              <div className="gallery-item-wrapper">
+                <img src={item.image} alt={item.title} loading="lazy" />
+                
+                {/* Video Play Icon Overlay */}
+                {item.type === "video" && (
+                  <div className="video-overlay">
+                    <div className="play-button">
+                      <Play size={40} fill="#fbbf24" color="#fbbf24" />
+                    </div>
+                  </div>
+                )}
+                
+                {/* Hover Overlay */}
+                <div className="gallery-overlay">
+                  <h3>{item.title}</h3>
+                  <span className="gallery-badge">
+                    {item.type === "video" ? "VIDEO" : "PHOTO"}
+                  </span>
                 </div>
-
-                <h2>{post.title}</h2>
-                <p>{post.excerpt}</p>
-
-                <Link className="read-more" to="#">
-                  READ MORE
-                </Link>
               </div>
-            </article>
+            </div>
           ))}
         </div>
 
-        {/* RIGHT SIDEBAR */}
-        <aside className="blog-sidebar">
-
-          {/* SEARCH */}
-          <div className="sidebar-box search-box">
-            <input type="text" placeholder="Search" />
-          </div>
-
-          {/* ACTIVITY TYPE */}
-          <div className="sidebar-box">
-            <h4>Activity Type</h4>
-            <label><input type="checkbox" /> Offroad Vehicle 1000cc</label>
-            <label><input type="checkbox" /> Quad Bike</label>
-            <label><input type="checkbox" /> CAN-AM 1500cc</label>
-            <label><input type="checkbox" /> Raptor 750cc</label>
-            <label><input type="checkbox" /> KTM Bike</label>
-            <label><input type="checkbox" /> Safari Night</label>
-          </div>
-
-          {/* RECENT POSTS */}
-          <div className="sidebar-box">
-            <h4>Recent Posts</h4>
-            <div className="recent-post">
-              <img 
-                src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=180&h=135&q=70&fit=crop&auto=format" 
-                alt="Quad Biking"
-                loading="lazy"
-                decoding="async"
-              />
-              <div>
-                <p>Quad Biking In Dubai</p>
-                <span>22/6/2025</span>
-              </div>
-            </div>
-            <div className="recent-post">
-              <img 
-                src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=180&h=135&q=70&fit=crop&auto=format" 
-                alt="Can-Am Adventure"
-                loading="lazy"
-                decoding="async"
-              />
-              <div>
-                <p>Can-Am Desert Safari</p>
-                <span>25/6/2025</span>
-              </div>
-            </div>
-            <div className="recent-post">
-              <img 
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=180&h=135&q=70&fit=crop&auto=format" 
-                alt="Polaris RZR"
-                loading="lazy"
-                decoding="async"
-              />
-              <div>
-                <p>Polaris RZR Experience</p>
-                <span>28/6/2025</span>
+        {/* Lightbox Modal */}
+        {selectedItem && (
+          <div className="lightbox" onClick={() => setSelectedItem(null)}>
+            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+              <button 
+                className="lightbox-close"
+                onClick={() => setSelectedItem(null)}
+              >
+                ×
+              </button>
+              
+              {selectedItem.type === "video" ? (
+                <div className="lightbox-video">
+                  <video controls autoPlay>
+                    <source src={selectedItem.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : (
+                <img src={selectedItem.image} alt={selectedItem.title} />
+              )}
+              
+              <div className="lightbox-info">
+                <h3>{selectedItem.title}</h3>
+                <span className="lightbox-type">
+                  {selectedItem.type === "video" ? "VIDEO" : "PHOTO"}
+                </span>
               </div>
             </div>
           </div>
-
-          {/* TAGS */}
-          <div className="sidebar-box">
-            <h4>Popular Tags</h4>
-            <div className="tags">
-              <span>Desert Safari</span>
-              <span>Quad Bikes</span>
-              <span>Raptor Rides</span>
-              <span>KTM Bikes</span>
-              <span>CAN-AM</span>
-            </div>
-          </div>
-
-        </aside>
+        )}
       </div>
     </div>
   );

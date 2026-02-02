@@ -20,6 +20,15 @@ router.get('/', async (req, res) => {
 
     let cars = await Car.find(query);
 
+    // Normalize: agar images [] hai lekin image hai to frontend ko images: [image] do (thumbnails ke liye)
+    cars = cars.map((car) => {
+      const doc = car.toObject ? car.toObject() : car;
+      if ((!doc.images || doc.images.length === 0) && doc.image) {
+        doc.images = [doc.image];
+      }
+      return doc;
+    });
+
     // Filter out cars that are booked during the requested dates
     if (startDate && endDate) {
       const start = new Date(startDate);
@@ -49,7 +58,9 @@ router.get('/:id', async (req, res) => {
     if (!car) {
       return res.status(404).json({ message: 'Car not found' });
     }
-    res.json(car);
+    const doc = car.toObject ? car.toObject() : car;
+    if ((!doc.images || doc.images.length === 0) && doc.image) doc.images = [doc.image];
+    res.json(doc);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

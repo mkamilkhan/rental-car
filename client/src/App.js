@@ -91,6 +91,7 @@ import Destination from './pages/Destination';
 import Service from './pages/Service';
 import Activities from './pages/Activities';
 import Blog from './pages/Blog';
+import BlogDetail from './pages/BlogDetail';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import CarDetails from './pages/CarDetails';
@@ -140,6 +141,7 @@ function App() {
                   <Route path="/service" element={<Service />} />
                   <Route path="/activities" element={<Activities />} />
                   <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogDetail />} />
                   <Route path="/gallery" element={<Gallery />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/car/:id" element={<CarDetails />} />

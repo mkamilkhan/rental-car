@@ -64,6 +64,10 @@ const carSchema = new mongoose.Schema({
     type: String,
     default: 'https://via.placeholder.com/400x300?text=Car+Image'
   },
+  images: {
+    type: [String],
+    default: function () { return []; }
+  },
   available: {
     type: Boolean,
     default: true

@@ -50,12 +50,28 @@ const Home = () => {
   };
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
-  // 
   const [selectedCard, setSelectedCard] = useState(null);
+  // Per-car image slider index (carId -> index)
+  const [carImageIndex, setCarImageIndex] = useState({});
 
   const handleCardClick = (id) => {
     setSelectedCard(selectedCard === id ? null : id);
   };
+
+  // Multiple images per car: car.images array (dashboard se) ya sirf car.image
+  const getCarImages = (car) => {
+    const list = Array.isArray(car.images) && car.images.length > 0
+      ? car.images.filter(Boolean)
+      : car.image
+        ? [car.image]
+        : [];
+    return list;
+  };
+
+  const setCarImage = (carId, index) => {
+    setCarImageIndex((prev) => ({ ...prev, [carId]: index }));
+  };
+
   const activities = [
     {
       id: '1',
@@ -591,12 +607,18 @@ const Home = () => {
 
               {/* Vehicle Cards - Horizontal Layout */}
               <div className="buggy-container">
-                {cars.map((car) => (
+                {cars.map((car) => {
+                  const images = getCarImages(car);
+                  const currentIdx = carImageIndex[car._id] ?? 0;
+                  const mainImage = images[Math.min(currentIdx, images.length - 1)] || car.image;
+                  return (
                   <div key={car._id} className="buggy-card-horizontal">
-                    {/* LEFT SIDE - Image Section */}
+                    {/* LEFT SIDE - Image (thumbnails removed, main image only) */}
                     <div className="buggy-image-section">
-                      <div className="buggy-image-wrapper">
-                        <ImageWithFallback src={car.image} alt={car.name} />
+                      <div className="buggy-image-slider">
+                        <div className="buggy-image-wrapper">
+                          <ImageWithFallback src={mainImage} alt={car.name} />
+                        </div>
                       </div>
                     </div>
 
@@ -690,7 +712,7 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                );})}
               </div>
             </div>
           )}

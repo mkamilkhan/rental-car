@@ -89,7 +89,7 @@ const Service = () => {
         <div className="service-fleet-hero-content">
           <div className="service-hero-badge">THE GARAGE</div>
           <h1 className="service-hero-title">
-            OUR <span>GALLERY</span>
+            OUR <span>SERVICE</span>
           </h1>
           <p className="service-gallery-subtitle">
           "See the adventure through the eyes of our riders. Unfiltered, raw, and unforgettable."

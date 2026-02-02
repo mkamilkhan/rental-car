@@ -28,6 +28,13 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+// Multer sirf tab chalao jab body multipart ho; JSON body ko preserve rakhne ke liye
+const maybeUpload = (req, res, next) => {
+  const isMultipart = (req.headers['content-type'] || '').includes('multipart/form-data');
+  if (isMultipart) return upload.single('image')(req, res, next);
+  next();
+};
+
 /* ================= BOOKINGS ================= */
 router.get('/bookings', adminAuth, async (req, res) => {
   try {
@@ -179,10 +186,28 @@ router.post('/cars', adminAuth, upload.single('image'), async (req, res) => {
       console.warn('⚠️ Cloudinary not configured, but file was uploaded');
     }
     
-    const car = await Car.create({
-      ...carData,
-      image: imageUrl,
+    let imagesArray = [imageUrl];
+    if (req.body.images) {
+      try {
+        const extra = typeof req.body.images === 'string' ? JSON.parse(req.body.images) : req.body.images;
+        if (Array.isArray(extra) && extra.length) {
+          const rest = extra.filter((u) => u && u !== imageUrl);
+          imagesArray = [imageUrl, ...rest];
+        }
+      } catch (e) {
+        console.warn('Could not parse images array:', e.message);
+      }
+    }
+
+    const allowedKeys = ['name', 'brand', 'model', 'year', 'price30min', 'price60min', 'price90min', 'price120min', 'currency', 'seats', 'transmission', 'fuelType', 'available', 'description'];
+    const createPayload = {};
+    allowedKeys.forEach((k) => {
+      if (carData[k] !== undefined && carData[k] !== '') createPayload[k] = carData[k];
     });
+    createPayload.image = imageUrl;
+    createPayload.images = imagesArray;
+
+    const car = await Car.create(createPayload);
 
     console.log('✅ Car created successfully:', car._id);
     res.status(201).json(car);
@@ -198,16 +223,22 @@ router.post('/cars', adminAuth, upload.single('image'), async (req, res) => {
       });
     }
     
-    // Handle Cloudinary errors
-    if (error.message && error.message.includes('cloudinary')) {
-      return res.status(500).json({ 
-        message: 'Image upload failed. Please check Cloudinary configuration.', 
+    // Handle Cloudinary file size limit (free plan: 10MB)
+    if (error.message && (error.message.includes('File size too large') || error.message.includes('file limit'))) {
+      return res.status(413).json({
+        message: 'Image is too large. Maximum size is 10MB. Please upload a smaller image or compress it.',
         error: error.message
       });
     }
-    
-    res.status(500).json({ 
-      message: 'Failed to add car', 
+    if (error.message && error.message.includes('cloudinary')) {
+      return res.status(500).json({
+        message: 'Image upload failed. Please check Cloudinary configuration.',
+        error: error.message
+      });
+    }
+
+    res.status(500).json({
+      message: 'Failed to add car',
       error: error.message,
       details: error.errors || error.stack
     });
@@ -215,7 +246,7 @@ router.post('/cars', adminAuth, upload.single('image'), async (req, res) => {
 });
 
 /* ================= UPDATE CAR ================= */
-router.put('/cars/:id', adminAuth, upload.single('image'), async (req, res) => {
+router.put('/cars/:id', adminAuth, maybeUpload, async (req, res) => {
   try {
     console.log('📝 Updating car - ID:', req.params.id);
     console.log('📝 Updating car - Body:', req.body);
@@ -265,10 +296,39 @@ router.put('/cars/:id', adminAuth, upload.single('image'), async (req, res) => {
     }
 
     if (req.file) {
-      updateData.image = req.file.path || req.file.secure_url; // Cloudinary URL
+      updateData.image = req.file.path || req.file.secure_url;
     }
 
-    const car = await Car.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
+    // images: FormData se JSON string ya JSON body se array dono handle karo.
+    // [] mat bhejo — agar client [] bheje to overwrite mat karo (existing images rahen).
+    if (req.body.images !== undefined) {
+      try {
+        const parsed = typeof req.body.images === 'string'
+          ? (req.body.images.trim() === '' ? [] : JSON.parse(req.body.images))
+          : req.body.images;
+        if (Array.isArray(parsed)) {
+          const list = parsed.filter(Boolean);
+          // Sirf tab images update karo jab list mein kuch ho; [] se DB clear mat karo
+          if (list.length > 0) {
+            updateData.images = list;
+            if (!updateData.image) updateData.image = list[0];
+            if (updateData.image && list.indexOf(updateData.image) !== 0) {
+              updateData.images = [updateData.image, ...list.filter((u) => u !== updateData.image)];
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Could not parse images array:', e.message);
+      }
+    }
+
+    const allowedKeys = ['name', 'brand', 'model', 'year', 'price30min', 'price60min', 'price90min', 'price120min', 'currency', 'seats', 'transmission', 'fuelType', 'available', 'description', 'image', 'images'];
+    const updatePayload = {};
+    allowedKeys.forEach((k) => {
+      if (updateData[k] !== undefined) updatePayload[k] = updateData[k];
+    });
+
+    const car = await Car.findByIdAndUpdate(req.params.id, updatePayload, { new: true, runValidators: true });
 
     if (!car) return res.status(404).json({ message: 'Car not found' });
 
@@ -276,8 +336,14 @@ router.put('/cars/:id', adminAuth, upload.single('image'), async (req, res) => {
     res.json(car);
   } catch (error) {
     console.error('❌ Error updating car:', error);
-    res.status(500).json({ 
-      message: 'Server error', 
+    if (error.message && (error.message.includes('File size too large') || error.message.includes('file limit'))) {
+      return res.status(413).json({
+        message: 'Image is too large. Maximum size is 10MB. Please upload a smaller image or compress it.',
+        error: error.message
+      });
+    }
+    res.status(500).json({
+      message: 'Server error',
       error: error.message,
       details: error.errors || error
     });

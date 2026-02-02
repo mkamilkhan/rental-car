@@ -1002,7 +1002,6 @@ const AdminDashboard = () => {
     brand: '',
     model: '',
     year: new Date().getFullYear(),
-    // pricePerDay: '',
     price30min: '',
     price60min: '',
     price90min: '',
@@ -1014,10 +1013,12 @@ const AdminDashboard = () => {
     description: '',
     available: true,
     imageFile: null,
+    images: [],
   });
-  
+  const [newImageUrl, setNewImageUrl] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
-    
+  const [carSubmitLoading, setCarSubmitLoading] = useState(false);
+
   useEffect(() => {
     fetchBookings();
     fetchCars();
@@ -1161,40 +1162,65 @@ const AdminDashboard = () => {
           
   const handleCarSubmit = async (e) => {
     e.preventDefault();
-  
+    setCarSubmitLoading(true);
     try {
+      const imagesArray = Array.isArray(carFormData.images) ? carFormData.images : [];
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+      // UPDATE without new image file → send JSON so server definitely gets images array
+      if (editingCar && !(carFormData.imageFile instanceof File)) {
+        const payload = {
+          name: carFormData.name,
+          brand: carFormData.brand,
+          model: carFormData.model,
+          year: carFormData.year,
+          price30min: carFormData.price30min,
+          price60min: carFormData.price60min,
+          price90min: carFormData.price90min,
+          price120min: carFormData.price120min,
+          currency: carFormData.currency,
+          seats: carFormData.seats,
+          transmission: carFormData.transmission,
+          fuelType: carFormData.fuelType,
+          description: carFormData.description ?? '',
+          available: carFormData.available,
+          images: imagesArray,
+        };
+        if (imagesArray.length > 0) payload.image = imagesArray[0];
+        await axios.put(`${apiUrl}/api/admin/cars/${editingCar._id}`, payload, {
+          headers: { 'Content-Type': 'application/json' },
+        });
+        alert('✅ Car updated successfully');
+        fetchCars();
+        setShowCarForm(false);
+        setEditingCar(null);
+        setImagePreview(null);
+        return;
+      }
+
+      // CREATE or UPDATE with new image file → use FormData
+      if (carFormData.imageFile instanceof File && carFormData.imageFile.size > MAX_IMAGE_SIZE_BYTES) {
+        alert(`Image is too large. Maximum size is ${MAX_IMAGE_SIZE_MB}MB. Please choose a smaller image.`);
+        return;
+      }
       const formData = new FormData();
-  
-      // Append all form fields except imageFile
       Object.entries(carFormData).forEach(([key, value]) => {
-        if (key !== 'imageFile') {
-          // Booleans need to be converted to strings
-          formData.append(key, typeof value === 'boolean' ? value.toString() : value);
+        if (key !== 'imageFile' && key !== 'images') {
+          formData.append(key, value === undefined || value === null ? '' : typeof value === 'boolean' ? value.toString() : value);
         }
       });
-  
-      // Append image file (if selected)
       if (carFormData.imageFile instanceof File) {
-        formData.append('image', carFormData.imageFile); // must match backend field name
+        formData.append('image', carFormData.imageFile);
+      } else if (imagesArray.length > 0) {
+        formData.append('image', imagesArray[0]);
       }
-  
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  
+      formData.append('images', JSON.stringify(imagesArray));
+
       if (editingCar) {
-        // Update existing car
-        await axios.put(
-          `${apiUrl}/api/admin/cars/${editingCar._id}`,
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } }
-        );
+        await axios.put(`${apiUrl}/api/admin/cars/${editingCar._id}`, formData, { headers: {} });
         alert('✅ Car updated successfully');
       } else {
-        // Add new car
-        await axios.post(
-          `${apiUrl}/api/admin/cars`,
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } }
-        );
+        await axios.post(`${apiUrl}/api/admin/cars`, formData, { headers: {} });
         alert('✅ Car added successfully');
       }
   
@@ -1204,16 +1230,30 @@ const AdminDashboard = () => {
       setImagePreview(null);
     } catch (error) {
       console.error(error);
-      alert('❌ Failed to save car');
+      const msg = error.response?.data?.message || error.message || 'Failed to save car';
+      alert(`❌ ${msg}`);
+    } finally {
+      setCarSubmitLoading(false);
     }
   };
-  
+
+  // Cloudinary free plan limit: 10MB
+  const MAX_IMAGE_SIZE_BYTES = 10 * 1024 * 1024; // 10485760
+  const MAX_IMAGE_SIZE_MB = 10;
+
   // Handle file input change
   const handleCarFormChange = (e) => {
     const { name, value, type, checked, files } = e.target;
   
     if (type === 'file') {
       const file = files[0];
+      if (file && file.size > MAX_IMAGE_SIZE_BYTES) {
+        alert(`Image is too large. Maximum size is ${MAX_IMAGE_SIZE_MB}MB. Please choose a smaller image or compress it.`);
+        e.target.value = '';
+        setCarFormData(prev => ({ ...prev, imageFile: null }));
+        setImagePreview(null);
+        return;
+      }
       setCarFormData(prev => ({ ...prev, imageFile: file }));
   
       if (file) {
@@ -1254,12 +1294,12 @@ const AdminDashboard = () => {
       fuelType: car.fuelType,
       description: car.description || '',
       available: car.available,
-      imageFile: null        // 🔥 VERY IMPORTANT
+      imageFile: null,
+      images: Array.isArray(car.images) ? [...car.images] : (car.image ? [car.image] : []),
     });
-  
-    // ✅ sirf UI preview ke liye
+
     setImagePreview(car.image);
-  
+    setNewImageUrl('');
     setShowCarForm(true);
   };
   
@@ -1711,9 +1751,11 @@ const AdminDashboard = () => {
                   fuelType: 'Petrol',
                   description: '',
                   available: true,
-                  imageFile: null
+                  imageFile: null,
+                  images: [],
                 });
                 setImagePreview(null);
+                setNewImageUrl('');
               }}
               className="btn btn-primary"
               style={{ marginBottom: '1.5rem' }}
@@ -1912,7 +1954,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ marginBottom: '1rem' }}>
-                      <label style={{ color: '#9CA3AF', display: 'block', marginBottom: '0.5rem' }}>Vehicle Image *</label>
+                      <label style={{ color: '#9CA3AF', display: 'block', marginBottom: '0.5rem' }}>Vehicle Image * (max {MAX_IMAGE_SIZE_MB}MB)</label>
                       <input
   type="file"
   name="image"
@@ -1928,6 +1970,20 @@ const AdminDashboard = () => {
                       )}
                     </div>
                     <div style={{ marginBottom: '1rem' }}>
+                      <label style={{ color: '#9CA3AF', display: 'block', marginBottom: '0.5rem' }}>Slider images (multiple – ye Home pe thumbnails + slider mein dikhenge)</label>
+                      {(carFormData.images || []).map((url, i) => (
+                        <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px' }}>
+                          <img src={url} alt="" style={{ width: '48px', height: '36px', objectFit: 'cover', borderRadius: '6px', background: '#111' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                          <input type="text" value={url} readOnly style={{ flex: 1, padding: '6px 10px', fontSize: '13px', borderRadius: '6px', border: '1px solid #1F2937', background: '#111', color: '#9CA3AF' }} />
+                          <button type="button" onClick={() => setCarFormData(prev => ({ ...prev, images: (prev.images || []).filter((_, j) => j !== i) }))} style={{ padding: '6px 10px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>Remove</button>
+                        </div>
+                      ))}
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                        <input type="url" placeholder="Image URL add karein" value={newImageUrl} onChange={(e) => setNewImageUrl(e.target.value)} style={{ flex: 1, padding: '8px 10px', borderRadius: '6px', border: '1px solid #1F2937', background: '#111', color: '#fff' }} />
+                        <button type="button" onClick={() => { if (newImageUrl.trim()) { setCarFormData(prev => ({ ...prev, images: [...(prev.images || []), newImageUrl.trim()] })); setNewImageUrl(''); } }} style={{ padding: '8px 14px', background: '#FDB43C', color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>Add</button>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: '1rem' }}>
                       <label style={{ color: '#9CA3AF', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
                         <input
                           type="checkbox"
@@ -1940,8 +1996,15 @@ const AdminDashboard = () => {
                       </label>
                     </div>
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-                      <button type="submit" className="btn btn-primary">
-                        {editingCar ? 'Update Car' : 'Add Car'}
+                      <button type="submit" className="btn btn-primary" disabled={carSubmitLoading}>
+                        {carSubmitLoading ? (
+                          <>
+                            <span className="car-submit-spinner" aria-hidden="true" />
+                            {editingCar ? 'Updating...' : 'Creating...'}
+                          </>
+                        ) : (
+                          editingCar ? 'Update Car' : 'Add Car'
+                        )}
                       </button>
                       <button
                         type="button"

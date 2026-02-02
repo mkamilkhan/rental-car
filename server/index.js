@@ -166,6 +166,30 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 /* =======================
+   GLOBAL ERROR HANDLER (prevents [object Object] in HTML)
+======================= */
+app.use((err, req, res, next) => {
+  console.error("Server error:", err.message || err);
+  const message = err.message || "Something went wrong";
+  const status = err.status || err.statusCode || 500;
+  if (req.xhr || req.path?.startsWith("/api/")) {
+    res.status(status).json({ message: String(message), error: message });
+  } else {
+    res.status(status).type("text/html").send(
+      `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Error</title></head><body><pre>${escapeHtml(String(message))}</pre></body></html>`
+    );
+  }
+});
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/* =======================
    MONGODB CONNECTION
 ======================= */
 const connectDB = async () => {

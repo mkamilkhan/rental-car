@@ -220,14 +220,18 @@ router.get('/google/callback',
         { expiresIn: '7d' }
       );
       
-      // Local: always 3000 (ignore FRONTEND_URL). Production: Render URL only.
+      // Use FRONTEND_URL on Render; localhost only when really local (no PORT or PORT=5000).
       const getFrontendUrl = () => {
-        const isProduction = process.env.NODE_ENV === 'production';
-        const isLocalServer = !process.env.PORT || process.env.PORT === '5000';
-        if (isProduction && !isLocalServer) {
-          return 'https://offroad-rental-client.onrender.com';
+        if (process.env.FRONTEND_URL) {
+          const url = process.env.FRONTEND_URL.replace(/\/$/, '');
+          console.log('Google OAuth: Using FRONTEND_URL:', url);
+          return url;
         }
-        return 'http://localhost:3000';
+        const isLocalServer = !process.env.PORT || process.env.PORT === '5000';
+        if (isLocalServer) {
+          return 'http://localhost:3000';
+        }
+        return 'https://offroad-rental-client.onrender.com';
       };
       
       const frontendUrl = getFrontendUrl();
